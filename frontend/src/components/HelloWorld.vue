@@ -1,5 +1,6 @@
 <template>
-  <v-container>
+
+  <v-container class="v-background">
     <v-row class="text-center">
       <v-col cols="12">
         <v-img
@@ -149,3 +150,10 @@ export default {
   })
 }
 </script>
+
+<style>
+.v-container {
+  background: aqua;
+
+}
+</style>
