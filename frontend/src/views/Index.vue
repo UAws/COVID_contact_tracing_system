@@ -40,15 +40,19 @@
       </v-col>
 
     </v-row>
+    <v-row>
+      <GMap />
+    </v-row>
 
   </v-container>
 </template>
 
 <script>
 import Header from '@/components/Header'
+import GMap from '@/components/GMap'
 export default {
   name: 'Index',
-  components: { Header },
+  components: { GMap, Header },
   data: () => ({
     intro_text: {
       fontSize: '38px',
