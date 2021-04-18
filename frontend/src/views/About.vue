@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header></Header>
+    <Header />
 
     <v-main>
       <div class="about">
@@ -16,7 +16,7 @@
 import Header from '@/components/Header.vue'
 
 export default {
-  name: 'about',
+  name: 'About',
   components: {
     Header
   }

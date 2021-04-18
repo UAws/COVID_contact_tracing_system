@@ -1,13 +1,13 @@
 <template>
   <v-container>
-    <Header></Header>
+    <Header />
     <v-main>
       <v-row height="200px">
         <v-col cols="6" class="align-self-center text-center" style="color: white">
-          <div :style="intro_text" >Coronavirus(COVID-19)<br/>
+          <div :style="intro_text">Coronavirus(COVID-19)<br>
           </div>
           <div :style="intro_text">
-            Tracing Application<br/>
+            Tracing Application<br>
             For Your Safety and Health</div>
         </v-col>
         <v-col cols="6">
@@ -27,7 +27,7 @@
           style="padding: 50px 0px 25px 50px"
           outlined
           clearable
-        ></v-text-field>
+        />
       </v-col>
       <v-col cols="2">
         <v-btn
@@ -40,15 +40,19 @@
       </v-col>
 
     </v-row>
+    <v-row>
+      <GMap />
+    </v-row>
 
   </v-container>
 </template>
 
 <script>
 import Header from '@/components/Header'
+import GMap from '@/components/GMap'
 export default {
-  name: 'index',
-  components: { Header },
+  name: 'Index',
+  components: { GMap, Header },
   data: () => ({
     intro_text: {
       fontSize: '38px',
