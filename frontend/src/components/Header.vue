@@ -1,31 +1,16 @@
 <template>
   <v-app-bar
     app
-    color="primary"
+    color="rgb(16, 37, 53)"
     dark
   >
     <div class="d-flex align-center">
-      <v-img
-        alt="Vuetify Logo"
-        class="shrink mr-2"
-        contain
-        src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-        transition="scale-transition"
-        width="40"
-      />
-
-
-
-
-
-
-
       <v-img
         alt="Vuetify Name"
         class="shrink mt-1 hidden-sm-and-down"
         contain
         min-width="100"
-        src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
+        src="../assets/logo_uni.png"
         width="100"
       />
     </div>
@@ -37,8 +22,20 @@
       target="_blank"
       text
     >
-      <span class="mr-2">Latest Release</span>
+      <!-- <span class="mr-2">Latest Release</span> -->
+      <div id="example-3">
+      </div>
       <v-icon>mdi-open-in-new</v-icon>
+    </v-btn>
+
+    <div class="mx-5">
+    <v-btn color="white">
+      <span class="black--text">Log in</span>
+    </v-btn>
+    </div>
+    <!-- <v-spacer></v-spacer> -->
+    <v-btn color="#0288D1">
+      Sign up
     </v-btn>
   </v-app-bar>
 </template>
