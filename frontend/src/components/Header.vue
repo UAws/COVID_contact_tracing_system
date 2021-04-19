@@ -54,7 +54,7 @@
       <span class="black--text">Log in</span>
     </v-btn>
     </div>
-    <v-btn color="#0288D1">
+    <v-btn color="#1976D2">
       Sign up
     </v-btn>
   </v-app-bar>
