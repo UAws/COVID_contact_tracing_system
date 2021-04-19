@@ -2,38 +2,58 @@
   <v-app-bar
     app
     color="rgb(16, 37, 53)"
+  >
+  <v-col
+      cols="12"
+      sm="4"
+    >
+    <v-hover
+        v-slot="{ hover }"
+        disabled
+      >
+        <v-card
+          :elevation="hover ? 12 : 2"
+          class="mx-auto"
+          height="280"
+          max-width="160"
+          color="rgb(16, 37, 53)"
+        >
+        <v-img
+        class="mx-2"
+        src="../assets/logo_uni.png"
+        height="400px"
+        contain
+        >
+        <div class="d-flex align-center">
+      </div>
+        </v-img>
+        </v-card>
+      </v-hover>
+  </v-col>
+  <v-tabs
+    fixed-tabs
+    background-color="rgb(16, 37, 53)"
     dark
   >
-    <div class="d-flex align-center">
-      <v-img
-        alt="Vuetify Name"
-        class="shrink mt-1 hidden-sm-and-down"
-        contain
-        min-width="100"
-        src="../assets/logo_uni.png"
-        width="100"
-      />
-    </div>
-
+    <v-tab>
+      HOME
+    </v-tab>
+    <v-tab>
+      MAP
+    </v-tab>
+    <v-tab>
+      HOTSPOT
+    </v-tab>
+    <v-tab>
+      CONTACT
+    </v-tab>
+  </v-tabs>
     <v-spacer></v-spacer>
-
-    <v-btn
-      href="https://github.com/vuetifyjs/vuetify/releases/latest"
-      target="_blank"
-      text
-    >
-      <!-- <span class="mr-2">Latest Release</span> -->
-      <div id="example-3">
-      </div>
-      <v-icon>mdi-open-in-new</v-icon>
-    </v-btn>
-
     <div class="mx-5">
     <v-btn color="white">
       <span class="black--text">Log in</span>
     </v-btn>
     </div>
-    <!-- <v-spacer></v-spacer> -->
     <v-btn color="#0288D1">
       Sign up
     </v-btn>
