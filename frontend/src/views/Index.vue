@@ -43,6 +43,9 @@
     <v-row>
       <GMap />
     </v-row>
+    <v-row>
+      <Footer />
+    </v-row>
 
   </v-container>
 </template>
@@ -50,9 +53,10 @@
 <script>
 import Header from '@/components/Header'
 import GMap from '@/components/GMap'
+import Footer from '@/components/Footer'
 export default {
   name: 'Index',
-  components: { GMap, Header },
+  components: { Footer, GMap, Header },
   data: () => ({
     intro_text: {
       fontSize: '38px',
