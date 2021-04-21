@@ -10,11 +10,13 @@
           style="max-width: 100%;"
         >
           <div id="map_div">
+            <!--            <p>{{ mapHeight }}</p>-->
             <GmapMap
               :center="center"
               :zoom="zoom"
               map-type-id="terrain"
-              style="width: 100%; height: 40rem"
+              style="width: 100%; "
+              :style="map_height"
             >
               <GmapMarker
                 v-for="(m, index) in markers"
@@ -48,6 +50,12 @@ import Vue from 'vue'
 
 export default {
   name: 'GMap',
+  props: {
+    propmapheight: {
+      type: String,
+      default: '40rem'
+    }
+  },
   data() {
     // padding and margin
     // https://vuetifyjs.com/en/styles/spacing/#how-it-works
@@ -64,6 +72,9 @@ export default {
       paddingSize: '6',
       paddingSizes: defaults,
       // Google map
+      map_height: {
+        height: this.propmapheight
+      },
       center: {
         lat: -34.9269366,
         lng: 138.597582

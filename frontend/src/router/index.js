@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Index from '../views/Index'
+import Hotspot from '@/views/Hotspot'
 
 Vue.use(VueRouter)
 
@@ -28,6 +29,11 @@ const routes = [
     path: '/',
     name: 'Index',
     component: Index
+  },
+  {
+    path: '/hotspot',
+    name: 'hotspot',
+    component: Hotspot
   }
 ]
 

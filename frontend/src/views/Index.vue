@@ -38,7 +38,7 @@
       <EnterCheckInCode />
     </v-row>
     <v-row>
-      <GMap />
+      <GMap propmapheight="40rem" />
     </v-row>
     <v-row>
       <Footer />
