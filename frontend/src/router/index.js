@@ -21,7 +21,7 @@ const routes = [
   },
   {
     path: '/index',
-    name: 'Index',
+    name: 'Index-1',
     component: Index
   },
   {
