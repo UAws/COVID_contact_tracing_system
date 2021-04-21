@@ -2,8 +2,8 @@
   <v-container>
     <Header />
     <v-main>
-      <v-row height="200px">
-        <v-col cols="12" xl="6" lg="6" sm="12" class="align-self-center text-center" style="color: white">
+      <v-row height="200px" style="padding-bottom: 1rem">
+        <v-col cols="12" xl="4" lg="4" sm="12" class="align-self-center text-center" style="color: white">
           <h3
             class="
             text-h4
@@ -22,12 +22,13 @@
           > Tracing Application<br>
             For Your Safety and Health</h4>
         </v-col>
-        <v-col cols="6" xl="6" lg="6" sm="12" class="align-self-center text-center">
+        <v-col cols="12" xl="8" lg="8" sm="12" class="align-self-center text-center">
           <v-img
             :src="require('../assets/main-pic.webp')"
             class="my-3"
-            max-height="600"
-            max-width="600"
+            style="border-radius: 5%"
+            max-height="100%"
+            max-width="100%"
           />
 
         </v-col>
