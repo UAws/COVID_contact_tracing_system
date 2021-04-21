@@ -34,13 +34,13 @@
       background-color="rgb(16, 37, 53)"
       dark
     >
-      <v-tab>
+      <v-tab to="/">
         HOME
       </v-tab>
       <v-tab>
         MAP
       </v-tab>
-      <v-tab>
+      <v-tab to="/hotspot">
         HOTSPOT
       </v-tab>
       <v-tab>

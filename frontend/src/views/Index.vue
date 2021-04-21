@@ -2,46 +2,43 @@
   <v-container>
     <Header />
     <v-main>
-      <v-row height="200px">
-        <v-col cols="6" class="align-self-center text-center" style="color: white">
-          <div :style="intro_text">Coronavirus(COVID-19)<br>
-          </div>
-          <div :style="intro_text">
-            Tracing Application<br>
-            For Your Safety and Health</div>
+      <v-row height="200px" style="padding-bottom: 1rem">
+        <v-col cols="12" xl="4" lg="4" sm="12" class="align-self-center text-center" style="color: white">
+          <h3
+            class="
+            text-h4
+            text-md-h2
+            text-lg-h3
+            text-xl-h3
+            text-truncate"
+          > Coronavirus(COVID-19)</h3>
+          <h4
+            class="
+            text-h4
+            text-md-h3
+            text-lg-h4
+            text-xl-h4
+            text-truncate"
+          > Tracing Application<br>
+            For Your Safety and Health</h4>
         </v-col>
-        <v-col cols="6">
+        <v-col cols="12" xl="8" lg="8" sm="12" class="align-self-center text-center">
           <v-img
             :src="require('../assets/main-pic.webp')"
             class="my-3"
-            height="600"
+            style="border-radius: 5%"
+            max-height="100%"
+            max-width="100%"
           />
 
         </v-col>
       </v-row>
     </v-main>
-    <v-row height="200px" style="background: white;padding: 100px">
-      <v-col cols="10">
-        <v-text-field
-          v-model="enter_code_text"
-          style="padding: 50px 0px 25px 50px"
-          outlined
-          clearable
-        />
-      </v-col>
-      <v-col cols="2">
-        <v-btn
-          depressed
-          style="padding: 25px;margin-top: 50px"
-          color="primary"
-        >
-          Submit
-        </v-btn>
-      </v-col>
-
+    <v-row>
+      <EnterCheckInCode />
     </v-row>
     <v-row>
-      <GMap />
+      <GMap propmapheight="40rem" />
     </v-row>
     <v-row>
       <Footer />
@@ -54,9 +51,10 @@
 import Header from '@/components/Header'
 import GMap from '@/components/GMap'
 import Footer from '@/components/Footer'
+import EnterCheckInCode from '@/components/EnterCheckInCode'
 export default {
   name: 'Index',
-  components: { Footer, GMap, Header },
+  components: { EnterCheckInCode, Footer, GMap, Header },
   data: () => ({
     intro_text: {
       fontSize: '38px',
@@ -66,8 +64,7 @@ export default {
       // font-size: "38px",
       // line-height:1.2em,
       // text-align:center"
-    },
-    enter_code_text: 'Enter check-in code'
+    }
   })
 }
 </script>
