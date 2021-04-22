@@ -23,14 +23,7 @@
             For Your Safety and Health</h4>
         </v-col>
         <v-col cols="12" xl="8" lg="8" sm="12" class="align-self-center text-center">
-          <v-img
-            :src="require('../assets/main-pic.webp')"
-            class="my-3"
-            style="border-radius: 5%"
-            max-height="100%"
-            max-width="100%"
-          />
-
+          <Slider />
         </v-col>
       </v-row>
     </v-main>
@@ -49,12 +42,13 @@
 
 <script>
 import Header from '@/components/Header'
+import Slider from '@/components/Slider'
 import GMap from '@/components/GMap'
 import Footer from '@/components/Footer'
 import EnterCheckInCode from '@/components/EnterCheckInCode'
 export default {
   name: 'Index',
-  components: { EnterCheckInCode, Footer, GMap, Header },
+  components: { EnterCheckInCode, Slider, Footer, GMap, Header },
   data: () => ({
     intro_text: {
       fontSize: '38px',
