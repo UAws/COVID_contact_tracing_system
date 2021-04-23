@@ -2,27 +2,27 @@
   <v-container>
     <Header />
     <v-main>
-      <v-row height="200px" style="padding-bottom: 1rem">
-        <v-col cols="12" xl="4" lg="4" sm="12" class="align-self-center text-center" style="color: white">
-          <h3
-            class="
-            text-h4
-            text-md-h2
-            text-lg-h3
-            text-xl-h3
-            text-truncate"
-          > Coronavirus(COVID-19)</h3>
-          <h4
-            class="
-            text-h4
-            text-md-h3
-            text-lg-h4
-            text-xl-h4
-            text-truncate"
-          > Tracing Application<br>
-            For Your Safety and Health</h4>
-        </v-col>
-        <v-col cols="12" xl="8" lg="8" sm="12" class="align-self-center text-center">
+      <v-row height="100vh" style="padding-bottom: 1rem">
+        <!--        <v-col cols="12" xl="4" lg="4" sm="12" class="align-self-center text-center" style="color: white">-->
+        <!--          <h3-->
+        <!--            class="-->
+        <!--            text-h4-->
+        <!--            text-md-h2-->
+        <!--            text-lg-h3-->
+        <!--            text-xl-h3-->
+        <!--            text-truncate"-->
+        <!--          > Coronavirus(COVID-19)</h3>-->
+        <!--          <h4-->
+        <!--            class="-->
+        <!--            text-h4-->
+        <!--            text-md-h3-->
+        <!--            text-lg-h4-->
+        <!--            text-xl-h4-->
+        <!--            text-truncate"-->
+        <!--          > Tracing Application<br>-->
+        <!--            For Your Safety and Health</h4>-->
+        <!--        </v-col>-->
+        <v-col cols="12" class="align-self-center text-center">
           <Slider />
         </v-col>
       </v-row>

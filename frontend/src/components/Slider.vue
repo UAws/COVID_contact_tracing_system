@@ -8,11 +8,13 @@
 
     <v-carousel-item
       :src="require('../assets/main-pic.webp')"
-      to="apple.com"
+      href="https://www.apple.com"
+      target="_blank"
+      @click.stop
     >
       <v-row
         class="fill-height"
-        align="start"
+        align="center"
         justify="center"
       >
         <div class="display-3">
@@ -23,7 +25,8 @@
 
     <v-carousel-item
       :src="require('../assets/main-pic.webp')"
-      to="apple.com"
+      href="https://www.apple.com"
+      target="_blank"
     >
       <v-row
         class="fill-height"
@@ -37,7 +40,8 @@
     </v-carousel-item>
     <v-carousel-item
       :src="require('../assets/main-pic.webp')"
-      to="apple.com"
+      href="https://www.apple.com"
+      target="_blank"
     >
       <v-row
         class="fill-height"
