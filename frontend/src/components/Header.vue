@@ -1,7 +1,8 @@
 <template>
   <v-app-bar
+    id="navbar"
     app
-    color="rgb(16, 37, 53)"
+    color="rgb(16,37,53)"
   >
     <v-col
       cols="12"
@@ -12,15 +13,15 @@
         disabled
       >
         <v-card
-          :elevation="hover ? 12 : 2"
+          :elevation="hover ? 12:2"
           class="mx-auto"
           height="280"
           max-width="160"
-          color="rgb(16, 37, 53)"
+          color="rgb(16,37,53)"
         >
           <v-img
-            class="mx-2"
-            src="../assets/logo_uni.png"
+            class="mx-0"
+            src="../assets/Tracing_logo.png"
             height="400px"
             contain
           >
@@ -31,7 +32,7 @@
     </v-col>
     <v-tabs
       fixed-tabs
-      background-color="rgb(16, 37, 53)"
+      background-color="rgb(16,37,53)"
       dark
     >
       <v-tab to="/">
@@ -44,7 +45,7 @@
         HOTSPOT
       </v-tab>
       <v-tab>
-        CONTACT
+        ABOUT US
       </v-tab>
     </v-tabs>
     <v-spacer />
@@ -60,8 +61,15 @@
 </template>
 
 <script>
-export default {
-  name: 'Header'
+var prevScrollpos = window.pageYOffset
+window.onscroll = function() {
+  var currentScrollPos = window.pageYOffset
+  if (prevScrollpos > currentScrollPos) {
+    document.getElementById('navbar').style.top = '0'
+  } else {
+    document.getElementById('navbar').style.top = '-180px'
+  }
+  prevScrollpos = currentScrollPos
 }
 </script>
 
