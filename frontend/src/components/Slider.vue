@@ -1,51 +1,102 @@
 <template>
-    <div>
-        <carousel
-        :per-page="1"
-        :mouse-drag="true"
-        :autoplay="true"
-        :centerMode="true"
-        :loop="true"
-        :autoplayTimeout="6000"
-        paginationPosition="bottom-overlay"
-        paginationActiveColor="rgb(15,61,137)"
-        >
-            <slide>
-                <a href="apple.com"><img src ="../assets/main-pic.webp" alt="" width="100%" style="border-radius: 5%"></a>
-            </slide>
-            <slide>
-                <a href="apple.com"><img src ="../assets/main-pic.webp" alt="" width="100%" style="border-radius: 5%"></a>
-            </slide>
-            <slide>
-                <a href="apple.com"><img src ="../assets/main-pic.webp" alt="" width="100%" style="border-radius: 5%"></a>
-            </slide>
-            <slide>
-                <a href="apple.com"><img src ="../assets/main-pic.webp" alt="" width="100%" style="border-radius: 5%"></a>
-            </slide>
-        </carousel>
-    </div>
+  <v-carousel
+    style="border-radius: 5%"
+    hide-delimiter-background
+    show-arrows-on-hover
+    cycle
+  >
+
+    <v-carousel-item
+      :src="require('../assets/main-pic.webp')"
+      to="apple.com"
+    >
+      <v-row
+        class="fill-height"
+        align="start"
+        justify="center"
+      >
+        <div class="display-3">
+          Coronavirus(COVID-19) Tracing Application For Your Safety and Health
+        </div>
+      </v-row>
+    </v-carousel-item>
+
+    <v-carousel-item
+      :src="require('../assets/main-pic.webp')"
+      to="apple.com"
+    >
+      <v-row
+        class="fill-height"
+        align="center"
+        justify="center"
+      >
+        <div class="display-3">
+          apple
+        </div>
+      </v-row>
+    </v-carousel-item>
+    <v-carousel-item
+      :src="require('../assets/main-pic.webp')"
+      to="apple.com"
+    >
+      <v-row
+        class="fill-height"
+        align="center"
+        justify="center"
+      >
+        <div class="display-3">
+          banana
+        </div>
+      </v-row>
+    </v-carousel-item>
+    <v-carousel-item
+      :src="require('../assets/main-pic.webp')"
+    >
+      <v-row
+        class="fill-height"
+        align="center"
+        justify="center"
+      >
+        <div class="display-3">
+          grape
+        </div>
+      </v-row>
+    </v-carousel-item>
+    <v-carousel-item
+      :src="require('../assets/main-pic.webp')"
+    >
+      <v-row
+        class="fill-height"
+        align="center"
+        justify="center"
+      >
+        <div class="display-3">
+          flower
+        </div>
+      </v-row>
+    </v-carousel-item>
+    <v-carousel-item
+      :src="require('../assets/main-pic.webp')"
+    >
+      <v-row
+        class="fill-height"
+        align="center"
+        justify="center"
+      >
+        <div class="display-3">
+          baba
+        </div>
+      </v-row>
+    </v-carousel-item>
+  </v-carousel>
 </template>
+
 <script>
-import { Carousel, Slide } from 'vue-carousel'
 export default {
-  components: {
-    Carousel,
-    Slide
+  data() {
+    return {
+
+    }
   }
 }
 </script>
-
-<style scoped>
-.text{
-    font-size: 12px;
-    color:white;
-    line-height:initial;
-}
-.bottom-left {
-  position: absolute;
-  bottom: 8px;
-  left: 16px;
-  color:white;
-}
-
-</style>
