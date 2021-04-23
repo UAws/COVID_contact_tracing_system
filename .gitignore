@@ -2,3 +2,5 @@
 .idea/
 
 COVID_contact_tracing_system.iml
+
+backend/node_modules/
