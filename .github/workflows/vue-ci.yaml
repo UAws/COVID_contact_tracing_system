@@ -6,9 +6,7 @@ name: CI
 on:
   push:
     branches:
-      - '*'         # matches every branch that doesn't contain a '/'
-      - '*/*'       # matches every branch containing a single '/'
-      - '**'        # matches every branch
+      - 'master'
   pull_request:
     branches:
       - '*'         # matches every branch that doesn't contain a '/'
@@ -16,7 +14,7 @@ on:
       - '**'        # matches every branch
 
 jobs:
-  integration:
+  CI-Front:
     strategy:
       matrix:
         os: [ubuntu-latest]
@@ -50,6 +48,43 @@ jobs:
 
 #      - name: Run unit tests
 #        run: npm run test:unit
+
+      - name: Code coverage
+        uses: codecov/codecov-action@v1.0.12
+  CI-Front-Admin:
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node: [12]
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: ./frontend-admin
+
+    steps:
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Checkout master branch
+        uses: actions/checkout@v2
+
+      - name: Cache node_modules
+        uses: actions/cache@v2.1.0
+        with:
+          path: node_modules
+          key: ${{ matrix.os }}-node-v${{ matrix.node }}-deps-${{ hashFiles(format('{0}{1}', github.workspace, '/package-lock.json')) }}
+
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm install
+
+      - name: Run ESLint
+        run: npm run lint
+
+      #      - name: Run unit tests
+      #        run: npm run test:unit
 
       - name: Code coverage
         uses: codecov/codecov-action@v1.0.12
