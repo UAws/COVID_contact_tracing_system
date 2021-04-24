@@ -25,7 +25,11 @@ jobs:
 
     steps:
       - name: Setup Node.js environment
+<<<<<<< HEAD
         uses: actions/setup-node@v2
+=======
+        uses: actions/setup-node@v1.4.3
+>>>>>>> Akide-commitment
         with:
           node-version: ${{ matrix.node }}
 
