@@ -10,6 +10,9 @@
         <GMap propmapheight="40rem" />
       </v-row>
       <v-row>
+        <CovidinfoPage propmapheight="40rem" />
+      </v-row>
+      <v-row>
         <Footer />
       </v-row>
 
@@ -24,9 +27,10 @@ import Slider from '@/components/Slider'
 import GMap from '@/components/GMap'
 import Footer from '@/components/Footer'
 import EnterCheckInCode from '@/components/EnterCheckInCode'
+import CovidinfoPage from '@/components/CovidinfoPage'
 export default {
   name: 'Index',
-  components: { EnterCheckInCode, Slider, Footer, GMap, Header },
+  components: { EnterCheckInCode, Slider, Footer, GMap, Header, CovidinfoPage },
   data: () => ({
     intro_text: {
       fontSize: '38px',
