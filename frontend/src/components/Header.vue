@@ -1,5 +1,6 @@
 <template>
   <v-app-bar
+    id="navbar"
     app
     color="rgb(16, 37, 53)"
   >
@@ -19,8 +20,8 @@
           color="rgb(16, 37, 53)"
         >
           <v-img
-            class="mx-2"
-            src="../assets/logo_uni.png"
+            class="mx-0"
+            src="../assets/Tracing_logo.png"
             height="400px"
             contain
           >
@@ -37,14 +38,14 @@
       <v-tab to="/">
         HOME
       </v-tab>
-      <v-tab>
+      <v-tab @click="goto('map_div')">
         MAP
       </v-tab>
       <v-tab to="/hotspot">
         HOTSPOT
       </v-tab>
-      <v-tab>
-        CONTACT
+      <v-tab to="/about">
+        ABOUT US
       </v-tab>
     </v-tabs>
     <v-spacer />
@@ -61,7 +62,23 @@
 
 <script>
 export default {
-  name: 'Header'
+  name: 'Header',
+  methods: {
+    goto(id) {
+      this.$vuetify.goTo(document.getElementById(id).offsetTop + 40)
+    }
+  }
+}
+
+var prevScrollpos = window.pageYOffset
+window.onscroll = function() {
+  var currentScrollPos = window.pageYOffset
+  if (prevScrollpos > currentScrollPos) {
+    document.getElementById('navbar').style.top = '0'
+  } else {
+    document.getElementById('navbar').style.top = '-180px'
+  }
+  prevScrollpos = currentScrollPos
 }
 </script>
 

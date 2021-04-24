@@ -30,7 +30,6 @@
             max-height="100%"
             max-width="100%"
           />
-
         </v-col>
       </v-row>
     </v-main>
