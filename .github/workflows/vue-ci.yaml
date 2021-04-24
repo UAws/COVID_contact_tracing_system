@@ -7,7 +7,10 @@ on:
   push:
     branches: [ master ]
   pull_request:
-    branches: [ * ]
+    branches:
+      - '*'         # matches every branch that doesn't contain a '/'
+      - '*/*'       # matches every branch containing a single '/'
+      - '**'        # matches every branch
 
 jobs:
   integration:
@@ -16,11 +19,13 @@ jobs:
         os: [ubuntu-latest]
         node: [12]
     runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: ./frontend
 
     steps:
       - name: Setup Node.js environment
         uses: actions/setup-node@v1.4.3
-        working-directory: ./frontend
         with:
           node-version: ${{ matrix.node }}
 
