@@ -47,49 +47,48 @@
             max-width="160"
             color="rgb(16,37,53)"
           >
-            <v-img
-              class="mx-0"
-              src="../assets/Tracing_logo.png"
-              height="400px"
-              contain
-            >
-              <div class="d-flex align-center" />
-            </v-img>
-          </v-card>
-        </v-hover>
-      </v-col>
-      <v-tabs
-        fixed-tabs
-        background-color="rgb(16,37,53)"
-        dark
-      >
-        <v-tab to="/">
-          HOME
-        </v-tab>
-        <v-tab>
-          MAP
-        </v-tab>
-        <v-tab to="/hotspot">
-          HOTSPOT
-        </v-tab>
-        <v-tab>
-          ABOUT US
-        </v-tab>
-      </v-tabs>
-      <v-spacer />
-      <div class="mx-5">
-        <v-btn color="white">
-          <span class="black--text">Log in</span>
-        </v-btn>
-      </div>
-      <v-btn color="#1976D2">
-        Sign up
+            <div class="d-flex align-center" />
+          </v-img>
+        </v-card>
+      </v-hover>
+    </v-col>
+    <v-tabs
+      fixed-tabs
+      background-color="rgb(16,37,53)"
+      dark
+    >
+      <v-tab to="/">
+        HOME
+      </v-tab>
+      <v-tab @click="goto('map_div')">
+        MAP
+      </v-tab>
+      <v-tab to="/hotspot">
+        HOTSPOT
+      </v-tab>
+      <v-tab to="/about">
+        ABOUT US
+      </v-tab>
+    </v-tabs>
+    <v-spacer />
+    <div class="mx-5">
+      <v-btn color="white">
+        <span class="black--text">Log in</span>
       </v-btn>
     </v-app-bar>
   </v-container>
 </template>
 
 <script>
+export default {
+  name: 'Header',
+  methods: {
+    goto(id) {
+      this.$vuetify.goTo(document.getElementById(id).offsetTop + 40)
+    }
+  }
+}
+
 export default {
   data: () => ({
     drawer: false,
