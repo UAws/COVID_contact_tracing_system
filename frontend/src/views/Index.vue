@@ -25,15 +25,6 @@
         <v-col cols="12" class="align-self-center text-center">
           <Slider />
         </v-col>
-        <v-col cols="12" xl="8" lg="8" sm="12" class="align-self-center text-center">
-          <v-img
-            :src="require('../assets/main-pic.webp')"
-            class="my-3"
-            style="border-radius: 5%"
-            max-height="100%"
-            max-width="100%"
-          />
-        </v-col>
       </v-row>
     </v-main>
     <v-row>
