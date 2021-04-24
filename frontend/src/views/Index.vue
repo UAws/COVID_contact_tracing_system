@@ -6,19 +6,15 @@
       <v-row>
         <EnterCheckInCode />
       </v-row>
-    </v-main>
-    <v-row>
-      <EnterCheckInCode />
-    </v-row>
-    <v-row>
-      <GMap propmapheight="40rem" />
-    </v-row>
-    <v-row>
-      <CovidinfoPage propmapheight="40rem" />
-    </v-row>
-    <v-row>
-      <Footer />
-    </v-row>
+      <v-row>
+        <GMap propmapheight="40rem" />
+      </v-row>
+      <v-row>
+        <CovidinfoPage propmapheight="40rem" />
+      </v-row>
+      <v-row>
+        <Footer />
+      </v-row>
 
     </v-container>
   </v-container>
