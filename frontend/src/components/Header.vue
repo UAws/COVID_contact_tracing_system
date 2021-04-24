@@ -36,7 +36,6 @@
     >
       <v-app-bar-nav-icon color="white" @click.stop="drawer = !drawer" />
       <v-row>
-
       </v-row>
       <v-col>
         <v-hover
