@@ -38,13 +38,13 @@
       <v-tab to="/">
         HOME
       </v-tab>
-      <v-tab>
+      <v-tab @click="goto('map_div')">
         MAP
       </v-tab>
       <v-tab to="/hotspot">
         HOTSPOT
       </v-tab>
-      <v-tab>
+      <v-tab to="/about">
         ABOUT US
       </v-tab>
     </v-tabs>
@@ -61,6 +61,26 @@
 </template>
 
 <script>
+export default {
+  name: 'Header',
+  methods: {
+    goto(id) {
+      this.$vuetify.goTo(document.getElementById(id).offsetTop + 40)
+    }
+  }
+}
+
+var prevScrollpos = window.pageYOffset
+window.onscroll = function() {
+  var currentScrollPos = window.pageYOffset
+  if (prevScrollpos > currentScrollPos) {
+    document.getElementById('navbar').style.top = '0'
+  } else {
+    document.getElementById('navbar').style.top = '-180px'
+  }
+  prevScrollpos = currentScrollPos
+}
+
 var prevScrollpos = window.pageYOffset
 window.onscroll = function() {
   var currentScrollPos = window.pageYOffset
