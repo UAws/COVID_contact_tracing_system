@@ -1,5 +1,34 @@
 <template>
   <v-container>
+    <v-navigation-drawer
+      v-model="drawer"
+      absolute
+      bottom
+      temporary
+    >
+      <v-list
+        nav
+        dense
+      >
+        <v-list-item-group
+          v-model="group"
+          active-class="blue--text text--accent-4"
+        >
+          <v-list-item>
+            <v-list-item-title>HOME</v-list-item-title>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-title>MAP</v-list-item-title>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-title>HOTSPOT</v-list-item-title>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-title>ABOUT US</v-list-item-title>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
     <v-app-bar
       id="navbar"
       app
@@ -57,41 +86,6 @@
         Sign up
       </v-btn>
     </v-app-bar>
-  <v-card
-      class="align-left max-auto overflow-hidden"
-      height="400px"
-      max-width="150px"
-    >
-      <v-navigation-drawer
-        v-model="drawer"
-        absolute
-        bottom
-        temporary
-      >
-        <v-list
-          nav
-          dense
-        >
-          <v-list-item-group
-            v-model="group"
-            active-class="blue--text text--accent-4"
-          >
-            <v-list-item>
-              <v-list-item-title>HOME</v-list-item-title>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-title>MAP</v-list-item-title>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-title>HOTSPOT</v-list-item-title>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-title>ABOUT US</v-list-item-title>
-            </v-list-item>
-          </v-list-item-group>
-        </v-list>
-      </v-navigation-drawer>
-    </v-card>
   </v-container>
 </template>
 
