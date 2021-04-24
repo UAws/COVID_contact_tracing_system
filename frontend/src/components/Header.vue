@@ -38,7 +38,7 @@
       <v-tab to="/">
         HOME
       </v-tab>
-      <v-tab @click="goto('map_div')">
+      <v-tab to="/?to=map_div" @click="goto('map_div')">
         MAP
       </v-tab>
       <v-tab to="/hotspot">
@@ -65,7 +65,9 @@ export default {
   name: 'Header',
   methods: {
     goto(id) {
-      this.$vuetify.goTo(document.getElementById(id).offsetTop + 40)
+      this.$nextTick(() => {
+        this.$vuetify.goTo(document.getElementById(id).offsetTop + 40)
+      })
     }
   }
 }

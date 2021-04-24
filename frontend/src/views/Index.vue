@@ -59,7 +59,12 @@ export default {
       // line-height:1.2em,
       // text-align:center"
     }
-  })
+  }),
+  mounted() {
+    if (this.$route.query.to) {
+      this.$vuetify.goTo(document.getElementById(this.$route.query.to).offsetTop + 40)
+    }
+  }
 }
 </script>
 
