@@ -38,13 +38,13 @@
       <v-tab to="/">
         HOME
       </v-tab>
-      <v-tab>
+      <v-tab @click="goto('map_div')">
         MAP
       </v-tab>
       <v-tab to="/hotspot">
         HOTSPOT
       </v-tab>
-      <v-tab>
+      <v-tab to="/about">
         ABOUT US
       </v-tab>
     </v-tabs>
@@ -61,6 +61,10 @@
 </template>
 
 <script>
+export default {
+  name: 'Header'
+}
+
 var prevScrollpos = window.pageYOffset
 window.onscroll = function() {
   var currentScrollPos = window.pageYOffset
