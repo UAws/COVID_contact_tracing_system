@@ -1,66 +1,113 @@
 <template>
-  <v-app-bar
-    id="navbar"
-    app
-    color="rgb(16,37,53)"
-  >
-    <v-col
-      cols="12"
-      sm="4"
+  <v-container>
+    <v-app-bar
+      id="navbar"
+      app
+      color="rgb(16,37,53)"
     >
-      <v-hover
-        v-slot="{ hover }"
-        disabled
-      >
-        <v-card
-          :elevation="hover ? 12:2"
-          class="mx-auto"
-          height="280"
-          max-width="160"
-          color="rgb(16,37,53)"
+      <v-app-bar-nav-icon color="white" @click.stop="drawer = !drawer" />
+      <v-col>
+        <v-hover
+          v-slot="{ hover }"
+          disabled
         >
-          <v-img
-            class="mx-0"
-            src="../assets/Tracing_logo.png"
-            height="400px"
-            contain
+          <v-card
+            :elevation="hover ? 12:2"
+            class="mx-auto"
+            height="280"
+            max-width="160"
+            color="rgb(16,37,53)"
           >
-            <div class="d-flex align-center" />
-          </v-img>
-        </v-card>
-      </v-hover>
-    </v-col>
-    <v-tabs
-      fixed-tabs
-      background-color="rgb(16,37,53)"
-      dark
-    >
-      <v-tab to="/">
-        HOME
-      </v-tab>
-      <v-tab>
-        MAP
-      </v-tab>
-      <v-tab to="/hotspot">
-        HOTSPOT
-      </v-tab>
-      <v-tab>
-        ABOUT US
-      </v-tab>
-    </v-tabs>
-    <v-spacer />
-    <div class="mx-5">
-      <v-btn color="white">
-        <span class="black--text">Log in</span>
+            <v-img
+              class="mx-0"
+              src="../assets/Tracing_logo.png"
+              height="400px"
+              contain
+            >
+              <div class="d-flex align-center" />
+            </v-img>
+          </v-card>
+        </v-hover>
+      </v-col>
+      <v-tabs
+        fixed-tabs
+        background-color="rgb(16,37,53)"
+        dark
+      >
+        <v-tab to="/">
+          HOME
+        </v-tab>
+        <v-tab>
+          MAP
+        </v-tab>
+        <v-tab to="/hotspot">
+          HOTSPOT
+        </v-tab>
+        <v-tab>
+          ABOUT US
+        </v-tab>
+      </v-tabs>
+      <v-spacer />
+      <div class="mx-5">
+        <v-btn color="white">
+          <span class="black--text">Log in</span>
+        </v-btn>
+      </div>
+      <v-btn color="#1976D2">
+        Sign up
       </v-btn>
-    </div>
-    <v-btn color="#1976D2">
-      Sign up
-    </v-btn>
-  </v-app-bar>
+    </v-app-bar>
+  <v-card
+      class="align-left max-auto overflow-hidden"
+      height="400px"
+      max-width="150px"
+    >
+      <v-navigation-drawer
+        v-model="drawer"
+        absolute
+        bottom
+        temporary
+      >
+        <v-list
+          nav
+          dense
+        >
+          <v-list-item-group
+            v-model="group"
+            active-class="blue--text text--accent-4"
+          >
+            <v-list-item>
+              <v-list-item-title>HOME</v-list-item-title>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-title>MAP</v-list-item-title>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-title>HOTSPOT</v-list-item-title>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-title>ABOUT US</v-list-item-title>
+            </v-list-item>
+          </v-list-item-group>
+        </v-list>
+      </v-navigation-drawer>
+    </v-card>
+  </v-container>
 </template>
 
 <script>
+export default {
+  data: () => ({
+    drawer: false,
+    group: null
+  }),
+
+  watch: {
+    group() {
+      this.drawer = false
+    }
+  }
+}
 var prevScrollpos = window.pageYOffset
 window.onscroll = function() {
   var currentScrollPos = window.pageYOffset
