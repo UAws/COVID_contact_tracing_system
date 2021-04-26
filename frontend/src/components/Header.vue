@@ -43,7 +43,7 @@
     >
       <v-app-bar-nav-icon color="white" @click.stop="drawer = !drawer" />
       <v-row />
-      <v-col>
+      <v-col cols="12" sm="4">
         <v-hover
           v-slot="{ hover }"
           disabled
