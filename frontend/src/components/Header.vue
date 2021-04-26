@@ -5,6 +5,7 @@
       absolute
       bottom
       temporary
+      color="rgb(16,37,53)"
     >
       <v-list
         nav
@@ -15,16 +16,22 @@
           active-class="blue--text text--accent-4"
         >
           <v-list-item>
-            <v-list-item-title>HOME</v-list-item-title>
+            <v-list-item-title class="white--text">HOME</v-list-item-title>
           </v-list-item>
           <v-list-item>
-            <v-list-item-title>MAP</v-list-item-title>
+            <v-list-item-title class="white--text">MAP</v-list-item-title>
           </v-list-item>
           <v-list-item>
-            <v-list-item-title>HOTSPOT</v-list-item-title>
+            <v-list-item-title class="white--text">HOTSPOT</v-list-item-title>
           </v-list-item>
           <v-list-item>
-            <v-list-item-title>ABOUT US</v-list-item-title>
+            <v-list-item-title class="white--text">ABOUT US</v-list-item-title>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-title class="white--text">SIGN UP</v-list-item-title>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-title class="white--text">LOG IN</v-list-item-title>
           </v-list-item>
         </v-list-item-group>
       </v-list>
@@ -35,9 +42,8 @@
       color="rgb(16,37,53)"
     >
       <v-app-bar-nav-icon color="white" @click.stop="drawer = !drawer" />
-      <v-row>
-      </v-row>
-      <v-col>
+      <v-row />
+      <v-col cols="12" sm="4">
         <v-hover
           v-slot="{ hover }"
           disabled
