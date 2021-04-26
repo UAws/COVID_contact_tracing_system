@@ -13,7 +13,7 @@
         <CovidinfoPage propmapheight="40rem" />
       </v-row>
       <v-row>
-        <KeepUpdates propmapheight="40rem" />
+        <KeepUpdates />
       </v-row>
       <v-row>
         <Footer />

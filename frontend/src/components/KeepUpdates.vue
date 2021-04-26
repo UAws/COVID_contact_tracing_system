@@ -6,7 +6,7 @@
       >
         <v-img
           class="mx-auto white--text align-end"
-          src="../assets/cq5dam.web.480.320.jpeg"
+          src="../assets/nurse.jpeg"
           height="300px"
         >
           <v-card
@@ -35,7 +35,7 @@
       >
         <v-img
           class="mx-auto white--text align-end"
-          src="../assets/cq5dam.web.480.320 (2).jpeg"
+          src="../assets/vaccine.jpeg"
           height="300px"
         >
           <v-card
@@ -64,7 +64,7 @@
       >
         <v-img
           class="mx-auto white--text align-end"
-          src="../assets/cq5dam.web.480.320 (1).jpeg"
+          src="../assets/doctor.jpeg"
           height="300px"
         >
           <v-card
