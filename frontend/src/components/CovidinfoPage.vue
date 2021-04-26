@@ -6,6 +6,7 @@
         min-width="400px"
       >
         <v-img
+          flex
           class="mx-auto"
           :aspect-ratio="16/9"
           src="../assets/clinic.jpeg"
