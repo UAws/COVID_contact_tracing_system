@@ -27,7 +27,7 @@
         </v-col>
       </v-row>
     </v-container>
-    <v-div
+    <div
       class="rgb(16,37,53) py-4 text-center white--text"
     >
       <v-card-text class="white--text pt-0">
@@ -38,7 +38,7 @@
           &copy; 2020 Copyright: <a href="https://www.ipaustralia.gov.au/sites/default/files/ipa-privacy-policy.pdf">IP Australia Privacy Policy </a>
         </v-container>
       </div>
-    </v-div>
+    </div>
   </v-footer>
 </template>
 <script>
