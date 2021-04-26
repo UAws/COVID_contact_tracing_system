@@ -45,14 +45,14 @@
           <v-card
             :elevation="hover ? 12:2"
             class="mx-auto"
-            height="280"
+            :height="boxH"
             max-width="160"
             color="rgb(16,37,53)"
           >
             <v-img
               class="mx-0"
               src="../assets/Tracing_logo.png"
-              height="400px"
+              :height="imgH+'px'"
               contain
             >
               <div class="d-flex align-center" />
@@ -99,12 +99,33 @@ export default {
 
   data: () => ({
     drawer: false,
-    group: null
-  }),
+    group: null,
 
+    imgH: 400,
+    boxH: 280
+  }),
   watch: {
     group() {
       this.drawer = false
+    }
+  },
+  created() {
+    let prevScrollpos = window.pageYOffset
+    window.onscroll = () => {
+      const currentScrollPos = window.pageYOffset
+      if (prevScrollpos > currentScrollPos) {
+        document.getElementById('navbar').style.top = '0'
+      } else {
+        document.getElementById('navbar').style.top = '-180px'
+      }
+      prevScrollpos = currentScrollPos
+      if (prevScrollpos < 20) {
+        this.boxH = 260
+        this.imgH = 400
+      } else {
+        this.boxH = 64
+        this.imgH = 64
+      }
     }
   },
   methods: {
@@ -114,16 +135,6 @@ export default {
       })
     }
   }
-}
-let prevScrollpos = window.pageYOffset
-window.onscroll = function() {
-  const currentScrollPos = window.pageYOffset
-  if (prevScrollpos > currentScrollPos) {
-    document.getElementById('navbar').style.top = '0'
-  } else {
-    document.getElementById('navbar').style.top = '-180px'
-  }
-  prevScrollpos = currentScrollPos
 }
 </script>
 
