@@ -53,11 +53,13 @@
             class="mx-auto"
             :height="boxH"
             max-width="160"
+            style="padding-left: 5px; padding-right: 5px; padding-bottom: 10px"
             color="rgb(16,37,53)"
           >
             <v-img
               class="mx-0"
               src="../assets/Tracing_logo.png"
+              style="padding-left: 5px; padding-right: 5px; padding-bottom: 10px"
               :height="imgH+'px'"
               contain
             >
