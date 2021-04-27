@@ -20,7 +20,7 @@
           />
         </v-card>
       </v-col>
-      <v-col cols="12" sm="8" lg="4">
+      <v-col cols="12" sm="4" lg="4">
         <v-card
           class="mx-auto"
           height="300px"
@@ -37,7 +37,7 @@
       </v-col>
     </v-row>
     <v-row style="padding-top: 2vh">
-      <v-col cols="12" sm="8" lg="4">
+      <v-col cols="12" sm="4" lg="4">
         <v-card
           class="mx-auto"
           height="550px"
@@ -66,7 +66,7 @@
             class="mx-auto"
             :aspect-ratio="16/9"
             src="../assets/About3.jpg"
-            height="500px"
+            height="550px"
           />
         </v-card>
       </v-col>
