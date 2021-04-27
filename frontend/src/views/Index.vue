@@ -7,13 +7,13 @@
         <EnterCheckInCode />
       </v-row>
       <v-row>
+        <KeepUpdates />
+      </v-row>
+      <v-row>
         <GMap propmapheight="40rem" />
       </v-row>
       <v-row>
         <CovidinfoPage/>
-      </v-row>
-      <v-row>
-        <KeepUpdates />
       </v-row>
       <v-row>
         <Footer />

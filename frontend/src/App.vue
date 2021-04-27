@@ -16,7 +16,7 @@ export default {
 
   data: () => ({
     m_background: {
-      background: '#0f3d89'
+      background: 'rgb(0, 38, 77)'
     }
     //
   })
