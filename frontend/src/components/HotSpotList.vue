@@ -60,11 +60,9 @@
 
     </v-col>
   </v-row>
-
 </template>
 
 <script>
-
 export default {
   name: 'HotSpotList',
   data() {
