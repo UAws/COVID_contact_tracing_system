@@ -135,22 +135,22 @@ Information below is about how each feature will implement based on the user int
 
 ## **Site Design**
 
-![img](https://minio.llycloud.com/image/uPic/image-20210428kloEc2.jpg)
+<img src="https://minio.llycloud.com/image/uPic/image-20210428kloEc2.jpg?raw=true">
 
-![img](https://minio.llycloud.com/image/uPic/image-20210428fI7CSL.jpg)
+<img src="https://minio.llycloud.com/image/uPic/image-20210428fI7CSL.jpg?raw=true">
 
-![img](https://minio.llycloud.com/image/uPic/image-20210428YABZFI.png)
+<img src="https://minio.llycloud.com/image/uPic/image-20210428YABZFI.png?raw=true">
 
-![img](https://minio.llycloud.com/image/uPic/image-20210428eAlLJC.jpg)
+<img src="https://minio.llycloud.com/image/uPic/image-20210428eAlLJC.jpg?raw=true">
 
-![img](https://minio.llycloud.com/image/uPic/image-20210428AvmkCV.jpg)
+<img src="https://minio.llycloud.com/image/uPic/image-20210428AvmkCV.jpg?raw=true">
 
 Mobile:
 
-![img](https://minio.llycloud.com/image/uPic/image-20210428lQF1XR.png)
+<img src="https://minio.llycloud.com/image/uPic/image-20210428lQF1XR.png?raw=true">
 
-![img](https://minio.llycloud.com/image/uPic/image-20210428VtQyd6.png)
+<img src="https://minio.llycloud.com/image/uPic/image-20210428VtQyd6.png?raw=true">
 
 Backstage page:
 
-![img](https://minio.llycloud.com/image/uPic/image-202104286FEsJn.png)
+<img src="https://minio.llycloud.com/image/uPic/image-202104286FEsJn.png?raw=true">
