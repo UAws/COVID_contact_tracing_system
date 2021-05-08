@@ -2,8 +2,7 @@
   <v-container>
     <v-navigation-drawer
       v-model="drawer"
-      absolute
-      bottom
+      app
       temporary
       color="rgb(16,37,53)"
     >
