@@ -1,11 +1,13 @@
 var express = require('express');
+const {User} = require("../../entity/User.ts");
+const {getRepository} = require("typeorm");
 var router = express.Router();
-
-router.use('/test',require('./test'));
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.send("express");
+
+    const users = getRepository(User).find();
+    res.send(users);
 });
 
 module.exports = router;
