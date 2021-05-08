@@ -13,7 +13,7 @@
         <GMap propmapheight="40rem" />
       </v-row>
       <v-row>
-        <CovidinfoPage/>
+        <CovidinfoPage />
       </v-row>
       <v-row>
         <Footer />

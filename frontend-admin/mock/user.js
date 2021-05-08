@@ -24,7 +24,7 @@ const users = {
 }
 
 module.exports = [
-  // user login
+  // User.ts login
   {
     url: '/vue-element-admin/user/login',
     type: 'post',
@@ -47,7 +47,7 @@ module.exports = [
     }
   },
 
-  // get user info
+  // get User.ts info
   {
     url: '/vue-element-admin/user/info\.*',
     type: 'get',
@@ -59,7 +59,7 @@ module.exports = [
       if (!info) {
         return {
           code: 50008,
-          message: 'Login failed, unable to get user details.'
+          message: 'Login failed, unable to get User.ts details.'
         }
       }
 
@@ -70,7 +70,7 @@ module.exports = [
     }
   },
 
-  // user logout
+  // User.ts logout
   {
     url: '/vue-element-admin/user/logout',
     type: 'post',

@@ -126,7 +126,7 @@ export const constantRoutes = [
 
 /**
  * asyncRoutes
- * the routes that need to be dynamically loaded based on user roles
+ * the routes that need to be dynamically loaded based on User.ts roles
  */
 export const asyncRoutes = [
   {
