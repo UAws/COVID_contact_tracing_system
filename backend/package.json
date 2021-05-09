@@ -1,21 +1,33 @@
 {
-  "name": "backend",
-  "version": "0.0.0",
-  "private": true,
-  "scripts": {
-    "start": "node ./bin/www",
-    "devstart": "nodemon ./bin/www",
-    "serverstart": "DEBUG=backend:* npm run devstart"
-  },
-  "dependencies": {
-    "cookie-parser": "~1.4.4",
-    "debug": "~2.6.9",
-    "express": "~4.16.1",
-    "http-errors": "~1.6.3",
-    "jade": "~1.11.0",
-    "morgan": "~1.9.1"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.7"
-  }
+   "name": "backend",
+   "version": "0.0.1",
+   "description": "Awesome project developed with TypeORM.",
+   "devDependencies": {
+      "@types/node": "^8.0.29",
+      "nodemon": "^2.0.7",
+      "ts-node": "3.3.0",
+      "typescript": "3.3.3333"
+   },
+   "dependencies": {
+      "body-parser": "^1.18.1",
+      "express": "^4.15.4",
+      "http-status-codes": "^2.1.4",
+      "mysql": "^2.14.1",
+      "reflect-metadata": "^0.1.10",
+      "typeorm": "0.2.32"
+   },
+   "scripts": {
+      "start": "ts-node src/index.ts",
+      "start:dev": "nodemon"
+   },
+   "nodemonConfig": {
+      "watch": [
+         "src"
+      ],
+      "ext": "ts, html",
+      "ignore": [
+         "src/public"
+      ],
+      "exec": "./node_modules/.bin/ts-node ./src"
+   }
 }

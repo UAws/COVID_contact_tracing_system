@@ -1,0 +1,24 @@
+{
+   "type": "mysql",
+   "host": "bt-02-test.in.llycloud.com",
+   "port": 3306,
+   "username": "wdc-project",
+   "password": "ej78jLZ3hskw4RFG",
+   "database": "wdc-project",
+   "synchronize": true,
+   "logging": false,
+   "entities": [
+      "src/entity/**/*.ts"
+   ],
+   "migrations": [
+      "src/migration/**/*.ts"
+   ],
+   "subscribers": [
+      "src/subscriber/**/*.ts"
+   ],
+   "cli": {
+      "entitiesDir": "src/entity",
+      "migrationsDir": "src/migration",
+      "subscribersDir": "src/subscriber"
+   }
+}
