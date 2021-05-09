@@ -2,7 +2,7 @@ import {getRepository} from "typeorm";
 import {NextFunction, Request, Response} from "express";
 import {User} from "../entity/User";
 
-export class UserController {
+export class UserInfoController {
 
     private userRepository = getRepository(User);
 
@@ -11,7 +11,7 @@ export class UserController {
     }
 
     async one(request: Request, response: Response, next: NextFunction) {
-        return this.userRepository.findOne(request.params.id);
+        return this.userRepository.findOne(request.params.id, {relations: ['Role', 'UserCheckIn','Venue']});
     }
 
     async save(request: Request, response: Response, next: NextFunction) {
