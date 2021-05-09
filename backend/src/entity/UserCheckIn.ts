@@ -14,7 +14,7 @@ export class UserCheckIn extends Audit {
     @Column()
     CheckInAddress : string
 
-    @Column()
+    @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP"})
     CheckInTimeStamp : Date;
 
     @ManyToMany(() => User, user => user.UserCheckIn)
