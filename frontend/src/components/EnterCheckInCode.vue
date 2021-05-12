@@ -22,8 +22,10 @@
               <v-col cols="12" sm="12" md="12" xl="7" lg="7">
                 <v-text-field
                   v-model="enter_code_text"
+                  label="Enter check-in code"
                   outlined
                   clearable
+                  :rules="code_rules"
                   class="align-self-center text-center"
                 />
               </v-col>
@@ -38,6 +40,7 @@
                   depressed
                   color="primary"
                   class="v-size--x-large"
+                  @click="submit"
                 >
                   Submit
                 </v-btn>
@@ -69,7 +72,10 @@ export default {
       paddingDirection: 'a',
       paddingSize: '6',
       paddingSizes: defaults,
-      enter_code_text: 'Enter check-in code'
+      enter_code_text: '',
+      code_rules: [
+        v => !!v || 'code is required'
+      ]
     }
   },
   computed: {
@@ -78,6 +84,14 @@ export default {
     },
     computedMargin() {
       return `m${this.marginDirection}-${this.marginSize}`
+    }
+  },
+  methods: {
+    submit: function() {
+      if (this.enter_code_text !== '') {
+        this.$store.commit('setCheckInCode', this.enter_code_text)
+        this.$router.push('/auth/login?checkInCode=' + this.enter_code_text)
+      }
     }
   }
 }

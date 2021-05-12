@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Index from '../views/Index'
 import Hotspot from '@/views/Hotspot'
+import Login from '@/views/Auth/Login'
+import Signup from '@/views/Auth/Signup'
 
 Vue.use(VueRouter)
 
@@ -34,6 +36,16 @@ const routes = [
     path: '/hotspot',
     name: 'hotspot',
     component: Hotspot
+  },
+  {
+    path: '/auth/login',
+    name: 'login',
+    component: Login
+  },
+  {
+    path: '/auth/signup',
+    name: 'signup',
+    component: Signup
   }
 ]
 

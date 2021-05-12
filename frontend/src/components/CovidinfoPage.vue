@@ -5,7 +5,6 @@
       <v-col cols="12" sm="8" lg="8">
         <v-card
           class="mx-auto"
-          min-width="400px"
         >
           <v-img
             flex

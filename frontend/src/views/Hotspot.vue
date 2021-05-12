@@ -31,5 +31,7 @@ export default {
 </script>
 
 <style scoped>
-
+body, html {
+  overflow: hidden
+}
 </style>
