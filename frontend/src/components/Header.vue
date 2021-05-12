@@ -14,22 +14,22 @@
           v-model="group"
           active-class="blue--text text--accent-4"
         >
-          <v-list-item>
+          <v-list-item to="/">
             <v-list-item-title class="white--text">HOME</v-list-item-title>
           </v-list-item>
-          <v-list-item>
+          <v-list-item to="/?to=map_div">
             <v-list-item-title class="white--text">MAP</v-list-item-title>
           </v-list-item>
-          <v-list-item>
+          <v-list-item to="/hotspot">
             <v-list-item-title class="white--text">HOTSPOT</v-list-item-title>
           </v-list-item>
-          <v-list-item>
+          <v-list-item to="/about">
             <v-list-item-title class="white--text">ABOUT US</v-list-item-title>
           </v-list-item>
-          <v-list-item>
+          <v-list-item to="/auth/signup">
             <v-list-item-title class="white--text">SIGN UP</v-list-item-title>
           </v-list-item>
-          <v-list-item>
+          <v-list-item to="/auth/login">
             <v-list-item-title class="white--text">LOG IN</v-list-item-title>
           </v-list-item>
         </v-list-item-group>
@@ -87,12 +87,12 @@
       </v-tabs>
       <v-spacer />
       <div class="mx-5">
-        <v-btn color="white">
+        <v-btn color="white" to="/auth/login">
           <span class="black--text">Log in</span>
         </v-btn>
       </div>
       <div class="mx-5">
-        <v-btn color="#1976D2">
+        <v-btn color="#1976D2" to="/auth/signup">
           Sign up
         </v-btn>
       </div>

@@ -38,6 +38,62 @@
 
 ## Object Example TODO
 
+User Info response json example :
+
+```json
+{
+  "update_time": "2021-05-09T13:36:45.000Z",
+  "create_time": "2021-05-09T13:36:47.000Z",
+  "update_by": "Akide_Liu",
+  "create_by": "Akide_Liu",
+  "user_id": 1,
+  "username": "Akide_Liu",
+  "password": "123456",
+  "address": "5 allan st, prospect, SA",
+  "emailAddress": "mail@llycloud.com",
+  "is_in_hotspot": false,
+  "is_approval": true,
+  "phone": 450460166,
+  "Role": [
+    {
+      "update_time": "2021-05-09T13:37:33.000Z",
+      "create_time": "2021-05-09T13:37:35.000Z",
+      "update_by": "Akide_Liu",
+      "create_by": "Akide_Liu",
+      "role_id": 1,
+      "level": 3,
+      "role_name": "admin",
+      "description": "administrators"
+    }
+  ],
+  "UserCheckIn": [
+    {
+      "update_time": "2021-05-09T14:16:06.000Z",
+      "create_time": "2021-05-09T14:16:07.000Z",
+      "update_by": "Akide_Liu",
+      "create_by": "Akide_Liu",
+      "check_in_id": 1,
+      "venue_id": 1,
+      "CheckInAddress": "156 george st ,Adelaide",
+      "CheckInTimeStamp": "2021-05-09T14:16:30.000Z"
+    }
+  ],
+  "Venue": [
+    {
+      "update_time": "2021-05-09T14:23:38.000Z",
+      "create_time": "2021-05-09T14:23:39.000Z",
+      "update_by": "Akide_Liu",
+      "create_by": "Akide_Liu",
+      "venue_id": 1,
+      "check_in_code": "1000001",
+      "email_address": "mail@adelaide.edu.au",
+      "venue_name": "University of Adelaide",
+      "shop_address": "The University of Adelaide\nSA 5005\nAUSTRALIA",
+      "is_hotspot": false
+    }
+  ]
+}
+```
 
 
 ## 
