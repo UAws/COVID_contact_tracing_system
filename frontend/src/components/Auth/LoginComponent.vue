@@ -103,7 +103,7 @@ export default {
     },
 
     // validation :
-    valid: true,
+    valid: false,
     name: '',
     nameRules: [
       v => !!v || 'Name is required',
@@ -134,6 +134,9 @@ export default {
   methods: {
     validate() {
       this.$refs.form.validate()
+      if (this.valid) {
+        this.$router.push('/admin/dashboard?checkInCode=' + this.$store.getters.getCheckInCode)
+      }
     },
     reset() {
       this.$refs.form.reset()

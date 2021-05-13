@@ -105,7 +105,7 @@ export default {
   data() {
     return {
       // validation :
-      valid: true,
+      valid: false,
       name: '',
       email: '',
       nameRules: [
@@ -140,6 +140,9 @@ export default {
   methods: {
     validate() {
       this.$refs.form.validate()
+      if (this.valid) {
+        this.$router.push('/admin/user')
+      }
     },
     reset() {
       this.$refs.form.reset()

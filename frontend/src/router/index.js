@@ -5,6 +5,8 @@ import Index from '../views/Index'
 import Hotspot from '@/views/Hotspot'
 import Login from '@/views/Auth/Login'
 import Signup from '@/views/Auth/Signup'
+import dashboard from '@/views/admin/dashboard'
+import user from '@/views/admin/user'
 
 Vue.use(VueRouter)
 
@@ -46,6 +48,16 @@ const routes = [
     path: '/auth/signup',
     name: 'signup',
     component: Signup
+  },
+  {
+    path: '/admin/dashboard',
+    name: 'dashboard',
+    component: dashboard
+  },
+  {
+    path: '/admin/user',
+    name: 'user',
+    component: user
   }
 ]
 
