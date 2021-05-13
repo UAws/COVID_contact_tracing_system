@@ -54,7 +54,7 @@ This cs50 has been authorized to `ian-knight-uofa` and `wdc-marker-uofa` with fo
 
 After `npm run serve ` the project would be viewed on following link https://ide-d8e35ee8ab724f2db147fb4a556d67b1-8081.cs50.ws/
 
-**Important : The default server port for project frontend is 8081 **
+**Important : The default server port for project frontend is 8081**
 
 
 
