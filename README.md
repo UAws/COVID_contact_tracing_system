@@ -16,7 +16,7 @@ This project is supervisored by University of Adelaide course [Web & Database Co
 
 go to `frontend` folder
 
-## Project setup
+
 
 ```
 npm install
