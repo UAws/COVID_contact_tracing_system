@@ -4,7 +4,7 @@
     padless
     class="mx-auto"
   >
-    <v-container class="text-left">
+    <v-container class="text-left" fluid style="padding: 0">
       <p>
         " "
         " "
