@@ -45,8 +45,11 @@ Object.keys(filters).forEach(key => {
 
 Vue.config.productionTip = false
 
+import vuetify from '@/plugins/vuetify' // path to vuetify export
+
 new Vue({
   el: '#app',
+  vuetify,
   router,
   store,
   render: h => h(App)
