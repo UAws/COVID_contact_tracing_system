@@ -15,6 +15,8 @@ const name = defaultSettings.title || 'vue Element Admin' // page title
 // port = 9527 npm run dev OR npm run dev --port = 9527
 const port = process.env.port || process.env.npm_config_port || 9527 // dev port
 
+const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
+
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
   /**
@@ -45,9 +47,13 @@ module.exports = {
     name: name,
     resolve: {
       alias: {
-        '@': resolve('src')
+        '@': resolve('src'),
+        vuetify: path.resolve(__dirname, 'node_modules/vuetify')
       }
-    }
+    },
+    plugins: [
+      new VuetifyLoaderPlugin()
+    ]
   },
   chainWebpack(config) {
     // it can improve the speed of the first screen, it is recommended to turn on preload

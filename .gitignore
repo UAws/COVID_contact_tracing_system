@@ -7,3 +7,6 @@ frontend-admin/node_modules/
 backend-example/node_modules/
 **/node_modules/
 */node_modules/
+
+*/package-lock.json
+**/package-lock.json
