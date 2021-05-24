@@ -97,7 +97,6 @@ jobs:
         with:
           name: frontend-admin.zip
           path: frontend-admin/frontend-admin.zip
-
       #      - name: Run unit tests
       #        run: npm run test:unit
 
