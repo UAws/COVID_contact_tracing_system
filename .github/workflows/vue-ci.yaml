@@ -46,8 +46,14 @@ jobs:
       - name: Run ESLint
         run: npm run lint
 
-#      - name: Run unit tests
-#        run: npm run test:unit
+      - name: Run build
+        run: npm run build && zip -r frontend.zip dist
+
+      - name: Upload a Build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: frontend.zip
+          path: frontend.zip
 
       - name: Code coverage
         uses: codecov/codecov-action@v1.0.12
@@ -82,6 +88,15 @@ jobs:
 
       - name: Run ESLint
         run: npm run lint
+
+      - name: Run build
+        run: npm run build && zip -r frontend-admin.zip dist
+
+      - name: Upload a Build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: frontend-admin.zip
+          path: frontend-admin.zip
 
       #      - name: Run unit tests
       #        run: npm run test:unit
