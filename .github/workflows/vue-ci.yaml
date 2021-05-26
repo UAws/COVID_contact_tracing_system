@@ -102,7 +102,7 @@ jobs:
 
       - name: Code coverage
         uses: codecov/codecov-action@v1.0.12
-  CI-BACKEND-DOCKER:
+  CI-Backend-Docker:
     strategy:
       matrix:
         os: [ubuntu-latest]
@@ -128,6 +128,7 @@ jobs:
         run: |
           docker build -t $REPO:latest -t $REPO:$GITHUB_RUN_ID .
           echo $GITHUB_RUN_ID
+          echo $$REPO
       - name: Publish Docker Image
         run: docker push $REPO:$GITHUB_RUN_ID
 
