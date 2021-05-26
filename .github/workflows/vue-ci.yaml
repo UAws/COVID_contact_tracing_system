@@ -102,3 +102,35 @@ jobs:
 
       - name: Code coverage
         uses: codecov/codecov-action@v1.0.12
+  CI-Backend-Docker:
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node: [12]
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: ./backend
+    env:
+      REPO: ${{ secrets.DOCKER_REPO }}
+    steps:
+      - name: Cehckout
+        uses: actions/checkout@v2
+
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Building Docker Image
+        run: |
+          docker build -t $REPO:latest -t $REPO:$GITHUB_RUN_ID .
+          echo $GITHUB_RUN_ID
+      - name: Publish Docker Image
+        run: docker push $REPO:$GITHUB_RUN_ID
+
+      - name: Publish Docker Image Latest
+        if: github.ref == 'refs/heads/master'
+        run: docker push $REPO:latest
