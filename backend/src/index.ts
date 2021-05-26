@@ -4,12 +4,37 @@ import * as express from "express";
 import * as bodyParser from "body-parser";
 import {Request, Response} from "express";
 import {Routes} from "./routes";
+import cors from "cors";
 
 createConnection().then(async connection => {
 
     // create express app
     const app = express();
     app.use(bodyParser.json());
+
+    // Add headers
+    app.use('/*',function (req: Request, res: Response, next: Function) {
+
+        // Website you wish to allow to connect
+        res.setHeader('Access-Control-Allow-Origin', '*');
+
+        // Request methods you wish to allow
+        res.setHeader('Access-Control-Allow-Methods', '*');
+
+        // Request headers you wish to allow
+        res.setHeader('Access-Control-Allow-Headers', '*');
+
+        // Set to true if you need the website to include cookies in the requests sent
+        // to the API (e.g. in case you use sessions)
+        res.setHeader('Access-Control-Allow-Credentials', true);
+
+        // Pass to next layer of middleware
+        next();
+    });
+
+    // app.use(cors());
+
+
 
     // register express routes from defined application routes
     Routes.forEach(route => {
