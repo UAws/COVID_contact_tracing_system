@@ -11,7 +11,7 @@ export class UserInfoController {
 
 
         const limit = request.query.limit || 10
-        const page = request.query.page || 0
+        const page = request.query.page || 1
         const keyword = request.query.keyword || ''
         const sort = request.query.sort || 'ASC'
 
