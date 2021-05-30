@@ -53,5 +53,16 @@ export const Routes = [{
     route: "/api/venue/venueID/:id",
     controller: venueController,
     action: "postVenueInfo"
-}
+},
+{
+    method: "get",
+    route: "/api/venue/info",
+    controller: venueController,
+    action: "all"
+}, {
+    method: "delete",
+    route: "/api/venue/info/:id",
+    controller: venueController,
+    action: "remove"
+},
 ];
