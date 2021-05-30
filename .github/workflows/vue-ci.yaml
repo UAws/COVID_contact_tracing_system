@@ -145,6 +145,6 @@ jobs:
         with:
           branch: argo-cd
           message: 'trigger argo cd repo with ${{ github.run_id }}-${{ github.sha }} '
-          cwd : './backend'
+          add : 'backend/CD/wdc-project-backend.yaml --force'
           force : true
 
