@@ -8,11 +8,11 @@ export function fetchUserList(query) {
   })
 }
 // pv???
-export function fetchPv(pv) {
+export function fetchUserDetails(user_id) {
   return request({
     url: 'https://wdc-backend-live.dev.vmv.re/api/user/info',
     method: 'get',
-    params: { pv }
+    params: { user_id }
   })
 }
 

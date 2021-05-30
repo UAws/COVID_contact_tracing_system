@@ -148,11 +148,10 @@
 </template>
 
 <script>
-import { UpdateUser, fetchPv } from '@/api/myUserInfo'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
-import { fetchUserList, createUser } from '@/api/myUserInfo'
+import { fetchUserList, createUser, UpdateUser, fetchUserDetails } from '@/api/myUserInfo'
 
 const calendarTypeOptions = [
   { key: 'WA', display_name: '5070' },
@@ -193,14 +192,15 @@ export default {
       listQuery: {
         page: 1,
         limit: 20,
+        // TODO need to be replace by user level such as 1, 2 ,3 for user, venue manager and admins . backend support required
         importance: undefined,
         keyword: undefined,
         type: undefined,
-        sort: '+id'
+        sort: 'ASC'
       },
       importanceOptions: [1, 2, 3],
       calendarTypeOptions,
-      sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }],
+      sortOptions: [{ label: 'ID Ascending', key: 'ASC' }, { label: 'ID Descending', key: 'DESC' }],
       statusOptions: ['false', 'true'],
       showReviewer: false,
       temp: {
@@ -237,11 +237,11 @@ export default {
       },
       dialogPvVisible: false,
       // pvData: [],
-      // rules: {
+      rules: {
       //   // type: [{ required: true, message: 'type is required', trigger: 'change' }]
       //   // timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
       //   // title: [{ required: true, message: 'title is required', trigger: 'blur' }]
-      // },
+      },
       // downloadLoading: false,
       // our data
       myData: [
@@ -283,9 +283,9 @@ export default {
     },
     sortByID(order) {
       if (order === 'ascending') {
-        this.listQuery.sort = '+id'
+        this.listQuery.sort = 'ASC'
       } else {
-        this.listQuery.sort = '-id'
+        this.listQuery.sort = 'DESC'
       }
       this.handleFilter()
     },
@@ -328,10 +328,29 @@ export default {
     createData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
-          this.temp.author = 'Akide_Liu'
-          createUser(this.temp).then(() => {
-            this.list.unshift(this.temp)
+          this.temp.user_id = undefined
+          this.temp.is_approval = true
+          // TODO need to replace by Auth API
+          this.temp.create_by = 'Akide_Liu'
+          this.temp.update_by = 'Akide_Liu'
+          this.temp.create_time = new Date()
+          switch (this.temp.Role[0].level) {
+            case 1:
+              this.temp.Role[0].role_id = 3
+              break
+            case 2:
+              this.temp.Role[0].role_id = 2
+              break
+            case 3:
+              this.temp.Role[0].role_id = 1
+              break
+            default:
+              this.temp.Role[0].role_id = 3
+          }
+          // this.temp.Role[0].level = undefined
+          createUser(this.temp).then(response => {
+            this.myData.unshift(response.data)
+            // console.log(response.data)
             this.dialogFormVisible = false
             this.$notify({
               title: 'Success',
@@ -383,7 +402,7 @@ export default {
       this.list.splice(index, 1)
     },
     handleFetchPv(pv) {
-      fetchPv(pv).then(response => {
+      fetchUserDetails(pv).then(response => {
         this.pvData = response.data.pvData
         this.dialogPvVisible = true
       })
