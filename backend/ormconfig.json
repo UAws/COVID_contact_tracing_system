@@ -1,9 +1,9 @@
 {
    "type": "mysql",
-   "host": "localhost",
+   "host": "bt-02-test.in.llycloud.com",
    "port": 3306,
-   "username": "root",
-   "password": "asdf@520",
+   "username": "wdc-project",
+   "password": "ej78jLZ3hskw4RFG",
    "database": "wdc-project",
    "synchronize": true,
    "logging": false,
