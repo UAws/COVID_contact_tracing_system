@@ -117,6 +117,8 @@ jobs:
     steps:
       - name: Cehckout
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
 
       - name: Login to Docker Hub
