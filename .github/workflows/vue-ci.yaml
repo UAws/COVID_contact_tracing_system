@@ -147,5 +147,4 @@ jobs:
           message: 'trigger argo cd repo with ${{ github.run_id }}-${{ github.sha }} '
           add: '*.yaml --force'
           cwd: './CD/'
-        run : echo $PWD
 
