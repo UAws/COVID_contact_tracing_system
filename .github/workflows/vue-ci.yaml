@@ -126,11 +126,26 @@ jobs:
 
       - name: Building Docker Image
         run: |
-          docker build -t $REPO:latest -t $REPO:$GITHUB_RUN_ID .
-          echo $GITHUB_RUN_ID
+          docker build -t $REPO:latest -t $REPO:${{ github.run_id }}-${{ github.sha }} .
+          echo ${{ github.run_id }}-${{ github.sha }}
       - name: Publish Docker Image
-        run: docker push $REPO:$GITHUB_RUN_ID
+        run: docker push $REPO:${{ github.run_id }}-${{ github.sha }}
 
       - name: Publish Docker Image Latest
         if: github.ref == 'refs/heads/master'
-        run: docker push $REPO:latest
+        run: |
+          docker push $REPO:latest
+          cd CD
+          sed -i -r 's/covid_contact_tracing_system_backend\:[[:alnum:]]+/covid_contact_tracing_system_backend\:${{ github.run_id }}-${{ github.sha }}/g' wdc-project-backend.yaml
+          cd ..
+
+      - name: trigger argo cd repo
+        if: github.ref == 'refs/heads/master'
+        uses: EndBug/add-and-commit@v7
+        with:
+          branch: argo-cd
+          message: 'trigger argo cd repo with ${{ github.run_id }}-${{ github.sha }} '
+          add : '*.yaml --force'
+          cwd : './backend/CD/'
+          force : true
+
