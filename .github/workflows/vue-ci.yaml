@@ -149,3 +149,4 @@ jobs:
           cwd : './backend'
           pull_strategy: '--rebase'
           push: origin argo-cd --force
+
