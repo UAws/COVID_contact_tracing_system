@@ -7,6 +7,13 @@ export function login(data) {
     data
   })
 }
+export function signup(data) {
+  return request({
+    url: '/vue-element-admin/user/signup',
+    method: 'post',
+    data
+  })
+}
 
 export function getInfo(token) {
   return request({
