@@ -158,4 +158,4 @@ jobs:
         with:
           branch: argo-cd
           message: 'trigger argo cd repo with ${{ github.run_id }}-${{ github.sha }} '
-          add: '*.yaml ./CD/*.yaml --force'
+          add: './* --force'
