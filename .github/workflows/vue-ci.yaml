@@ -133,4 +133,17 @@ jobs:
 
       - name: Publish Docker Image Latest
         if: github.ref == 'refs/heads/master'
-        run: docker push $REPO:latest
+        run: |
+          docker push $REPO:latest
+          cd CD
+          sed -i -r 's/covid_contact_tracing_system_backend\:[[:alnum:]]+/covid_contact_tracing_system_backend\:$GITHUB_RUN_ID/g' wdc-project-backend.yaml
+          cd ..
+
+      - name: trigger argo cd repo
+        if: github.ref == 'refs/heads/master'
+        uses: EndBug/add-and-commit@v7
+        with:
+          branch: argo-cd
+          message: 'trigger argo cd repo with $GITHUB_RUN_ID '
+          add: '*.yaml --force'
+          cmd: './CD/'
