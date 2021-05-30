@@ -137,8 +137,9 @@ jobs:
         run: |
           docker push $REPO:latest
           cd CD
-          git checkout -- wdc-project-backend.yaml
+          git checkout argo-cd
           sed -i -r 's/covid_contact_tracing_system_backend\:[[:alnum:]]+/covid_contact_tracing_system_backend\:${{ github.run_id }}\-${{ github.sha }}/g' wdc-project-backend.yaml
+          git commit -m 'trigger argo cd repo with ${{ github.run_id }}-${{ github.sha }} '
           grep covid_contact_tracing_system_backend wdc-project-backend.yaml
 
       - name: trigger argo cd repo
