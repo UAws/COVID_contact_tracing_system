@@ -211,7 +211,7 @@ export default {
       this.getList()
     },
     async handleModifyStatus(row, status) {
-      const res = await editVenue(row.id, { ...row, status })
+      const res = await editVenue(row.venue_id, { ...row, status })
       if (res.code === 20000) {
         this.$message({
           message: '操作Success',
