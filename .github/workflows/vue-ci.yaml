@@ -138,13 +138,12 @@ jobs:
           docker push $REPO:latest
           cd CD
           git checkout -- wdc-project-backend.yaml
-          sed -i -r 's/covid_contact_tracing_system_backend\:[[:alnum:]]+/covid_contact_tracing_system_backend\:$DOCKER_TAG/g' wdc-project-backend.yaml
+          sed -i -r 's/covid_contact_tracing_system_backend\:[[:alnum:]]+/covid_contact_tracing_system_backend\:\${{ github.run_id }}\-\${{ github.sha }}/g' wdc-project-backend.yaml
 
       - name: trigger argo cd repo
         if: github.ref == 'refs/heads/master'
         uses: EndBug/add-and-commit@v7
         with:
           branch: argo-cd
-          message: 'trigger argo cd repo with $DOCKER_TAG '
+          message: 'trigger argo cd repo with ${{ github.run_id }}-${{ github.sha }} '
           add: '*.yaml --force'
-          force : true
