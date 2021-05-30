@@ -140,6 +140,7 @@ jobs:
           docker push $REPO:latest
 
       - name: Modify argo CD deployment file
+        if: github.ref == 'refs/heads/master'
         run: |
           cd CD
           git checkout argo-cd
