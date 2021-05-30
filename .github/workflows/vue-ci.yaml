@@ -147,4 +147,3 @@ jobs:
           message: 'trigger argo cd repo with ${{ github.run_id }} '
           cwd: './CD/'
           pull_strategy: '--rebase'
-
