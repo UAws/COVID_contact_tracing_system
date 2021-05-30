@@ -17,9 +17,6 @@
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
         Add
       </el-button>
-      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
-        Export
-      </el-button>
       <el-checkbox v-model="showReviewer" class="filter-item" style="margin-left:15px;" @change="tableKey=tableKey+1">
         reviewer
       </el-checkbox>
@@ -48,7 +45,8 @@
       <el-table-column label="Username" min-width="100px">
         <template slot-scope="{row}">
           <span class="link-type" @click="handleUpdate(row)">{{ row.username }}</span>
-          <el-tag>{{ row.is_approval | typeFilter }}</el-tag>
+          <el-tag>{{ row.type | typeFilter }}</el-tag>
+          <!-- <el-tag>{{ row.is_approval | typeFilter }}</el-tag> -->
         </template>
       </el-table-column>
       <el-table-column label="Address" width="180px" align="center">
@@ -100,8 +98,8 @@
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
-      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
-        <el-form-item label="Type" prop="type">
+      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="150px" style="width: 400px; margin-left:50px;">
+        <el-form-item label="Postcode" prop="type">
           <el-select v-model="temp.type" class="filter-item" placeholder="Please select">
             <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name" :value="item.key" />
           </el-select>
@@ -109,7 +107,7 @@
         <el-form-item label="Update Time" prop="timestamp">
           <el-date-picker v-model="temp.update_time" type="datetime" placeholder="Please pick a date" />
         </el-form-item>
-        <el-form-item label="UserName" prop="title">
+        <el-form-item label="User Name" prop="username">
           <el-input v-model="temp.username" />
         </el-form-item>
         <el-form-item label="Password" prop="password">
@@ -124,15 +122,16 @@
         <el-form-item label="Phone" prop="phone">
           <el-input v-model="temp.phone" />
         </el-form-item>
-        <el-form-item label="HostSport Status">
+        <el-form-item label="HotSpot Status">
           <el-select v-model="temp.is_in_hotspot" class="filter-item" placeholder="Please select">
             <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />
           </el-select>
         </el-form-item>
-        <el-form-item label="UserLevel">
+        <el-form-item label="User Level">
           <el-rate v-model="temp.Role[0].level" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="3" style="margin-top:8px;" />
+          <!-- <el-rate v-model="temp.Role[0].role_id" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="3" style="margin-top:8px;" /> -->
         </el-form-item>
-        <el-form-item label="Remark">
+        <el-form-item label="Message">
           <el-input v-model="temp.remark" :autosize="{ minRows: 2, maxRows: 4}" type="textarea" placeholder="Please input" />
         </el-form-item>
       </el-form>
@@ -145,31 +144,21 @@
         </el-button>
       </div>
     </el-dialog>
-
-    <el-dialog :visible.sync="dialogPvVisible" title="Reading statistics">
-      <el-table :data="pvData" border fit highlight-current-row style="width: 100%">
-        <el-table-column prop="key" label="Channel" />
-        <el-table-column prop="pv" label="Pv" />
-      </el-table>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogPvVisible = false">Confirm</el-button>
-      </span>
-    </el-dialog>
   </div>
 </template>
 
 <script>
-import { fetchPv, updateArticle } from '@/api/article'
+import { UpdateUser, fetchPv } from '@/api/myUserInfo'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 import { fetchUserList, createUser } from '@/api/myUserInfo'
 
 const calendarTypeOptions = [
-  { key: 'CN', display_name: 'China' },
-  { key: 'US', display_name: 'USA' },
-  { key: 'JP', display_name: 'Japan' },
-  { key: 'EU', display_name: 'Eurozone' }
+  { key: 'WA', display_name: '5070' },
+  { key: 'NSW', display_name: '5000' },
+  { key: 'SA', display_name: '5086' },
+  { key: 'QLD', display_name: '5042' }
 ]
 
 // arr to obj, such as { CN : "China", US : "USA" }
@@ -207,11 +196,11 @@ export default {
         importance: undefined,
         keyword: undefined,
         type: undefined,
-        sort: 'ASC'
+        sort: '+id'
       },
       importanceOptions: [1, 2, 3],
       calendarTypeOptions,
-      sortOptions: [{ label: 'ID Ascending', key: 'ASC' }, { label: 'ID Descending', key: 'DESC' }],
+      sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }],
       statusOptions: ['false', 'true'],
       showReviewer: false,
       temp: {
@@ -247,13 +236,13 @@ export default {
         create: 'Create'
       },
       dialogPvVisible: false,
-      pvData: [],
-      rules: {
-        // type: [{ required: true, message: 'type is required', trigger: 'change' }]
-        // timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
-        // title: [{ required: true, message: 'title is required', trigger: 'blur' }]
-      },
-      downloadLoading: false,
+      // pvData: [],
+      // rules: {
+      //   // type: [{ required: true, message: 'type is required', trigger: 'change' }]
+      //   // timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
+      //   // title: [{ required: true, message: 'title is required', trigger: 'blur' }]
+      // },
+      // downloadLoading: false,
       // our data
       myData: [
       ]
@@ -281,7 +270,7 @@ export default {
     },
     handleModifyStatus(row, status) {
       this.$message({
-        message: '操作Success',
+        message: 'Success',
         type: 'success'
       })
       row.is_in_hotspot = status
@@ -294,9 +283,9 @@ export default {
     },
     sortByID(order) {
       if (order === 'ascending') {
-        this.listQuery.sort = 'ASC'
+        this.listQuery.sort = '+id'
       } else {
-        this.listQuery.sort = 'DESC'
+        this.listQuery.sort = '-id'
       }
       this.handleFilter()
     },
@@ -317,8 +306,13 @@ export default {
         Role: [
           {
             update_time: new Date(),
+            create_time: '',
+            update_by: '',
+            create_by: '',
             role_id: 1,
-            level: 1
+            level: 1,
+            role_name: '',
+            description: ''
           }
         ]
       }
@@ -334,29 +328,10 @@ export default {
     createData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          this.temp.user_id = undefined
-          this.temp.is_approval = true
-          // TODO need to replace by Auth API
-          this.temp.create_by = 'Akide_Liu'
-          this.temp.update_by = 'Akide_Liu'
-          this.temp.create_time = new Date()
-          switch (this.temp.Role[0].level) {
-            case 1:
-              this.temp.Role[0].role_id = 3
-              break
-            case 2:
-              this.temp.Role[0].role_id = 2
-              break
-            case 3:
-              this.temp.Role[0].role_id = 1
-              break
-            default:
-              this.temp.Role[0].role_id = 3
-          }
-          // this.temp.Role[0].level = undefined
-          createUser(this.temp).then(response => {
-            this.myData.unshift(response.data)
-            // console.log(response.data)
+          this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
+          this.temp.author = 'Akide_Liu'
+          createUser(this.temp).then(() => {
+            this.list.unshift(this.temp)
             this.dialogFormVisible = false
             this.$notify({
               title: 'Success',
@@ -368,6 +343,8 @@ export default {
         }
       })
     },
+    // this.temp.Role[0].level = undefined
+
     handleUpdate(row) {
       this.temp = Object.assign({}, row) // copy obj
       this.temp.timestamp = new Date(this.temp.timestamp)
@@ -382,7 +359,7 @@ export default {
         if (valid) {
           const tempData = Object.assign({}, this.temp)
           tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
-          updateArticle(tempData).then(() => {
+          UpdateUser(tempData).then(() => {
             const index = this.list.findIndex(v => v.id === this.temp.id)
             this.list.splice(index, 1, this.temp)
             this.dialogFormVisible = false
@@ -409,20 +386,6 @@ export default {
       fetchPv(pv).then(response => {
         this.pvData = response.data.pvData
         this.dialogPvVisible = true
-      })
-    },
-    handleDownload() {
-      this.downloadLoading = true
-      import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = ['timestamp', 'title', 'type', 'importance', 'status']
-        const filterVal = ['timestamp', 'title', 'type', 'importance', 'status']
-        const data = this.formatJson(filterVal)
-        excel.export_json_to_excel({
-          header: tHeader,
-          data,
-          filename: 'table-list'
-        })
-        this.downloadLoading = false
       })
     },
     formatJson(filterVal) {
