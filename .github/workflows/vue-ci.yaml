@@ -126,8 +126,8 @@ jobs:
 
       - name: Building Docker Image
         run: |
-          docker build -t $REPO:latest -t $REPO:$GITHUB_RUN_ID .
-          echo $GITHUB_RUN_ID
+          docker build -t $REPO:latest -t $REPO:${{ github.run_id }}-${{ github.sha }} .
+          echo ${{ github.run_id }}-${{ github.sha }}
       - name: Publish Docker Image
         run: docker push $REPO:$GITHUB_RUN_ID
 
@@ -136,7 +136,7 @@ jobs:
         run: |
           docker push $REPO:latest
           cd CD
-          sed -i -r 's/covid_contact_tracing_system_backend\:[[:alnum:]]+/covid_contact_tracing_system_backend\:${{ github.run_id }}/g' wdc-project-backend.yaml
+          sed -i -r 's/covid_contact_tracing_system_backend\:[[:alnum:]]+/covid_contact_tracing_system_backend\:${{ github.run_id }}-${{ github.sha }}/g' wdc-project-backend.yaml
           cd ..
 
       - name: trigger argo cd repo
@@ -144,9 +144,9 @@ jobs:
         uses: EndBug/add-and-commit@v7
         with:
           branch: argo-cd
-          message: 'trigger argo cd repo with ${{ github.run_id }} '
+          message: 'trigger argo cd repo with ${{ github.run_id }}-${{ github.sha }} '
           add : './CD/*.yaml --force'
           cwd : './backend'
           pull_strategy: '--rebase'
-          push: origin argo-cd --force
+          force : true
 
