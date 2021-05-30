@@ -32,7 +32,7 @@ createConnection().then(async connection => {
         next();
     });
 
-     app.use(cors());
+    // app.use(cors());
 
 
 
