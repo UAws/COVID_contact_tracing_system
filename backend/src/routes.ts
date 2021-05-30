@@ -1,6 +1,6 @@
 import {UserInfoController} from "./controller/UserInfoController";
 import {RoleController} from "./controller/RoleController";
-import { UserCheckInController } from "./controller/UserCheckInController";
+import {UserCheckInController} from "./controller/UserCheckInController";
 import {venueController} from "./controller/venueController";
 
 export const Routes = [{
@@ -28,7 +28,7 @@ export const Routes = [{
     route: "/api/user/role/",
     controller: RoleController,
     action: "getRoles"
-},{
+}, {
     method: "get",
     route: "/api/user/role/:id",
     controller: RoleController,
@@ -43,15 +43,30 @@ export const Routes = [{
     route: "/api/user/checkIn/:id",
     controller: UserCheckInController,
     action: "postUserCheckIn"
-},{
-    method: "get",
-    route: "/api/venue/venueID/:id",
+}, {
+    method: 'get',
+    route: '/api/venue/venueID/:id',
     controller: venueController,
-    action: "getVenueInfo"
-},{
-    method: "post",
-    route: "/api/venue/venueID/:id",
+    action: 'getVenueInfo',
+}, {
+    method: 'post',
+    route: '/api/venue/venueID/:id',
     controller: venueController,
-    action: "postVenueInfo"
+    action: 'postVenueInfo',
+}, {
+    method: 'get',
+    route: '/api/venue/info',
+    controller: venueController,
+    action: 'all',
+}, {
+    method: 'delete',
+    route: '/api/venue/info/:id',
+    controller: venueController,
+    action: 'remove',
+}, {
+    method: 'post',
+    route: '/api/venue/info',
+    controller: venueController,
+    action: 'save',
 }
 ];
