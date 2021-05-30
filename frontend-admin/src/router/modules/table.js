@@ -42,11 +42,12 @@ const tableRouter = {
       meta: { title: 'Complex Table Users' }
     },
     {
-      path: 'complex-table-venue',
-      component: () => import('@/views/venu'),
-      name: 'ComplexTable-venue',
-      meta: { title: 'Complex Table Venue' }
+      path: 'venue',
+      component: () => import('@/views/table/venue'),
+      name: 'venue',
+      meta: { title: 'venue' }
     }
+
   ]
 }
 export default tableRouter
