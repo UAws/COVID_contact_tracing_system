@@ -137,7 +137,6 @@ jobs:
           docker push $REPO:latest
           cd CD
           sed -i -r 's/covid_contact_tracing_system_backend\:[[:alnum:]]+/covid_contact_tracing_system_backend\:$GITHUB_RUN_ID/g' wdc-project-backend.yaml
-          cd ..
 
       - name: trigger argo cd repo
         if: github.ref == 'refs/heads/master'
