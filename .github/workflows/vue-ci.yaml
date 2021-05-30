@@ -138,8 +138,13 @@ jobs:
         if: github.ref == 'refs/heads/master'
         run: |
           docker push $REPO:latest
+
+      - name: Modify argo CD deployment file
+        run: |
           cd CD
           git checkout argo-cd
+          git config --global user.email "mail@llycloud.com"
+          git config --global user.name "AkideLiu-Argo-CD-commit-bot"
           sed -i -r 's/covid_contact_tracing_system_backend\:[[:alnum:]]+/covid_contact_tracing_system_backend\:${{ github.run_id }}\-${{ github.sha }}/g' wdc-project-backend.yaml
           git commit -m 'trigger argo cd repo with ${{ github.run_id }}-${{ github.sha }} '
           grep covid_contact_tracing_system_backend wdc-project-backend.yaml
