@@ -143,14 +143,14 @@ jobs:
         if: github.ref == 'refs/heads/master'
         run: |
           cd CD
-          git checkout argo-cd
-          git config --global user.email "mail@llycloud.com"
-          git config --global user.name "AkideLiu-Argo-CD-commit-bot"
+#          git checkout argo-cd
+#          git config --global user.email "mail@llycloud.com"
+#          git config --global user.name "AkideLiu-Argo-CD-commit-bot"
           echo $PWD
           sed -i -r 's/covid_contact_tracing_system_backend\:\$?[[:alnum:]]+\-?[[:alnum:]]+/covid_contact_tracing_system_backend\:${{ github.run_id }}\-${{ github.sha }}/g' wdc-project-backend.yaml
           grep covid_contact_tracing_system_backend wdc-project-backend.yaml
-          git add ./*.yaml
-          git commit -m 'trigger argo cd repo with ${{ github.run_id }}-${{ github.sha }} '
+#          git add ./*.yaml
+#          git commit -m 'trigger argo cd repo with ${{ github.run_id }}-${{ github.sha }} '
 
       - name: trigger argo cd repo
         if: github.ref == 'refs/heads/master'
@@ -158,4 +158,4 @@ jobs:
         with:
           branch: argo-cd
           message: 'trigger argo cd repo with ${{ github.run_id }}-${{ github.sha }} '
-          add: '*.yaml --force'
+          add: '*.yaml ./CD/*.yaml --force'
