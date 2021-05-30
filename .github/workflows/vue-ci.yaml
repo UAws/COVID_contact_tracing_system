@@ -145,5 +145,6 @@ jobs:
         with:
           branch: argo-cd
           message: 'trigger argo cd repo with ${{ github.run_id }} '
+          add : './CD/*.yaml --force'
           pull_strategy: '--rebase'
           push: origin argo-cd --force
