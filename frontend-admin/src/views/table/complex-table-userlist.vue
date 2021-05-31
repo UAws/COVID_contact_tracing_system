@@ -1,12 +1,9 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-input v-model="listQuery.keyword" placeholder="Title" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
-      <el-select v-model="listQuery.importance" placeholder="Imp" clearable style="width: 90px" class="filter-item">
-        <el-option v-for="item in importanceOptions" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-select v-model="listQuery.type" placeholder="Type" clearable class="filter-item" style="width: 130px">
-        <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key" />
+      <el-input v-model="listQuery.keyword" placeholder="UserName" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-select v-model="listQuery.type" placeholder="User Level" clearable class="filter-item" style="width: 200px">
+        <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name+' ( '+item.key+' ) '" :value="item.key" />
       </el-select>
       <el-select v-model="listQuery.sort" style="width: 140px" class="filter-item" @change="handleFilter">
         <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />
@@ -44,8 +41,8 @@
       </el-table-column>
       <el-table-column label="Username" min-width="100px">
         <template slot-scope="{row}">
-          <span class="link-type" @click="handleUpdate(row)">{{ row.username }}</span>
-          <el-tag>{{ row.type | typeFilter }}</el-tag>
+          <span class="link-type" @click="handleUpdate(row)"> {{ row.username }}     </span>
+          <el-tag>{{ row.Role[0].description }}</el-tag>
           <!-- <el-tag>{{ row.is_approval | typeFilter }}</el-tag> -->
         </template>
       </el-table-column>
@@ -154,10 +151,9 @@ import Pagination from '@/components/Pagination' // secondary package based on e
 import { fetchUserList, createUser, UpdateUser, fetchUserDetails } from '@/api/myUserInfo'
 
 const calendarTypeOptions = [
-  { key: 'WA', display_name: '5070' },
-  { key: 'NSW', display_name: '5000' },
-  { key: 'SA', display_name: '5086' },
-  { key: 'QLD', display_name: '5042' }
+  { key: '3', display_name: 'Administrators' },
+  { key: '2', display_name: 'Venue Manager' },
+  { key: '1', display_name: 'General User' }
 ]
 
 // arr to obj, such as { CN : "China", US : "USA" }
@@ -365,6 +361,8 @@ export default {
     // this.temp.Role[0].level = undefined
 
     handleUpdate(row) {
+      row.is_approval = row.is_approval.toString()
+      row.is_in_hotspot = row.is_in_hotspot.toString()
       this.temp = Object.assign({}, row) // copy obj
       this.temp.timestamp = new Date(this.temp.timestamp)
       this.dialogStatus = 'update'
@@ -379,8 +377,8 @@ export default {
           const tempData = Object.assign({}, this.temp)
           tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
           UpdateUser(tempData).then(() => {
-            const index = this.list.findIndex(v => v.id === this.temp.id)
-            this.list.splice(index, 1, this.temp)
+            const index = this.myData.findIndex(v => v.user_id === this.temp.user_id)
+            this.myData.splice(index, 1, this.temp)
             this.dialogFormVisible = false
             this.$notify({
               title: 'Success',
