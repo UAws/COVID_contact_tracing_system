@@ -18,7 +18,12 @@ export const Routes = [{
     method: "post",
     route: "/api/user/info",
     controller: UserInfoController,
-    action: "save"
+    action: "create"
+},{
+    method: "put",
+    route: "/api/user/info",
+    controller: UserInfoController,
+    action: "update"
 }, {
     method: "delete",
     route: "/api/user/info/:id",

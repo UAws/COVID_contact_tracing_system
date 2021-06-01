@@ -26,7 +26,7 @@ export function createUser(data) {
 export function UpdateUser(data) {
   return request({
     url: 'https://wdc-backend-live.dev.vmv.re/api/user/info',
-    method: 'post',
+    method: 'put',
     data
   })
 }

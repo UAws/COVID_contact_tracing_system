@@ -1,4 +1,4 @@
-import {getRepository, In, Like, SelectQueryBuilder} from "typeorm";
+import {getCustomRepository, getRepository, In, Like, SelectQueryBuilder} from "typeorm";
 import {NextFunction, Request, Response} from "express";
 import {User} from "../entity/User";
 import {ApiResultBean} from "../support/ApiResultBean";
@@ -8,7 +8,7 @@ import {UserRepository} from "../repository/UserRepository";
 
 export class UserInfoController {
 
-    private userRepository = new UserRepository();
+    private userRepository = getCustomRepository(UserRepository);
     // private qb = this.userRepository.createQueryBuilder();
 
     async all(request: Request, response: Response, next: NextFunction) {
@@ -58,20 +58,39 @@ export class UserInfoController {
         }
     }
 
-    async save(request: Request, response: Response, next: NextFunction) {
+    async create(request: Request, response: Response, next: NextFunction) {
 
-        let saved = await this.userRepository.saveUser(request.body);
+        const user : User = new User(request.body);
+        let saved = await this.userRepository.saveUser(user);
 
         // handle repository layer error
 
         if (saved instanceof Error) {
-            console.log(saved);
+            // console.log(saved);
             return ApiResultBean.error(request, saved);
         } else {
             return ApiResultBean.success(saved);
         }
 
     }
+
+    async update(request: Request, response: Response, next: NextFunction) {
+
+        const user : User = new User(request.body);
+
+        let saved = await this.userRepository.updateUser(user);
+
+        // handle repository layer error
+
+        if (saved instanceof Error) {
+            // console.log(saved);
+            return ApiResultBean.error(request, saved);
+        } else {
+            return ApiResultBean.success(saved);
+        }
+
+    }
+
 
     async remove(request: Request, response: Response, next: NextFunction) {
         let userToRemove = await this.userRepository.get().findOne(request.params.id);

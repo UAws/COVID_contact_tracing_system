@@ -1,4 +1,4 @@
-import {EntityRepository, getRepository, Like, Repository} from "typeorm";
+import {EntityRepository, getCustomRepository, getRepository, Like, Repository} from "typeorm";
 import {User} from "../entity/User";
 import {reqParamsOptionsInterface} from "../support/reqParamsOptions.Interface";
 import {tokenOptions} from "../support/tokenOptions";
@@ -49,8 +49,64 @@ export class UserRepository extends Repository<User>{
     public async saveUser(user: User) {
 
         try {
-            user.user_id = null;
-            return await this.repository.save(user);
+
+            if (!await this.findOne({
+                where: {user_id: user.user_id},
+            })) {
+
+                user.user_id = null;
+
+                if (!user.create_by) {
+                    user.create_by = "System admin";
+                }
+                if (!user.update_by) {
+                    user.update_by = "System admin";
+                }
+                    user.create_time = Dayjs().toDate();
+                    user.update_time = Dayjs().toDate();
+
+                return await this.repository.save(user);
+
+            }{
+                return "user already exists"
+            }
+
+
+        } catch (error) {
+            return error;
+        }
+
+    }
+
+
+    public async updateUser(user: User) {
+
+        try {
+
+            let dbuser : User = await this.findOne({
+                where: {user_id: user.user_id}
+            });
+
+            if (dbuser) {
+
+                // merge request user to database user
+                // for (const dbuserKey in dbuser) {
+                //     if (user[dbuserKey]) {
+                //         dbuser[dbuserKey] = user[dbuserKey];
+                //     }
+                // }
+
+                if (!user.update_by) {
+                    user.update_by = "System admin";
+                }
+
+                user.update_time = Dayjs().toDate();
+
+                return await this.repository.save(user);
+
+            } else {
+                return "user not already exists";
+            }
 
         } catch (error) {
             return error;
