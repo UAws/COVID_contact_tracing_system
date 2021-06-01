@@ -4,11 +4,11 @@ import {User} from "../entity/User";
 import {ApiResultBean} from "../support/ApiResultBean";
 import {Role} from "../entity/Role";
 import {reqParamsOptionsInterface} from "../support/reqParamsOptions.Interface";
-import {userRepository} from "../repository/userRepository";
+import {UserRepository} from "../repository/UserRepository";
 
 export class UserInfoController {
 
-    private userRepository = new userRepository();
+    private userRepository = new UserRepository();
     // private qb = this.userRepository.createQueryBuilder();
 
     async all(request: Request, response: Response, next: NextFunction) {

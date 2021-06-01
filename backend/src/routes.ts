@@ -2,6 +2,7 @@ import {UserInfoController} from "./controller/UserInfoController";
 import {RoleController} from "./controller/RoleController";
 import {UserCheckInController} from "./controller/UserCheckInController";
 import {venueController} from "./controller/venueController";
+import {AuthController} from "./controller/AuthController";
 
 export const Routes = [{
     method: "get",
@@ -68,5 +69,20 @@ export const Routes = [{
     route: '/api/venue/info',
     controller: venueController,
     action: 'save',
+}, {
+    method: 'post',
+    route: '/api/auth/register',
+    controller: AuthController,
+    action: 'register',
+}, {
+    method: 'post',
+    route: '/api/auth/login',
+    controller: AuthController,
+    action: 'login',
+}, {
+    method: 'post',
+    route: '/api/auth/logout',
+    controller: AuthController,
+    action: 'logout',
 }
 ];
