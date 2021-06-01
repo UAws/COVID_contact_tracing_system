@@ -44,6 +44,14 @@ export class ApiResultBean {
 
     }
 
+    public static error(message?: string): ApiResultBean {
+        if (message === null) {
+            return new ApiResultBean("Request ERROR", 20001, message);
+        } else {
+            return new ApiResultBean("Request ERROR", 20002, "Internal Server Error");
+        }
+    }
+
 
 
 }
