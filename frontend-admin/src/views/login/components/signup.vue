@@ -30,8 +30,8 @@
 
 <script>
 import { validUsername } from '@/utils/validate'
-import Header from '@/views/signup/components/Header'
-import SignupComponent from '@/views/signup/components/SignupComponent'
+import Header from '@/views/login/components/Header'
+import SignupComponent from '@/views/login/components/SignupComponent'
 
 export default {
   name: 'Signup',
@@ -71,15 +71,6 @@ export default {
     }
   },
   mounted() {
-    if (this.loginForm.username === '') {
-      this.$refs.username.focus()
-    } else if (this.loginForm.password === '') {
-      this.$refs.password.focus()
-    } else if (this.loginForm.email === '') {
-      this.$refs.username.focus()
-    } else if (this.loginForm.userLevels === '') {
-      this.$refs.userLevels.focus()
-    }
   },
   destroyed() {
     // window.removeEventListener('storage', this.afterQRScan)
