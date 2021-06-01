@@ -20,7 +20,7 @@ export function createUser(data) {
   return request({
     url: 'https://wdc-backend-live.dev.vmv.re/api/user/info',
     method: 'post',
-    params: { data }
+    data
   })
 }
 export function UpdateUser(data) {
@@ -28,5 +28,12 @@ export function UpdateUser(data) {
     url: 'https://wdc-backend-live.dev.vmv.re/api/user/info',
     method: 'post',
     data
+  })
+}
+
+export function DeleteUser(id) {
+  return request({
+    url: `https://wdc-backend-live.dev.vmv.re/api/user/info/${id}`,
+    method: 'delete'
   })
 }

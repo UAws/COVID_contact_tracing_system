@@ -42,7 +42,7 @@
       <el-table-column label="Username" min-width="100px">
         <template slot-scope="{row}">
           <span class="link-type" @click="handleUpdate(row)"> {{ row.username }}     </span>
-          <el-tag>{{ row.Role[0].description }}</el-tag>
+          <el-tag>{{ row.Role[0].description || 'haha' }}</el-tag>
           <!-- <el-tag>{{ row.is_approval | typeFilter }}</el-tag> -->
         </template>
       </el-table-column>
@@ -85,7 +85,7 @@
           <el-button v-if="row.is_in_hotspot" size="mini" @click="handleModifyStatus(row,false)">
             Not In HotSpot
           </el-button>
-          <el-button v-if="row.status!='deleted'" size="mini" type="danger" @click="handleDelete(row,$index)">
+          <el-button size="mini" type="danger" @click="handleDelete(row,$index)">
             Delete
           </el-button>
         </template>
@@ -148,7 +148,7 @@
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
-import { fetchUserList, createUser, UpdateUser, fetchUserDetails } from '@/api/myUserInfo'
+import { fetchUserList, createUser, UpdateUser, fetchUserDetails, DeleteUser } from '@/api/myUserInfo'
 
 const calendarTypeOptions = [
   { key: '3', display_name: 'Administrators' },
@@ -391,13 +391,16 @@ export default {
       })
     },
     handleDelete(row, index) {
-      this.$notify({
-        title: 'Success',
-        message: 'Delete Successfully',
-        type: 'success',
-        duration: 2000
+      DeleteUser(row.user_id).then(response => {
+        this.$notify({
+          title: 'Success',
+          message: 'Delete Successfully',
+          type: 'success',
+          duration: 2000
+        })
+        console.log(row.user_id)
+        this.myData.splice(index, 1)
       })
-      this.list.splice(index, 1)
     },
     handleFetchPv(pv) {
       fetchUserDetails(pv).then(response => {
