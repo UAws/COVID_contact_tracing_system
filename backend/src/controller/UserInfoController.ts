@@ -3,71 +3,79 @@ import {NextFunction, Request, Response} from "express";
 import {User} from "../entity/User";
 import {ApiResultBean} from "../support/ApiResultBean";
 import {Role} from "../entity/Role";
-import {error, log} from "util";
+import {reqParamsOptionsInterface} from "../support/reqParamsOptions.Interface";
+import {userRepository} from "../repository/userRepository";
 
 export class UserInfoController {
 
-    private userRepository = getRepository(User);
-    private qb = this.userRepository.createQueryBuilder("user");
+    private userRepository = new userRepository();
+    // private qb = this.userRepository.createQueryBuilder();
 
     async all(request: Request, response: Response, next: NextFunction) {
 
+        const reqParams : reqParamsOptionsInterface = {
+            limit : request.query.limit || 10,
+            page : request.query.page || 1,
+            keyword: request.query.keyword || '',
+            sort : request.query.sort || 'ASC',
+            userType : request.query.type || null
+        }
 
-        const limit = Number(request.query.limit) || 10
-        const page = Number(request.query.page) || 1
-        const keyword = String(request.query.keyword) || ''
-        const sort = request.query.sort || 'ASC'
-        const userType = request.query.type || null
-
-        let [list, total] = [null, null];
-
-        try {
-
-            // username : Like('%' + keyword + '%')
-            [list, total] = await this.userRepository.findAndCount({
-                where: qb =>{
-                    qb.where({
-                        username: Like('%' + keyword + '%')
-                    })
-
-                    if (userType !== null) {
-                        qb.andWhere('User__Role.level = :level', {level: userType});
-                    }
-
-                },
-                order: {user_id: sort},
-                take: limit,
-                skip: (page - 1) * limit,
-                relations: ['Role']
-            });
+        // console.log(reqParams);
 
 
+        const [list, total] = await this.userRepository.listAllUsers(reqParams);
 
-        } catch (error) {
-            console.log(error);
+        // handle repository layer error
+
+        if (list instanceof Error) {
+            console.log(list);
+            return ApiResultBean.error(request, list);
         }
 
         if (list != null && total != null) {
+
             return ApiResultBean.success({total, list});
         } else {
             return ApiResultBean.error();
         }
 
 
-
     }
 
     async one(request: Request, response: Response, next: NextFunction) {
-        return ApiResultBean.success(await this.userRepository.findOne(request.params.id, {relations: ['Role', 'UserCheckIn', 'Venue']}));
+        try {
+            const user : User = await this.userRepository.get().findOne(request.params.id, {relations: ['Role', 'UserCheckIn', 'Venue']});
+
+            return ApiResultBean.success(user);
+
+        } catch (error) {
+
+            console.log(error);
+
+            return ApiResultBean.error(request,error);
+
+        }
     }
 
     async save(request: Request, response: Response, next: NextFunction) {
-        return ApiResultBean.success(await this.userRepository.save(request.body));
+
+        let saved = await this.userRepository.saveUser(request.body);
+
+        // handle repository layer error
+
+        if (saved instanceof Error) {
+            console.log(saved);
+            return ApiResultBean.error(request, saved);
+        } else {
+            return ApiResultBean.success(saved);
+        }
+
     }
 
     async remove(request: Request, response: Response, next: NextFunction) {
-        let userToRemove = await this.userRepository.findOne(request.params.id);
-        await this.userRepository.remove(userToRemove);
+        let userToRemove = await this.userRepository.get().findOne(request.params.id);
+        await this.userRepository.get().remove(userToRemove);
         return ApiResultBean.success();
     }
 

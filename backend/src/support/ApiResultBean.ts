@@ -1,4 +1,5 @@
 import {log} from "util";
+import {Request} from "express";
 
 export class ApiResultBean {
 
@@ -44,11 +45,30 @@ export class ApiResultBean {
 
     }
 
-    public static error(message?: string): ApiResultBean {
-        if (message === null) {
-            return new ApiResultBean("Request ERROR", 20001, message);
+    public static error(
+        request?: Request,
+        error?: any ,
+        message?: string | object
+    ): ApiResultBean {
+
+        if (request != null && error!= null) {
+            const errObj = {
+                errorServerInfo : {
+                    method: request.method,
+                    params : request.params,
+                    body: request.body,
+                    url : request.url
+                },
+                errorDatabaseInfo: error
+            }
+
+            return new ApiResultBean("Request ERROR", 20001, errObj);
+        }
+
+        if (message != null) {
+            return new ApiResultBean("Request ERROR", 20002, message);
         } else {
-            return new ApiResultBean("Request ERROR", 20002, "Internal Server Error");
+            return new ApiResultBean("Request ERROR", 20003, "Internal Server Error");
         }
     }
 
