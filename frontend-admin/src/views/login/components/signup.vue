@@ -12,14 +12,14 @@
           <!-- TODO url must replaced -->
           <v-img
             class="mx-auto white--text align-end"
-            src="https://minio.llycloud.com/image/uPic/image-20210525x0ru9y.png"
+            :src="require('@/assets/login.png')"
             height="90vh"
             style="margin-top: 5vh"
           />
         </v-col>
 
         <v-col cols="12" xl="4" lg="4" md="4" class="login">
-          <LoginComponent />
+          <SignupComponent />
 
         </v-col>
       </v-row>
@@ -31,11 +31,11 @@
 <script>
 import { validUsername } from '@/utils/validate'
 import Header from '@/views/login/components/Header'
-import LoginComponent from '@/views/login/components/LoginComponent'
+import SignupComponent from '@/views/login/components/SignupComponent'
 
 export default {
-  name: 'Login',
-  components: { Header, LoginComponent },
+  name: 'Signup',
+  components: { Header, SignupComponent },
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
@@ -53,8 +53,10 @@ export default {
     }
     return {
       loginForm: {
-        username: 'admin',
-        password: '111111'
+        username: '',
+        password: '',
+        email: '',
+        userLevels: ''
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -68,27 +70,7 @@ export default {
       otherQuery: {}
     }
   },
-  watch: {
-    $route: {
-      handler: function(route) {
-        const query = route.query
-        if (query) {
-          this.redirect = query.redirect
-          this.otherQuery = this.getOtherQuery(query)
-        }
-      },
-      immediate: true
-    }
-  },
-  created() {
-    // window.addEventListener('storage', this.afterQRScan)
-  },
   mounted() {
-    if (this.loginForm.username === '') {
-      this.$refs.username.focus()
-    } else if (this.loginForm.password === '') {
-      this.$refs.password.focus()
-    }
   },
   destroyed() {
     // window.removeEventListener('storage', this.afterQRScan)
@@ -112,7 +94,7 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('user/login', this.loginForm)
+          this.$store.dispatch('user/signup', this.loginForm)
             .then(() => {
               this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
               this.loading = false
