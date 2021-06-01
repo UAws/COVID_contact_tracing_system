@@ -13,28 +13,44 @@ export class AuthController {
 
     async register(req: Request, res: Response) {
 
-        const user : User = new User(req.body);
 
-        const count = await this.userRepository.count();
-        if (count === 0) {
-            // set to admin
-            user.Role[0].role_id = UserLevel.ADMIN;
+        try {
+            const user : User = new User(req.body);
+
+            const count = await this.userRepository.count();
+            if (count === 0) {
+                // set to admin
+                user.Role[0].role_id = UserLevel.ADMIN;
+            }
+
+            const resultUser : User = await this.userRepository.saveUser(user);
+            const token = await AuthService.generateTokenResponse(user, user.token());
+
+            return ApiResultBean.success({token, resultUser});
+        } catch (error){
+
+            return ApiResultBean.error(req, error);
+
         }
-
-        const resultUser : User = await this.userRepository.saveUser(user);
-        const token = await AuthService.generateTokenResponse(user, user.token());
-
-        return ApiResultBean.success({token, resultUser});
 
     }
 
     async login(req: Request, res: Response) {
 
-        const {user, accessToken} = await this.userRepository.findAndGenerateToken(req.body);
+        try {
+            const {user, accessToken} = await this.userRepository.findAndGenerateToken(req.body);
 
-        const token = await AuthService.generateTokenResponse(user, accessToken);
+            const token = await AuthService.generateTokenResponse(user, accessToken);
 
-        return ApiResultBean.success({token, user});
+            return ApiResultBean.success({token, user});
+
+        } catch (error){
+
+            res.status(error.statusCode)
+            return ApiResultBean.error(req, error);
+
+        }
+
 
     }
 
