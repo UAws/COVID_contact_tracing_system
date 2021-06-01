@@ -158,3 +158,6 @@ jobs:
         with:
           message: 'trigger argo cd repo with ${{ github.run_id }}-${{ github.sha }} '
           add: './* --force'
+          author_name : Akide_Liu
+          author_email: mail@llycloud.com
+          
