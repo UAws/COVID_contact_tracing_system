@@ -1,11 +1,31 @@
-import {Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable,} from "typeorm";
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    Column,
+    ManyToMany,
+    JoinTable,
+    AfterLoad,
+    BeforeInsert, BeforeUpdate,
+} from "typeorm";
+import * as Bcrypt from 'bcrypt';
+import * as Dayjs from 'dayjs';
+import * as Jwt from 'jwt-simple';
 import { Audit } from "./Audit";
 import { Role } from "./Role";
 import { UserCheckIn } from "./UserCheckIn";
 import { Venue } from "./Venue";
+import {JwtConstants} from "../constants/JwtConstants";
+import {badImplementation} from "@hapi/boom";
 
 @Entity()
 export class User extends Audit {
+
+
+
+    constructor(payload?: Record<string, unknown>) {
+        super();
+        Object.assign(this, payload);
+    }
 
     @PrimaryGeneratedColumn()
     user_id: number;
@@ -23,13 +43,13 @@ export class User extends Audit {
     emailAddress: string;
 
     @Column()
-    is_in_hotspot : boolean;
+    is_in_hotspot: boolean;
 
     @Column()
-    is_approval : boolean;
+    is_approval: boolean;
 
     @Column()
-    phone : number;
+    phone: number;
 
     // many to many
     // https://typeorm.io/#/many-to-many-relations
@@ -40,10 +60,43 @@ export class User extends Audit {
 
     @ManyToMany(() => UserCheckIn, UserCheckIn => UserCheckIn.Users)
     @JoinTable()
-    UserCheckIn : UserCheckIn[];
+    UserCheckIn: UserCheckIn[];
 
     @ManyToMany(() => Venue, venue => venue.Users)
     @JoinTable()
     Venue: Venue[];
 
+    private temporaryPassword;
+
+    @AfterLoad()
+    storeTemporaryPassword(): void {
+        this.temporaryPassword = this.password;
+    }
+
+    @BeforeInsert()
+    @BeforeUpdate()
+    async hashPassword(): Promise<string | boolean> {
+        try {
+            this.password = await Bcrypt.hash(this.password, 10);
+            return true;
+        } catch (error) {
+            throw badImplementation();
+        }
+    }
+
+
+    async passwordMatches(password: string): Promise<boolean> {
+        return await Bcrypt.compare(password, this.password);
+    }
+
+    token(duration: number = null): string {
+        const payload = {
+            exp: Dayjs().add(duration, 'minutes').unix(),
+            iat: Dayjs().unix(),
+            sub: this.user_id
+        };
+        return Jwt.encode(payload, JwtConstants.SECRET);
+    }
+
 }
+
