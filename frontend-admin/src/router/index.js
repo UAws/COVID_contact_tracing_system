@@ -52,7 +52,12 @@ export const constantRoutes = [
   },
   {
     path: '/login',
-    component: () => import('@/views/login/index'),
+    component: () => import('@/views/login/login'),
+    hidden: true
+  },
+  {
+    path: '/signup',
+    component: () => import('@/views/login/components/signup'),
     hidden: true
   },
   {

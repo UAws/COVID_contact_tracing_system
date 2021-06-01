@@ -98,12 +98,18 @@
 </template>
 
 <script>
-import UnifiedMarginPaddingSlot from '@/components/slots/unified_margin_padding_slot'
+import UnifiedMarginPaddingSlot from './unified_margin_padding_slot'
 export default {
   name: 'SignupComponent',
   components: { UnifiedMarginPaddingSlot },
   data() {
     return {
+      // element-admin
+      capsTooltip: false,
+      loading: false,
+      showDialog: false,
+      redirect: undefined,
+      otherQuery: {},
       // validation :
       valid: false,
       name: '',
@@ -136,12 +142,45 @@ export default {
       checkbox: false
     }
   },
-
+  computed: {
+    signupForm() {
+      return {
+        username: this.name,
+        password: this.password,
+        email: this.email,
+        userLevels: this.select
+      }
+    }
+  },
+  watch: {
+    $route: {
+      handler: function(route) {
+        const query = route.query
+        if (query) {
+          this.redirect = query.redirect
+          this.otherQuery = this.getOtherQuery(query)
+        }
+      },
+      immediate: true
+    }
+  },
   methods: {
     validate() {
       this.$refs.form.validate()
       if (this.valid) {
-        this.$router.push('/admin/user')
+        // this.$router.push('/admin/dashboard?checkInCode=' + this.$store.getters.getCheckInCode)
+        this.loading = true
+        this.$store.dispatch('user/signup', this.loginForm)
+          .then(() => {
+            this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
+            this.loading = false
+          })
+          .catch(() => {
+            this.loading = false
+          })
+      } else {
+        console.log('error submit!!')
+        return false
       }
     },
     reset() {
@@ -149,6 +188,14 @@ export default {
     },
     resetValidation() {
       this.$refs.form.resetValidation()
+    },
+    getOtherQuery(query) {
+      return Object.keys(query).reduce((acc, cur) => {
+        if (cur !== 'redirect') {
+          acc[cur] = query[cur]
+        }
+        return acc
+      }, {})
     }
   }
 }
