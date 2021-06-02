@@ -42,6 +42,10 @@ export class AuthController {
 
             const token = await AuthService.generateTokenResponse(user, accessToken);
 
+            if (token instanceof Error) {
+                return ApiResultBean.error(req, token);
+            }
+
             return ApiResultBean.success({token, user});
 
         } catch (error){

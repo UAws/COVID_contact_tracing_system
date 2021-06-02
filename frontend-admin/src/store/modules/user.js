@@ -1,5 +1,5 @@
 import { login, logout, getInfo } from '@/api/user'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { getToken, setToken, removeToken, setUserToken, getUserToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
 const state = {
@@ -7,7 +7,8 @@ const state = {
   name: '',
   avatar: '',
   introduction: '',
-  roles: []
+  roles: [],
+  user: null
 }
 
 const mutations = {
@@ -25,7 +26,11 @@ const mutations = {
   },
   SET_ROLES: (state, roles) => {
     state.roles = roles
+  },
+  SET_User: (state, user) => {
+    state.user = user
   }
+
 }
 
 const actions = {
@@ -36,7 +41,9 @@ const actions = {
       login({ username: username.trim(), password: password }).then(response => {
         const { data } = response
         commit('SET_TOKEN', data.token)
+        commit('SET_User', data.user)
         setToken(data.token)
+        setUserToken(data.user)
         resolve()
       }).catch(error => {
         reject(error)
@@ -47,24 +54,36 @@ const actions = {
   // get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
-      getInfo(state.token).then(response => {
+      const user = JSON.parse(getUserToken())
+      const cookieToken = JSON.parse(getToken())
+
+      if (!state.user) {
+        commit('SET_User', user)
+      }
+      if (!state.token || !(state.token instanceof Object)) {
+        commit('SET_TOKEN', cookieToken)
+      }
+      // console.log(state.token)
+      getInfo(state.user.user_id, state.token.accessToken).then(response => {
         const { data } = response
 
         if (!data) {
           reject('Verification failed, please Login again.')
         }
 
-        const { roles, name, avatar, introduction } = data
+        const { Role, username } = data
 
         // roles must be a non-empty array
-        if (!roles || roles.length <= 0) {
+        if (!Role || Role.length <= 0) {
           reject('getInfo: roles must be a non-null array!')
         }
 
+        const roles = [Role[0].role_name]
+
         commit('SET_ROLES', roles)
-        commit('SET_NAME', name)
-        commit('SET_AVATAR', avatar)
-        commit('SET_INTRODUCTION', introduction)
+        commit('SET_NAME', username)
+        commit('SET_AVATAR', 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif')
+        commit('SET_INTRODUCTION', Role[0].description)
         resolve(data)
       }).catch(error => {
         reject(error)

@@ -9,15 +9,15 @@ export function login(data) {
 }
 export function signup(data) {
   return request({
-    url: '/vue-element-admin/user/signup',
+    url: '/auth/signup',
     method: 'post',
     data
   })
 }
 
-export function getInfo(token) {
+export function getInfo(user_id, token) {
   return request({
-    url: '/vue-element-admin/user/info',
+    url: `/user/info/${user_id}?token=`,
     method: 'get',
     params: { token }
   })
@@ -25,7 +25,7 @@ export function getInfo(token) {
 
 export function logout() {
   return request({
-    url: '/user/logout',
+    url: '/auth/logout',
     method: 'post'
   })
 }

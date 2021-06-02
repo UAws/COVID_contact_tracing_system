@@ -10,3 +10,5 @@ backend-example/node_modules/
 
 */package-lock.json
 **/package-lock.json
+
+frontend-admin/.env.development
