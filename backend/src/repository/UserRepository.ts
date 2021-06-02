@@ -116,25 +116,31 @@ export class UserRepository extends Repository<User>{
 
     public async findAndGenerateToken(options: tokenOptions): Promise<{ user: User, accessToken: string; }> {
 
-        const {username, emailAddress, password, refreshToken} = options;
+        try {
+            const {username, emailAddress, password, refreshToken} = options;
 
-        if (!emailAddress && !username) {
-            throw badRequest("An email address or username is required to generate a token");
+            if (!emailAddress && !username) {
+                throw badRequest("An email address or username is required to generate a token");
+            }
+
+            const user = await this.findOne({
+                where: emailAddress ? {emailAddress: emailAddress} : {username: username}
+            });
+
+            if (!user) {
+                throw notFound('User not found');
+            } else if (password && await user.passwordMatches(password.toString()) === false) {
+                throw unauthorized('Password must match to authorize a token generating');
+            } else if (refreshToken && refreshToken.user.emailAddress === emailAddress && Dayjs(refreshToken.expires).isBefore(Dayjs())) {
+                throw unauthorized('Invalid refresh token');
+            }
+            return {user, accessToken: user.token()};
+
+        } catch (error){
+            return error;
         }
 
-        const user = await this.findOne({
-            where: emailAddress ? {emailAddress : emailAddress} : {username : username}
-        })
 
-        if (!user) {
-            throw notFound('User not found');
-        } else if (password && await user.passwordMatches(password.toString()) === false) {
-            throw unauthorized('Password must match to authorize a token generating');
-        } else if (refreshToken && refreshToken.user.emailAddress === emailAddress && Dayjs(refreshToken.expires).isBefore( Dayjs() )) {
-            throw unauthorized('Invalid refresh token');
-        }
-
-        return {user, accessToken: user.token()};
 
     }
 
