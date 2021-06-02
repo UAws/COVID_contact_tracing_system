@@ -5,15 +5,20 @@ import * as bodyParser from "body-parser";
 import {Request, Response} from "express";
 import {Routes} from "./routes";
 import cors from "cors";
+import * as path from "path";
 
 createConnection().then(async connection => {
 
     // create express app
     const app = express();
+
+    // handle the static files
+    app.use('/', express.static(path.join(__dirname, 'public')))
+
     app.use(bodyParser.json());
 
     // Add headers
-    app.use('/*',function (req: Request, res: Response, next: Function) {
+    app.use('/*', function (req: Request, res: Response, next: Function) {
 
         // Website you wish to allow to connect
         res.setHeader('Access-Control-Allow-Origin', '*');
@@ -33,7 +38,6 @@ createConnection().then(async connection => {
     });
 
     // app.use(cors());
-
 
 
     // register express routes from defined application routes
