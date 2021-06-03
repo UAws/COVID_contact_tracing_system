@@ -124,6 +124,7 @@ export class UserRepository extends Repository<User>{
             }
 
             const user = await this.findOne({
+                relations: ['Role'],
                 where: emailAddress ? {emailAddress: emailAddress} : {username: username}
             });
 
