@@ -42,6 +42,7 @@ const actions = {
         const { data } = response
         commit('SET_TOKEN', data.token)
         commit('SET_User', data.user)
+        // console.log(data.user)
         setToken(data.token)
         setUserToken(data.user)
         resolve()
@@ -56,7 +57,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       const user = JSON.parse(getUserToken())
       const cookieToken = JSON.parse(getToken())
-
+      // console.log(user)
       if (!state.user) {
         commit('SET_User', user)
       }
