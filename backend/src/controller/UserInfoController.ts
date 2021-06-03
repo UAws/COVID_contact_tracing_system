@@ -98,4 +98,18 @@ export class UserInfoController {
         return ApiResultBean.success();
     }
 
+    async changeInHotSport(request: Request, response: Response, next: NextFunction) {
+
+            const result = await this.userRepository.changeInHotSport(request.params.id);
+
+            if (result instanceof Error) {
+
+                return ApiResultBean.error(request,result);
+
+            }
+            return ApiResultBean.success(result);
+
+
+    }
+
 }

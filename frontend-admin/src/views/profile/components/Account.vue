@@ -40,9 +40,9 @@
 
 const { UpdateUser } = require('@/api/myUserInfo')
 const userTypeOptions = [
-  { key: '3', display_name: 'Administrators' },
+  { key: '1', display_name: 'Administrators' },
   { key: '2', display_name: 'Venue Manager' },
-  { key: '1', display_name: 'General User' }
+  { key: '3', display_name: 'General User' }
 ]
 
 export default {
@@ -84,20 +84,26 @@ export default {
 
       const tempData = Object.assign({}, this.localUser)
 
+      function isNumber(n) { return /^-?[\d.]+(?:e-?\d+)?$/.test(n) }
+
       let tmp_role_id
-      if (this.localUser.Role[0].description instanceof Number) {
-        tmp_role_id = this.localUser.Role[0].description
+      if (isNumber(this.localUser.Role[0].description)) {
+        for (const userTypeOption of userTypeOptions) {
+          if (parseInt(userTypeOption.key) === parseInt(tempData.Role[0].description)) {
+            tmp_role_id = this.localUser.Role[0].description
+
+            break
+          }
+        }
       } else {
         tmp_role_id = this.localUser.Role[0].role_id
       }
       // tempData.Role.push({ role_id: tmp_role_id })
-      tempData.Role[0].role_id = tmp_role_id
-      for (const userTypeOption of userTypeOptions) {
-        if (userTypeOption.key === tempData.Role[0].description) {
-          tempData.Role[0].description = userTypeOption.description
-          break
-        }
-      }
+      tempData.Role = []
+      tempData.Role.push({
+        role_id: tmp_role_id
+      })
+      // tempData.Role[0].role_id = tmp_role_id
 
       tempData.update_by = this.localUser.update_by
       tempData.update_by = new Date()

@@ -1,4 +1,11 @@
-import {EntityRepository, getCustomRepository, getRepository, Like, Repository} from "typeorm";
+import {
+    EntityRepository,
+    getCustomRepository,
+    getManager,
+    getRepository,
+    Like,
+    Repository
+} from "typeorm";
 import {User} from "../entity/User";
 import {reqParamsOptionsInterface} from "../support/reqParamsOptions.Interface";
 import {tokenOptions} from "../support/tokenOptions";
@@ -12,6 +19,7 @@ export class UserRepository extends Repository<User>{
 
     private repository = getRepository(User);
     private userSelectQueryBuilder = this.repository.createQueryBuilder();
+    private connection = getManager().connection;
 
     public get() {
         return this.repository;
@@ -27,7 +35,7 @@ export class UserRepository extends Repository<User>{
                     })
 
                     if (params.userType !== null) {
-                        qb.andWhere('User__Role.level = :level', {level: params.userType});
+                        qb.andWhere('User__Role.role_id = :role_id', {role_id: params.userType});
                     }
 
                 },
@@ -65,7 +73,11 @@ export class UserRepository extends Repository<User>{
                     user.create_time = Dayjs().toDate();
                     user.update_time = Dayjs().toDate();
 
-                return await this.repository.save(user);
+                const dbuser = await this.repository.save(user);
+                return await this.findOne({
+                    relations: ['Role'],
+                    where: {user_id: dbuser.user_id}
+                });
 
             }{
                 return "user already exists"
@@ -102,7 +114,11 @@ export class UserRepository extends Repository<User>{
 
                 user.update_time = Dayjs().toDate();
 
-                return await this.repository.save(user);
+                dbuser = await this.repository.save(user);
+                return await this.findOne({
+                    relations: ['Role'],
+                    where: {user_id: dbuser.user_id}
+                });
 
             } else {
                 return "user not already exists";
@@ -138,8 +154,35 @@ export class UserRepository extends Repository<User>{
             return {user, accessToken: user.token()};
 
         } catch (error){
-            return error;
+            return  error;
         }
+
+
+
+    }
+
+    public async changeInHotSport(userId: number) {
+
+        try {
+            const dbUser: User = await this.findOne(userId);
+
+
+            if (dbUser) {
+                const rawData = await this.manager.query(`update user
+                                                          set is_in_hotspot = ?
+                                                          where user_id = ?`,
+                    [(dbUser.is_in_hotspot !== true), userId]);
+
+                return rawData;
+            } else {
+                throw badRequest("User not found");
+            }
+
+        } catch (error) {
+            return error
+        }
+
+
 
 
 
