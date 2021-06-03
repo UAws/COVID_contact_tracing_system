@@ -96,13 +96,10 @@
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="150px" style="width: 400px; margin-left:50px;">
-        <el-form-item label="Postcode" prop="type">
-          <el-select v-model="temp.type" class="filter-item" placeholder="Please select">
+        <el-form-item label="UserLevel" prop="type">
+          <el-select v-model="temp.Role[0].description" class="filter-item" placeholder="Please select">
             <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name" :value="item.key" />
           </el-select>
-        </el-form-item>
-        <el-form-item label="Update Time" prop="timestamp">
-          <el-date-picker v-model="temp.update_time" type="datetime" placeholder="Please pick a date" />
         </el-form-item>
         <el-form-item label="User Name" prop="username">
           <el-input v-model="temp.username" />
@@ -113,23 +110,26 @@
         <el-form-item label="Address" prop="address">
           <el-input v-model="temp.address" />
         </el-form-item>
-        <el-form-item label="Email" prop="emailAddress">
-          <el-input v-model="temp.emailAddress" />
-        </el-form-item>
         <el-form-item label="Phone" prop="phone">
           <el-input v-model="temp.phone" />
         </el-form-item>
+        <el-form-item label="Email" prop="emailAddress">
+          <el-input v-model="temp.emailAddress" />
+        </el-form-item>
+        <el-form-item label="Update Time" prop="timestamp">
+          <el-date-picker v-model="temp.update_time" type="datetime" placeholder="Please pick a date" />
+        </el-form-item>
         <el-form-item label="HotSpot Status">
-          <el-select v-model="temp.is_in_hotspot" class="filter-item" placeholder="Please select">
-            <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />
-          </el-select>
+          <el-radio-group v-model="temp.is_in_hotspot">
+            <el-radio :label="true.toString()">Yes</el-radio>
+            <el-radio :label="false.toString()"> No </el-radio>
+          </el-radio-group>
         </el-form-item>
-        <el-form-item label="User Level">
-          <el-rate v-model="temp.Role[0].level" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="3" style="margin-top:8px;" />
-          <!-- <el-rate v-model="temp.Role[0].role_id" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="3" style="margin-top:8px;" /> -->
-        </el-form-item>
-        <el-form-item label="Message">
-          <el-input v-model="temp.remark" :autosize="{ minRows: 2, maxRows: 4}" type="textarea" placeholder="Please input" />
+        <el-form-item label="Approval">
+          <el-radio-group v-model="temp.is_approval">
+            <el-radio :label="true.toString()"> Approval </el-radio>
+            <el-radio :label="false.toString()"> Pending </el-radio>
+          </el-radio-group>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -150,10 +150,12 @@ import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 import { fetchUserList, createUser, UpdateUser, fetchUserDetails, DeleteUser } from '@/api/myUserInfo'
 
+const { changeInHotSport } = require('@/api/myUserInfo')
+
 const calendarTypeOptions = [
-  { key: '3', display_name: 'Administrators' },
+  { key: '1', display_name: 'Administrators' },
   { key: '2', display_name: 'Venue Manager' },
-  { key: '1', display_name: 'General User' }
+  { key: '3', display_name: 'General User' }
 ]
 
 // arr to obj, such as { CN : "China", US : "USA" }
@@ -161,6 +163,8 @@ const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
   acc[cur.key] = cur.display_name
   return acc
 }, {})
+
+function isNumber(n) { return /^-?[\d.]+(?:e-?\d+)?$/.test(n) }
 
 export default {
   name: 'ComplexTable',
@@ -209,8 +213,8 @@ export default {
         password: '',
         address: '',
         emailAddress: '',
-        is_in_hotspot: 'false',
-        is_approval: 'false',
+        is_in_hotspot: false,
+        is_approval: false,
         phone: '',
         Role: [
           {
@@ -252,6 +256,9 @@ export default {
       this.listLoading = true
       fetchUserList(this.listQuery).then(response => {
         this.myData = response.data.list
+        for (const user of this.myData) {
+          user.password = null
+        }
         this.total = response.data.total
 
         // Just to simulate the time of the request
@@ -265,11 +272,19 @@ export default {
       this.getList()
     },
     handleModifyStatus(row, status) {
-      this.$message({
-        message: 'Success',
-        type: 'success'
+      changeInHotSport(row.user_id).then(response => {
+        this.$message({
+          message: 'Success',
+          type: 'success'
+        })
+        row.is_in_hotspot = status
+      }).catch(err => {
+        this.$message({
+          message: err,
+          type: 'error'
+        })
+        console.log(err)
       })
-      row.is_in_hotspot = status
     },
     sortChange(data) {
       const { prop, order } = data
@@ -364,7 +379,6 @@ export default {
       row.is_approval = row.is_approval.toString()
       row.is_in_hotspot = row.is_in_hotspot.toString()
       this.temp = Object.assign({}, row) // copy obj
-      this.temp.timestamp = new Date(this.temp.timestamp)
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       this.$nextTick(() => {
@@ -375,10 +389,28 @@ export default {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           const tempData = Object.assign({}, this.temp)
-          tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
-          UpdateUser(tempData).then(() => {
+
+          let tmp_role_id
+          if (isNumber(this.temp.Role[0].description)) {
+            for (const userTypeOption of calendarTypeOptions) {
+              if (parseInt(userTypeOption.key) === parseInt(tempData.Role[0].description)) {
+                tmp_role_id = this.temp.Role[0].description
+
+                break
+              }
+            }
+          } else {
+            tmp_role_id = this.temp.Role[0].role_id
+          }
+          // tempData.Role.push({ role_id: tmp_role_id })
+          tempData.Role = []
+          tempData.Role.push({
+            role_id: tmp_role_id
+          })
+
+          UpdateUser(tempData).then((response) => {
             const index = this.myData.findIndex(v => v.user_id === this.temp.user_id)
-            this.myData.splice(index, 1, this.temp)
+            this.myData.splice(index, 1, response.data)
             this.dialogFormVisible = false
             this.$notify({
               title: 'Success',

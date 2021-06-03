@@ -37,3 +37,10 @@ export function DeleteUser(id) {
     method: 'delete'
   })
 }
+
+export function changeInHotSport(id) {
+  return request({
+    url: `/user/info/changeHotSpot/${id}`,
+    method: 'put'
+  })
+}

@@ -24,6 +24,11 @@ export const Routes = [{
     route: "/api/user/info",
     controller: UserInfoController,
     action: "update"
+},{
+    method: "put",
+    route: "/api/user/info/changeHotSpot/:id",
+    controller: UserInfoController,
+    action: "changeInHotSport"
 }, {
     method: "delete",
     route: "/api/user/info/:id",
