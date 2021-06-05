@@ -80,6 +80,16 @@ export const Routes = [{
     controller: venueController,
     action: 'save',
 }, {
+        method: "put",
+        route: "/api/venue/info/changeHotSpot/:id",
+        controller: venueController,
+        action: "changeInHotSport"
+},{
+        method: "post",
+        route: "/api/venue/info/changeCoordinates/:id",
+        controller: venueController,
+        action: "changeCoordinates"
+},{
     method: 'post',
     route: '/api/auth/register',
     controller: AuthController,

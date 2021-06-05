@@ -22,7 +22,16 @@ export class Venue extends Audit{
     shop_address : string;
 
     @Column()
-    is_hotspot : boolean;
+    is_hotspot: boolean;
+
+    @Column({type : "double", nullable: true})
+    lng: number;
+
+    @Column({type : "double", nullable: true})
+    lat: number;
+
+    @Column({nullable: true})
+    risk_level: number;
 
     @ManyToMany(()=>User, user=> user.Venue)
     Users : User[];

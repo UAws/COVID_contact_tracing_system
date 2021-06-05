@@ -46,6 +46,11 @@ const tableRouter = {
       component: () => import('@/views/table/venue'),
       name: 'venue',
       meta: { title: 'venue' }
+    }, {
+      path: 'hotspot',
+      component: () => import('@/views/hotspot/manageHotspot'),
+      name: 'HotSpot',
+      meta: { title: 'HotSpot' }
     }
   ]
 }

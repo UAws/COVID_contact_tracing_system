@@ -1,12 +1,11 @@
-import {getRepository,Like} from "typeorm";
+import {getCustomRepository, getRepository, Like} from "typeorm";
 import {NextFunction, Request, Response} from "express";
-import StatusCodes from 'http-status-codes';
-import {Venue} from "../entity/Venue";
-const { BAD_REQUEST, CREATED, OK } = StatusCodes;
 import {ApiResultBean} from "../support/ApiResultBean";
+import {VenueRepository} from "../repository/VenueRepository";
+import {venueHotSpotOptions} from '../support/venueHotSpotOptions'
 
 export class venueController {
-    private venueRepository = getRepository(Venue);
+    private venueRepository = getCustomRepository(VenueRepository)
 
     async all(request: Request, response: Response, next: NextFunction) {
         const limit = Number(request.query.limit) || 10
@@ -40,6 +39,40 @@ export class venueController {
         let venueToRemove = await this.venueRepository.findOne(request.params.id);
         await this.venueRepository.remove(venueToRemove);
         return ApiResultBean.success();
+    }
+
+    async changeInHotSport(request: Request, response: Response, next: NextFunction) {
+
+        const result = await this.venueRepository.changeInHotSport(request.params.id);
+
+        if (result instanceof Error) {
+
+            return ApiResultBean.error(request,result);
+
+        }
+        return ApiResultBean.success(result);
+
+
+    }
+
+    async changeCoordinates(request: Request, response:Response, next: NextFunction) {
+
+        const options: venueHotSpotOptions = {
+            lat: request.body.lat,
+            lng: request.body.lng,
+            risk_level : request.body.risk_level
+        }
+
+        const result = await this.venueRepository.changeCoordinates(request.params.id, options);
+
+
+        if (result instanceof Error) {
+
+            return ApiResultBean.error(request,result);
+
+        }
+        return ApiResultBean.success(result);
+
     }
 
 }
