@@ -42,7 +42,7 @@
       <el-table-column label="Username" min-width="100px">
         <template slot-scope="{row}">
           <span class="link-type" @click="handleUpdate(row)"> {{ row.username }}     </span>
-          <el-tag>{{ row.Role[0].description || 'haha' }}</el-tag>
+          <el-tag>{{ row.Role[0].description || 'Role' }}</el-tag>
           <!-- <el-tag>{{ row.is_approval | typeFilter }}</el-tag> -->
         </template>
       </el-table-column>
@@ -96,7 +96,7 @@
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="150px" style="width: 400px; margin-left:50px;">
-        <el-form-item label="Postcode" prop="type">
+        <el-form-item label="Role" prop="type">
           <el-select v-model="temp.type" class="filter-item" placeholder="Please select">
             <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name" :value="item.key" />
           </el-select>
