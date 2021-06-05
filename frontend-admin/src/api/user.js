@@ -17,7 +17,7 @@ export function signup(data) {
 
 export function getInfo(user_id, token) {
   return request({
-    url: `/user/info/${user_id}?token=`,
+    url: `/user/info/${user_id}`,
     method: 'get',
     params: { token }
   })

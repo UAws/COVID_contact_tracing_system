@@ -86,7 +86,7 @@
 </template>
 
 <script>
-import UnifiedMarginPaddingSlot from './unified_margin_padding_slot'
+import UnifiedMarginPaddingSlot from '@/components/Self/unified_margin_padding_slot'
 import GoogleLogin from 'vue-google-login'
 export default {
   name: 'LoginComponent',
