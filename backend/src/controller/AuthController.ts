@@ -42,6 +42,10 @@ export class AuthController {
 
             const token = await AuthService.generateTokenResponse(user, accessToken);
 
+            if (user.Role[0].role_id !== 3 && user.is_approval === false) {
+                return ApiResultBean.errorMessage("User need to be approve!!");
+            }
+
             if (token instanceof Error) {
                 return ApiResultBean.error(req, token);
             }
@@ -50,7 +54,11 @@ export class AuthController {
 
         } catch (error){
 
-            res.status(error.statusCode)
+            // res.status(error.statusCode)
+            console.log(error);
+            if (error.output.payload) {
+                return ApiResultBean.error(req, error,error.output.payload.message);
+            }
             return ApiResultBean.error(req, error);
 
         }

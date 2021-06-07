@@ -132,17 +132,23 @@ export class UserRepository extends Repository<User>{
 
     public async findAndGenerateToken(options: tokenOptions): Promise<{ user: User, accessToken: string; }> {
 
-        try {
             const {username, emailAddress, password, refreshToken} = options;
 
             if (!emailAddress && !username) {
                 throw badRequest("An email address or username is required to generate a token");
             }
 
-            const user = await this.findOne({
-                relations: ['Role'],
-                where: emailAddress ? {emailAddress: emailAddress} : {username: username}
-            });
+            let user;
+
+            try {
+                user = await this.findOne({
+                    relations: ['Role'],
+                    where: emailAddress ? {emailAddress: emailAddress} : {username: username}
+                });
+            }catch (error) {
+                return error;
+            }
+
 
             if (!user) {
                 throw notFound('User not found');
@@ -153,9 +159,6 @@ export class UserRepository extends Repository<User>{
             }
             return {user, accessToken: user.token()};
 
-        } catch (error){
-            return  error;
-        }
 
 
 
