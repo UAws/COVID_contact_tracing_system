@@ -9,6 +9,7 @@ Group member: Akide Liu, Chi Wang, Ziqi Zhang, Zihan Wang..
 This project is supervisored by University of Adelaide course [Web & Database Computing](https://www.adelaide.edu.au/course-outlines/108960/1/sem-1/)
 
 
+## Github Actions CI Status：[![CI](https://github.com/UAws/COVID_contact_tracing_system/actions/workflows/vue-ci.yaml/badge.svg?branch=master)](https://github.com/UAws/COVID_contact_tracing_system/actions/workflows/vue-ci.yaml)
 
 ## Setup Instructions
 
