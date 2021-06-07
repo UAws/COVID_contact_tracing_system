@@ -29,3 +29,11 @@ export function logout() {
     method: 'post'
   })
 }
+
+export function googleLogin(redirect_uri) {
+  return request({
+    url: '/auth/oauth/google',
+    method: 'get',
+    params: { redirect_uri }
+  })
+}

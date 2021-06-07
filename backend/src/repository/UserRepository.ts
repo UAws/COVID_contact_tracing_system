@@ -11,6 +11,7 @@ import {reqParamsOptionsInterface} from "../support/reqParamsOptions.Interface";
 import {tokenOptions} from "../support/tokenOptions";
 import {badRequest, notFound, unauthorized} from "@hapi/boom";
 import * as Dayjs from 'dayjs';
+import {Role} from "../entity/Role";
 
 
 @EntityRepository(User)
@@ -185,9 +186,41 @@ export class UserRepository extends Repository<User>{
             return error
         }
 
+    }
+
+    public async findOrCreateUser(user: User) {
+
+        let dbUser = await this.findOne({
+            relations: ['Role'],
+            where: qb => {
+                qb.where("User.username = :username",{username: user.username})
+                    .orWhere("User.emailAddress = :address",{address: user.emailAddress});
+            }
+        });
 
 
+        if (dbUser) {
 
+            dbUser.emailAddress ? dbUser.emailAddress = user.emailAddress : null;
+            dbUser.username ? dbUser.username = user.username : null;
+            dbUser.password = '123456'
+
+            return await this.updateUser(dbUser);
+
+        } else {
+
+            // set default role -- > user
+            const tempRow = new Role();
+            tempRow.role_id = 3;
+            user.Role = [tempRow];
+
+            // set default password
+            user.password = '123456';
+            user.address = '';
+            user.is_approval = false;
+            user.is_in_hotspot = false;
+            return await this.saveUser(user);
+        }
 
     }
 
