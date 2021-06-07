@@ -26,10 +26,10 @@
           <v-list-item to="/about">
             <v-list-item-title class="white--text">ABOUT US</v-list-item-title>
           </v-list-item>
-          <v-list-item to="/auth/signup">
+          <v-list-item to="/admin/#/signup">
             <v-list-item-title class="white--text">SIGN UP</v-list-item-title>
           </v-list-item>
-          <v-list-item to="/auth/login">
+          <v-list-item to="/admin/#/login">
             <v-list-item-title class="white--text">LOG IN</v-list-item-title>
           </v-list-item>
         </v-list-item-group>
@@ -87,12 +87,12 @@
       </v-tabs>
       <v-spacer />
       <div class="mx-5">
-        <v-btn color="white" to="/auth/login">
+        <v-btn color="white" to="/admin/#/login">
           <span class="black--text">Log in</span>
         </v-btn>
       </div>
       <div class="mx-5">
-        <v-btn color="#1976D2" to="/auth/signup">
+        <v-btn color="#1976D2" to="/admin/#/signup">
           Sign up
         </v-btn>
       </div>

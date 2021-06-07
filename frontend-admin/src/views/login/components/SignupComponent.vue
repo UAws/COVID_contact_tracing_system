@@ -47,6 +47,24 @@
         type="password"
       />
 
+      <v-text-field
+        v-model="address"
+        :counter="30"
+        :rules="nameRules"
+        label="Address"
+        outlined
+        required
+      />
+
+      <v-text-field
+        v-model="phone"
+        :counter="30"
+        :rules="nameRules"
+        label="Phone"
+        outlined
+        required
+      />
+
       <v-select
         v-model="select"
         :items="userLevels"
@@ -98,6 +116,7 @@
 </template>
 
 <script>
+import { signup } from '@/api/user'
 import UnifiedMarginPaddingSlot from '@/components/Self/unified_margin_padding_slot'
 export default {
   name: 'SignupComponent',
@@ -120,6 +139,8 @@ export default {
       ],
       password: '',
       rePassword: '',
+      phone: '',
+      address: '',
       passwordRules: [
         v => !!v || 'Password is required'
       ],
@@ -136,8 +157,7 @@ export default {
       userLevels: [
         'Regular User',
         'Venue Manager',
-        'Health Official',
-        'Administrators'
+        'Health Official / Administrators'
       ],
       checkbox: false
     }
@@ -147,9 +167,21 @@ export default {
       return {
         username: this.name,
         password: this.password,
-        email: this.email,
-        userLevels: this.select
+        emailAddress: this.email,
+        is_in_hotspot: false,
+        is_approval: false,
+        address: this.address,
+        phone: this.phone,
+        Role: [
+          {
+            role_id: this.userLevelsTemp.findIndex(level => level === this.select) + 1
+          }
+        ]
       }
+    },
+    userLevelsTemp() {
+      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+      return this.userLevels.reverse()
     }
   },
   watch: {
@@ -170,8 +202,8 @@ export default {
       if (this.valid) {
         // this.$router.push('/admin/dashboard?checkInCode=' + this.$store.getters.getCheckInCode)
         this.loading = true
-        this.$store.dispatch('user/signup', this.loginForm)
-          .then(() => {
+        signup(this.signupForm)
+          .then((response) => {
             this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
             this.loading = false
           })

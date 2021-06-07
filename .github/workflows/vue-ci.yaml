@@ -129,7 +129,9 @@ jobs:
 
       - name: Building Docker Image
         run: |
+          wget ${{ secrets.BACKEND_ENV }} -O .env
           docker build -t $REPO:latest -t $REPO:$DOCKER_TAG .
+          rm -rf ./.env
           echo $DOCKER_TAG
       - name: Publish Docker Image
         run: docker push $REPO:$DOCKER_TAG

@@ -3,14 +3,18 @@ import {createConnection} from "typeorm";
 import * as express from "express";
 import * as bodyParser from "body-parser";
 import {Request, Response} from "express";
+var cookieParser = require('cookie-parser');
 import {Routes} from "./routes";
 import cors from "cors";
 import * as path from "path";
+import {googleOAuthRouter} from "./routes/googleOAuthRouter";
 
 createConnection().then(async connection => {
 
     // create express app
     const app = express();
+
+    app.use(cookieParser());
 
     // handle the static files
     app.use('/', express.static(path.join(__dirname, 'public')))
@@ -53,6 +57,8 @@ createConnection().then(async connection => {
         });
     });
 
+    const local_googleOAuthRouter = new googleOAuthRouter();
+    app.use('/api/auth/oauth', local_googleOAuthRouter.get());
     // setup express app here
     // ...
 

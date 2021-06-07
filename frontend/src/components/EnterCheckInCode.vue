@@ -90,7 +90,7 @@ export default {
     submit: function() {
       if (this.enter_code_text !== '') {
         this.$store.commit('setCheckInCode', this.enter_code_text)
-        this.$router.push('/auth/login?checkInCode=' + this.enter_code_text)
+        this.$router.push('/admin/#/login?checkInCode=' + this.enter_code_text)
       }
     }
   }

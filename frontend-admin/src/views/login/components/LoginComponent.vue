@@ -62,16 +62,15 @@
       </v-row>
 
       <v-row>
-        <GoogleLogin style="width: 100%" :params="params" :on-success="onSuccess" :on-failure="onFailure">
-          <v-btn
-            color="primary"
-            class="mr-4 btn"
-            style="padding-top: 0"
-            large
-          >
-            <v-icon mdi-google />Google Login
-          </v-btn>
-        </GoogleLogin>
+        <v-btn
+          color="primary"
+          class="mr-4 btn"
+          style="padding-top: 0"
+          large
+          @click="redirectToGoogle"
+        >
+          <v-icon mdi-google />Google Login
+        </v-btn>
 
       </v-row>
 
@@ -87,10 +86,9 @@
 
 <script>
 import UnifiedMarginPaddingSlot from '@/components/Self/unified_margin_padding_slot'
-import GoogleLogin from 'vue-google-login'
 export default {
   name: 'LoginComponent',
-  components: { UnifiedMarginPaddingSlot, GoogleLogin },
+  components: { UnifiedMarginPaddingSlot },
   data: () => ({
     // element-admin
     capsTooltip: false,
@@ -122,7 +120,16 @@ export default {
     ],
     select: null,
     checkbox: false,
-    current_code: ''
+    current_code: '',
+    // google login,
+    google_login_data: {
+      NT: '', // google_token
+      Ue: '', // username
+      pu: '', // email
+      sT: '', // lastname
+      vK: '', // user avatar
+      xV: '' // fast name
+    }
   }),
   computed: {
     add_check_in_code() {
@@ -201,6 +208,14 @@ export default {
         }
         return acc
       }, {})
+    },
+    redirectToGoogle() {
+      console.log(window.location.href)
+      const redirect_query = {
+        redirect_uri: window.location.href
+      }
+
+      window.location.replace(process.env.VUE_APP_BASE_API + '/auth/oauth/google' + `?redirect_uri=${redirect_query.redirect_uri}`)
     }
   }
 }

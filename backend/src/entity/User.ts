@@ -36,19 +36,19 @@ export class User extends Audit {
     @Column()
     password: string;
 
-    @Column()
+    @Column({nullable:true})
     address: string;
 
     @Column()
     emailAddress: string;
 
-    @Column()
+    @Column({nullable:true})
     is_in_hotspot: boolean;
 
-    @Column()
+    @Column({nullable:true})
     is_approval: boolean;
 
-    @Column()
+    @Column({nullable:true})
     phone: number;
 
     // many to many

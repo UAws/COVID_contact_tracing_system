@@ -62,11 +62,22 @@ export class ApiResultBean {
                 errorDatabaseInfo: error
             }
 
-            return new ApiResultBean("Request ERROR", 20001, errObj);
+            if (message) {
+                return new ApiResultBean(message.toString(), 20001, errObj);
+            } else {
+                return new ApiResultBean("Request ERROR", 20002, errObj);
+            }
+
+
         }
 
-        if (message != null) {
-            return new ApiResultBean("Request ERROR", 20002, message);
+
+    }
+
+    public static errorMessage(message?: string
+    ) {
+        if (message) {
+            return new ApiResultBean(message, 20002, {});
         } else {
             return new ApiResultBean("Request ERROR", 20003, "Internal Server Error");
         }

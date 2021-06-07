@@ -9,7 +9,7 @@ export function login(data) {
 }
 export function signup(data) {
   return request({
-    url: '/auth/signup',
+    url: '/auth/register',
     method: 'post',
     data
   })
@@ -27,5 +27,13 @@ export function logout() {
   return request({
     url: '/auth/logout',
     method: 'post'
+  })
+}
+
+export function googleLogin(redirect_uri) {
+  return request({
+    url: '/auth/oauth/google',
+    method: 'get',
+    params: { redirect_uri }
   })
 }

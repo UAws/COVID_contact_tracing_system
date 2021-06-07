@@ -261,6 +261,6 @@ export default {
     }
 
     .login {
-      padding-top: 15vh;
+      padding-top: 6vh;
     }
   </style>
