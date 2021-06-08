@@ -5,6 +5,7 @@ sql_start
 cd ..
 mkdir -p backend/src/public/admin
 cd backend/src/public || exit
+rm -rf ./*
 wget https://github.com/UAws/COVID_contact_tracing_system/releases/download/latest/frontend-admin.zip.zip -O frontend-admin.zip.zip
 wget https://github.com/UAws/COVID_contact_tracing_system/releases/download/latest/frontend.zip.zip -O frontend.zip.zip
 
