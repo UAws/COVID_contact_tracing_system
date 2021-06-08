@@ -68,18 +68,18 @@ export default {
             }
           },
           indicator: [
-            { name: 'Sales', max: 10000 },
-            { name: 'Administration', max: 20000 },
-            { name: 'Information Technology', max: 20000 },
-            { name: 'Customer Support', max: 20000 },
-            { name: 'Development', max: 20000 },
-            { name: 'Marketing', max: 20000 }
+            { name: '', max: 10000 },
+            { name: '', max: 20000 },
+            { name: '', max: 20000 },
+            { name: '', max: 20000 },
+            { name: '', max: 20000 },
+            { name: '', max: 20000 }
           ]
         },
         legend: {
           left: 'center',
           bottom: '10',
-          data: ['Allocated Budget', 'Expected Spending', 'Actual Spending']
+          data: ['Recovered', 'Death', 'Confirmed']
         },
         series: [{
           type: 'radar',
@@ -96,15 +96,15 @@ export default {
           data: [
             {
               value: [5000, 7000, 12000, 11000, 15000, 14000],
-              name: 'Allocated Budget'
+              name: 'Recovered'
             },
             {
-              value: [4000, 9000, 15000, 15000, 13000, 11000],
-              name: 'Expected Spending'
+              value: [4000, 5000, 10000, 8000, 13000, 11000],
+              name: 'Death'
             },
             {
-              value: [5500, 11000, 12000, 15000, 12000, 12000],
-              name: 'Actual Spending'
+              value: [6500, 15000, 12000, 15000, 12000, 12000],
+              name: 'Confirmed'
             }
           ],
           animationDuration: animationDuration

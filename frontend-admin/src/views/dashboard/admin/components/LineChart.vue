@@ -64,7 +64,7 @@ export default {
     setOptions({ expectedData, actualData } = {}) {
       this.chart.setOption({
         xAxis: {
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          data: ['SEP', 'OCT', 'NOV', 'DEC', 'JAN', 'FEB', 'MAR'],
           boundaryGap: false,
           axisTick: {
             show: false
@@ -72,7 +72,7 @@ export default {
         },
         grid: {
           left: 10,
-          right: 10,
+          right: 20,
           bottom: 20,
           top: 30,
           containLabel: true
@@ -90,10 +90,10 @@ export default {
           }
         },
         legend: {
-          data: ['expected', 'actual']
+          data: ['Global', 'Australia']
         },
         series: [{
-          name: 'expected', itemStyle: {
+          name: 'Global', itemStyle: {
             normal: {
               color: '#FF005A',
               lineStyle: {
@@ -105,11 +105,11 @@ export default {
           smooth: true,
           type: 'line',
           data: expectedData,
-          animationDuration: 2800,
+          animationDuration: 100,
           animationEasing: 'cubicInOut'
         },
         {
-          name: 'actual',
+          name: 'Australia',
           smooth: true,
           type: 'line',
           itemStyle: {
