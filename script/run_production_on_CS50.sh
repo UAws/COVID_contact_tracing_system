@@ -28,6 +28,7 @@ cp -rf sql_dump/ormconfig.json ./
 mysql --host=127.0.0.1 < sql_dump/dump.sql
 
 if [ -f ./.env ]; then
+    sed -i -r 's/app\.listen\(3000\)\;/app\.listen\(8081\)\;/g' ./src/index.ts
     npm install
     npm run start:dev
 else
