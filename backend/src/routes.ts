@@ -51,7 +51,7 @@ export const Routes = [{
     action: "getUserCheckIn"
 }, {
     method: "post",
-    route: "/api/user/checkIn/:id",
+    route: "/api/user/checkIn/",
     controller: UserCheckInController,
     action: "postUserCheckIn"
 }, {
@@ -59,6 +59,11 @@ export const Routes = [{
     route: '/api/venue/venueID/:id',
     controller: venueController,
     action: 'getVenueInfo',
+},{
+    method: 'get',
+    route: '/api/venue/checkIn/:code',
+    controller: venueController,
+    action: 'getVenueInfoByCheckInCode',
 }, {
     method: 'post',
     route: '/api/venue/venueID/:id',
