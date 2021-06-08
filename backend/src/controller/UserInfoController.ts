@@ -5,6 +5,7 @@ import {ApiResultBean} from "../support/ApiResultBean";
 import {Role} from "../entity/Role";
 import {reqParamsOptionsInterface} from "../support/reqParamsOptions.Interface";
 import {UserRepository} from "../repository/UserRepository";
+import to from "await-to-js";
 
 export class UserInfoController {
 
@@ -24,20 +25,22 @@ export class UserInfoController {
         // console.log(reqParams);
 
 
-        const [list, total] = await this.userRepository.listAllUsers(reqParams);
+        const [error, [list, total]] = await to(this.userRepository.listAllUsers(reqParams));
 
         // handle repository layer error
 
-        if (list instanceof Error) {
-            console.log(list);
-            return ApiResultBean.error(request, list);
+        if (error) {
+            return ApiResultBean.error(request, error);
         }
 
         if (list != null && total != null) {
 
             return ApiResultBean.success({total, list});
+
         } else {
+
             return ApiResultBean.error();
+
         }
 
 
@@ -61,16 +64,15 @@ export class UserInfoController {
     async create(request: Request, response: Response, next: NextFunction) {
 
         const user : User = new User(request.body);
-        let saved = await this.userRepository.saveUser(user);
+        let [error, saved] = await to(this.userRepository.saveUser(user));
+
 
         // handle repository layer error
 
-        if (saved instanceof Error) {
-            // console.log(saved);
-            return ApiResultBean.error(request, saved);
-        } else {
-            return ApiResultBean.success(saved);
+        if (error) {
+            return ApiResultBean.error(request, error);
         }
+            return ApiResultBean.success(saved);
 
     }
 
@@ -78,16 +80,16 @@ export class UserInfoController {
 
         const user : User = new User(request.body);
 
-        let saved = await this.userRepository.updateUser(user);
+        let [error, saved] = await to(this.userRepository.updateUser(user));
+
+        if (error) {
+            return ApiResultBean.error(request, error);
+        }
+
 
         // handle repository layer error
-
-        if (saved instanceof Error) {
-            // console.log(saved);
-            return ApiResultBean.error(request, saved);
-        } else {
             return ApiResultBean.success(saved);
-        }
+
 
     }
 
@@ -100,15 +102,13 @@ export class UserInfoController {
 
     async changeInHotSport(request: Request, response: Response, next: NextFunction) {
 
-            const result = await this.userRepository.changeInHotSport(request.params.id);
+        const [error, result] = await to(this.userRepository.changeInHotSport(request.params.id));
 
-            if (result instanceof Error) {
+        if (error) {
+            return ApiResultBean.error(request, error);
+        }
 
-                return ApiResultBean.error(request,result);
-
-            }
-            return ApiResultBean.success(result);
-
+        return ApiResultBean.success(result);
 
     }
 

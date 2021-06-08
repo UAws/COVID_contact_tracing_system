@@ -23,10 +23,10 @@ class AuthService {
 
     async generateTokenResponse(user: User, accessToken: string): Promise<{ tokenType, accessToken, refreshToken, expiresIn }|Error> {
         if (!user || !(user instanceof User) || !user.user_id) {
-            return badData('User is not an instance of User');
+            throw badData('User is not an instance of User');
         }
         if (!accessToken) {
-            return badData('Access token cannot be retrieved');
+            throw badData('Access token cannot be retrieved');
         }
         const tokenType = 'Bearer';
         const oldToken = await getRepository(RefreshToken).findOne({ where : { user } });

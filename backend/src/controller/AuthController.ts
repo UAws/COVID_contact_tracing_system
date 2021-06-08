@@ -5,6 +5,7 @@ import {UserLevel} from "../constants/UserLevel";
 import {AuthService} from "../service/AuthService";
 import {ApiResultBean} from "../support/ApiResultBean";
 import {getCustomRepository} from "typeorm";
+import to from 'await-to-js'
 
 export class AuthController {
 
@@ -13,62 +14,75 @@ export class AuthController {
 
     async register(req: Request, res: Response) {
 
+        let error, count: number, resultUser: User, token;
 
-        try {
-            const user : User = new User(req.body);
+        const user: User = new User(req.body);
 
-            const count = await this.userRepository.count();
+        [error, count] = await to(this.userRepository.count());
+
+            if (error){
+                return ApiResultBean.error(req, error);
+            }
+
             if (count === 0) {
                 // set to admin
                 user.Role[0].role_id = UserLevel.ADMIN;
             }
 
-            const resultUser : User = await this.userRepository.saveUser(user);
-            const token = await AuthService.generateTokenResponse(user, user.token());
+        [error, resultUser] = await to(this.userRepository.saveUser(user));
 
-            return ApiResultBean.success({token, resultUser});
-        } catch (error){
-
+        if (error) {
             return ApiResultBean.error(req, error);
-
         }
+
+        [error, token] = await to(AuthService.generateTokenResponse(user, user.token()));
+
+        if (error) {
+            return ApiResultBean.error(req, error);
+        }
+
+        return ApiResultBean.success({token, resultUser});
 
     }
 
     async login(req: Request, res: Response) {
 
-        try {
-            const {user, accessToken} = await this.userRepository.findAndGenerateToken(req.body);
+        let error, user:User, accessToken:string, token,result;
 
-            const token = await AuthService.generateTokenResponse(user, accessToken);
+        [error, result] = await to(this.userRepository.findAndGenerateToken(req.body));
 
-            if (user.Role[0].role_id !== 3 && user.is_approval === false) {
-                return ApiResultBean.errorMessage("User need to be approve!!");
-            }
+        if (error) {
 
-            if (token instanceof Error) {
-                return ApiResultBean.error(req, token);
-            }
-
-            return ApiResultBean.success({token, user});
-
-        } catch (error){
-
-            // res.status(error.statusCode)
-            console.log(error);
-            if (error.output.payload) {
-                return ApiResultBean.error(req, error,error.output.payload.message);
-            }
             return ApiResultBean.error(req, error);
 
+        }else {
+            user = result.user;
+            accessToken = result.accessToken;
         }
 
+        [error, token] = await to(AuthService.generateTokenResponse(user, accessToken));
+
+        if (error) {
+            return ApiResultBean.error(req, error);
+        }
+
+        if (user.Role[0].role_id !== 3 && user.is_approval === false) {
+            return ApiResultBean.errorMessage("User need to be approve!!");
+        }
+
+
+        return ApiResultBean.success({token, user});
 
     }
 
 
     async logout(req: Request, res: Response): Promise<ApiResultBean> {
-        await AuthService.revokeRefreshToken(req.user);
+        const [error, info] = await to(AuthService.revokeRefreshToken(req.user));
+
+        if (error) {
+            return ApiResultBean.error(req, error);
+        }
+
         return ApiResultBean.success({}, "Logout Success");
     }
 
