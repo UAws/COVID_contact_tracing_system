@@ -9,13 +9,14 @@ rm -rf ./*
 wget https://github.com/UAws/COVID_contact_tracing_system/releases/download/latest/frontend-admin.zip.zip -O frontend-admin.zip.zip
 wget https://github.com/UAws/COVID_contact_tracing_system/releases/download/latest/frontend.zip.zip -O frontend.zip.zip
 
-unzip frontend-admin.zip*.zip
+unzip frontend-admin.zip.zip
 unzip frontend-admin.zip
+mkdir admin
 cp -rf ./dist/* admin/
 
 rm -rf "./dist"
 
-unzip frontend.zip*.zip
+unzip frontend.zip.zip
 unzip frontend.zip
 cp -rf ./dist/* ./
 
