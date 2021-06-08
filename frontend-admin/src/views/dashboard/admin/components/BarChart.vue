@@ -62,7 +62,7 @@ export default {
         },
         xAxis: [{
           type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          data: ['SEP', 'OCT', 'NOV', 'DEC', 'JAN', 'FEB', 'MAR'],
           axisTick: {
             alignWithLabel: true
           }
@@ -74,25 +74,25 @@ export default {
           }
         }],
         series: [{
-          name: 'pageA',
+          name: 'Victoria',
           type: 'bar',
           stack: 'vistors',
           barWidth: '60%',
-          data: [79, 52, 200, 334, 390, 330, 220],
+          data: [79, 52, 67, 40, 33, 20, 11],
           animationDuration
         }, {
-          name: 'pageB',
+          name: 'NSW',
           type: 'bar',
           stack: 'vistors',
           barWidth: '60%',
-          data: [80, 52, 200, 334, 390, 330, 220],
+          data: [80, 66, 77, 54, 40, 33, 19],
           animationDuration
         }, {
-          name: 'pageC',
+          name: 'SA',
           type: 'bar',
           stack: 'vistors',
           barWidth: '60%',
-          data: [30, 52, 200, 334, 390, 330, 220],
+          data: [30, 33, 28, 26, 20, 18, 7],
           animationDuration
         }]
       })

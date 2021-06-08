@@ -3,8 +3,12 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
+import shareIt from 'vue-share-it'
 
 Vue.config.productionTip = false
+Vue.config.ignoredElements = [/snippet-\w*/]
+
+Vue.use(shareIt)
 
 new Vue({
   router,

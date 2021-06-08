@@ -18,6 +18,9 @@
           <h4 class="text-uppercase mb-4 font-weight-bold">Contact Us</h4>
           <p>email: tracing@gmail.com</p>
           <p>call us: 800-000-0000</p>
+          <div class="x-pad">
+            <share-it :targets="['twitter', 'facebook']" />
+          </div>
         </v-col>
         <v-col sm="4">
           <h4 class="text-uppercase mb-4 font-weight-bold">Where to go for help</h4>
