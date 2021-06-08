@@ -5,6 +5,8 @@ sql_start
 cd ..
 mkdir -p backend/src/public/admin
 cd backend/src/public || exit
+wget https://github.com/UAws/COVID_contact_tracing_system/releases/download/latest/frontend-admin.zip.zip -O frontend-admin.zip.zip
+wget https://github.com/UAws/COVID_contact_tracing_system/releases/download/latest/frontend.zip.zip -O frontend.zip.zip
 
 unzip frontend-admin.zip*.zip
 unzip frontend-admin.zip
@@ -18,7 +20,7 @@ cp -rf ./dist/* ./
 
 rm -rf ./*.zip
 # current dir ： /backend/
-cd .. || exit
+cd ../.. || exit
 
 cp -rf sql_dump/ormconfig.json ./
 
