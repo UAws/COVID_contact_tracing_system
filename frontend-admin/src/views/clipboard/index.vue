@@ -29,7 +29,7 @@ export default {
   data() {
     return {
       activeName: 'directly',
-      inputData: 'https://github.com/PanJiaChen/vue-element-admin'
+      inputData: 'https://github.com/UAws/COVID_contact_tracing_system/'
     }
   },
   methods: {

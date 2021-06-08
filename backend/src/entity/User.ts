@@ -91,9 +91,10 @@ export class User extends Audit {
 
     token(duration: number = null): string {
         const payload = {
-            exp: Dayjs().add(duration, 'minutes').unix(),
+            exp: Dayjs().add(duration, 'minutes'),
             iat: Dayjs().unix(),
-            sub: this.user_id
+            user_id: this.user_id,
+            user_level: this.Role[0]
         };
         return Jwt.encode(payload, JwtConstants.SECRET);
     }

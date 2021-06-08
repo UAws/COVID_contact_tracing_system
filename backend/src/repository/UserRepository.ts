@@ -49,7 +49,7 @@ export class UserRepository extends Repository<User>{
             return [list, total];
 
         } catch (error) {
-            return [error];
+            throw error;
         }
 
 
@@ -81,12 +81,12 @@ export class UserRepository extends Repository<User>{
                 });
 
             }{
-                return "user already exists"
+                throw badRequest("user already exists");
             }
 
 
         } catch (error) {
-            return error;
+            throw error;
         }
 
     }
@@ -147,7 +147,7 @@ export class UserRepository extends Repository<User>{
                     where: emailAddress ? {emailAddress: emailAddress} : {username: username}
                 });
             }catch (error) {
-                return error;
+                throw error;
             }
 
 
@@ -159,9 +159,6 @@ export class UserRepository extends Repository<User>{
                 throw unauthorized('Invalid refresh token');
             }
             return {user, accessToken: user.token()};
-
-
-
 
     }
 
@@ -183,7 +180,7 @@ export class UserRepository extends Repository<User>{
             }
 
         } catch (error) {
-            return error
+            throw error
         }
 
     }

@@ -62,6 +62,10 @@ export class ApiResultBean {
                 errorDatabaseInfo: error
             }
 
+            if (error.output) {
+                return new ApiResultBean(error.output.payload.message, 20003, errObj);
+            }
+
             if (message) {
                 return new ApiResultBean(message.toString(), 20001, errObj);
             } else {
