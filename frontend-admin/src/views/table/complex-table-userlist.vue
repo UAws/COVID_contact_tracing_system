@@ -79,10 +79,10 @@
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             Edit
           </el-button>
-          <el-button v-if="!row.is_in_hotspot" size="mini" type="success" @click="handleModifyStatus(row,true)">
+          <el-button v-if="row.is_in_hotspot" size="mini" type="success" @click="handleModifyStatus(row,true)">
             In HotSpot
           </el-button>
-          <el-button v-if="row.is_in_hotspot" size="mini" @click="handleModifyStatus(row,false)">
+          <el-button v-if="!row.is_in_hotspot" size="mini" @click="handleModifyStatus(row,false)">
             Not In HotSpot
           </el-button>
           <el-button size="mini" type="danger" @click="handleDelete(row,$index)">
@@ -345,21 +345,27 @@ export default {
           this.temp.create_by = 'Akide_Liu'
           this.temp.update_by = 'Akide_Liu'
           this.temp.create_time = new Date()
-          switch (this.temp.Role[0].level) {
-            case 1:
-              this.temp.Role[0].role_id = 3
-              break
-            case 2:
-              this.temp.Role[0].role_id = 2
-              break
-            case 3:
-              this.temp.Role[0].role_id = 1
-              break
-            default:
-              this.temp.Role[0].role_id = 3
+          let tmp_role_id
+          if (isNumber(this.temp.Role[0].description)) {
+            for (const userTypeOption of calendarTypeOptions) {
+              if (parseInt(userTypeOption.key) === parseInt(this.temp.Role[0].description)) {
+                tmp_role_id = this.temp.Role[0].description
+
+                break
+              }
+            }
+          } else {
+            tmp_role_id = this.temp.Role[0].role_id
           }
+          // tempData.Role.push({ role_id: tmp_role_id })
+          this.temp.Role = []
+          this.temp.Role.push({
+            role_id: tmp_role_id
+          })
+
           // this.temp.Role[0].level = undefined
           createUser(this.temp).then(response => {
+            response.data.password = null
             this.myData.unshift(response.data)
             // console.log(response.data)
             this.dialogFormVisible = false
