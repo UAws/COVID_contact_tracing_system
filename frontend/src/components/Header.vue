@@ -48,6 +48,7 @@
           disabled
         >
           <v-card
+            to="/"
             :elevation="hover ? 12:2"
             class="mx-auto"
             :height="boxH"
