@@ -35,7 +35,7 @@ export class AuthController {
             return ApiResultBean.error(req, error);
         }
 
-        [error, token] = await to(AuthService.generateTokenResponse(user, user.token()));
+        [error, token] = await to(AuthService.generateTokenResponse(user, resultUser.token(3600)));
 
         if (error) {
             return ApiResultBean.error(req, error);
