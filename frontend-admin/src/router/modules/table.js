@@ -3,12 +3,12 @@
 import Layout from '@/layout'
 
 const tableRouter = {
-  path: '/table',
+  path: '/administration',
   component: Layout,
   redirect: '/table/complex-table',
-  name: 'Table',
+  name: 'Admin Area',
   meta: {
-    title: 'Table',
+    title: 'Admin Area',
     icon: 'table'
   },
   children: [
@@ -37,20 +37,20 @@ const tableRouter = {
     //   meta: { title: 'Complex Table' }
     // },
     {
-      path: 'complex-table-users',
+      path: 'manager-user',
       component: () => import('@/views/table/complex-table-userlist'),
-      name: 'ComplexTable-users',
-      meta: { title: 'Complex Table Users' }
+      name: 'User Manage',
+      meta: { title: 'User Manage' }
     }, {
-      path: 'venue',
+      path: 'manager-venue',
       component: () => import('@/views/table/venue'),
-      name: 'venue',
-      meta: { title: 'venue' }
+      name: 'Venue Manage',
+      meta: { title: 'Venue Manage' }
     }, {
-      path: 'hotspot',
+      path: 'manage-hotspot',
       component: () => import('@/views/hotspot/manageHotspot'),
-      name: 'HotSpot',
-      meta: { title: 'HotSpot' }
+      name: 'HotSpot Manage',
+      meta: { title: 'HotSpot Manage' }
     }
   ]
 }
