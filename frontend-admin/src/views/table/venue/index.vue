@@ -8,6 +8,13 @@
         class="filter-item"
         @keyup.enter.native="handleFilter"
       />
+      <el-input
+        v-model="listQuery.checkInCode"
+        placeholder="CheckIn Code"
+        style="width: 200px;"
+        class="filter-itemm"
+        @keyup.enter.native="handleFilter"
+      />
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         Search
       </el-button>
@@ -135,6 +142,7 @@ export default {
       listLoading: true,
       listQuery: {
         page: 1,
+        checkInCode: undefined,
         limit: 20,
         importance: undefined,
         keyword: undefined,
