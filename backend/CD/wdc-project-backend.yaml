@@ -25,7 +25,7 @@ spec:
         workload.user.cattle.io/workloadselector: deployment-default-wdc-project-backend
     spec:
       containers:
-      - image: akide/covid_contact_tracing_system_backend:921729476-46d0bec6e9288313010193b5990173ce0957565f
+      - image: akide/covid_contact_tracing_system_backend:921787875-178eddfad7d4f4145d134a71baf068772039238a
         imagePullPolicy: Always
         name: wdc-project-backend
         ports:
