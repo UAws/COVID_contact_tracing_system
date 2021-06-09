@@ -76,7 +76,7 @@ export default {
             update_time: new Date()
           })
         this.$notify.success(`${this.form.venue_id ? 'Edit' : 'Add'} Success`)
-        this.$emit('update')
+        this.$emit('getList')
         this.handleClose()
       }
     }

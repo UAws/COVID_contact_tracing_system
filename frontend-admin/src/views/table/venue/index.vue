@@ -8,6 +8,13 @@
         class="filter-item"
         @keyup.enter.native="handleFilter"
       />
+      <el-input
+        v-model="listQuery.checkInCode"
+        placeholder="CheckIn Code"
+        style="width: 200px;"
+        class="filter-itemm"
+        @keyup.enter.native="handleFilter"
+      />
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         Search
       </el-button>
@@ -81,7 +88,7 @@
       :limit.sync="listQuery.limit"
       @pagination="getList"
     />
-    <edit-modal ref="editModal" :visible.sync="ctrl.showEditModal" @update="getList" />
+    <edit-modal ref="editModal" :visible.sync="ctrl.showEditModal" @getList="getList" />
   </div>
 </template>
 
@@ -135,6 +142,7 @@ export default {
       listLoading: true,
       listQuery: {
         page: 1,
+        checkInCode: undefined,
         limit: 20,
         importance: undefined,
         keyword: undefined,
