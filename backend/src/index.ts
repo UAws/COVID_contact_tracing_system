@@ -8,6 +8,7 @@ import {Routes} from "./routes";
 import cors from "cors";
 import * as path from "path";
 import {googleOAuthRouter} from "./routes/googleOAuthRouter";
+import {JWTAuthInterceptor} from "./routes/JWTAuthInterceptor";
 
 createConnection().then(async connection => {
 
@@ -42,7 +43,8 @@ createConnection().then(async connection => {
     });
 
     // app.use(cors());
-
+    const jwtRouter = new JWTAuthInterceptor();
+    app.use('/api/*', jwtRouter.get());
 
     // register express routes from defined application routes
     Routes.forEach(route => {
@@ -67,7 +69,7 @@ createConnection().then(async connection => {
 
     // insert new users for test
     // await connection.manager.save(connection.manager.create(User, {
-    //     firstName: "Timber",
+    //     firstName: "Timbloer",
     //     lastName: "Saw",
     //     age: 27
     // }));

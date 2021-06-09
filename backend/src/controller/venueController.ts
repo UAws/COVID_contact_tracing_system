@@ -3,6 +3,7 @@ import {NextFunction, Request, Response} from "express";
 import {ApiResultBean} from "../support/ApiResultBean";
 import {VenueRepository} from "../repository/VenueRepository";
 import {venueHotSpotOptions} from '../support/venueHotSpotOptions'
+import to from "await-to-js";
 
 export class venueController {
     private venueRepository = getCustomRepository(VenueRepository)
@@ -25,6 +26,25 @@ export class venueController {
 
     async getVenueInfo(request: Request, response: Response, next: NextFunction) {
         return this.venueRepository.findOne(request.params.id, {relations: ['Users']});
+    }
+
+    async getVenueInfoByCheckInCode(request: Request, response: Response, next: NextFunction) {
+        const [error, venue] = await to(this.venueRepository.findOne({
+                where: {check_in_code: request.params.code},
+                relations: ['Users']
+            }
+        ));
+
+        if (error) {
+            ApiResultBean.error(request, error);
+        }
+
+        if (venue) {
+            return ApiResultBean.success(venue);
+        } else {
+            return ApiResultBean.errorMessage("venue not found");
+        }
+
     }
 
     async postVenueInfo(request: Request, response: Response, next: NextFunction) {

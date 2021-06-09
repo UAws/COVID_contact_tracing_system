@@ -61,13 +61,13 @@
       </el-table-column>
       <el-table-column label="Actions" align="center" width="250" class-name="small-padding fixed-width">
         <template slot-scope="{row,$index}">
-          <el-button type="text" size="mini" @click="handleUpdate(row)">
+          <el-button type="primary" size="mini" @click="handleUpdate(row)">
             Edit
           </el-button>
-          <el-button size="mini" type="text" @click="handleModifyStatus(row,!row.is_in_hotspot)">
+          <el-button size="mini" type="success" @click="handleModifyStatus(row,!row.is_in_hotspot)">
             {{ !row.is_in_hotspot ? 'In HotSpot' : 'Not In HotSpot' }}
           </el-button>
-          <el-button v-if="row.status!=='deleted'" size="mini" type="text" @click="handleDelete(row,$index)">
+          <el-button v-if="row.status!=='deleted'" size="mini" type="danger" @click="handleDelete(row,$index)">
             Delete
           </el-button>
         </template>

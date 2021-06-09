@@ -14,16 +14,16 @@
           v-model="group"
           active-class="blue--text text--accent-4"
         >
-          <v-list-item to="/">
+          <v-list-item @click="redirect('/')">
             <v-list-item-title class="white--text">HOME</v-list-item-title>
           </v-list-item>
-          <v-list-item to="/?to=map_div">
+          <v-list-item @click="redirect('/?to=map_div')">
             <v-list-item-title class="white--text">MAP</v-list-item-title>
           </v-list-item>
-          <v-list-item to="/hotspot">
+          <v-list-item @click="redirect('/hotspot')">
             <v-list-item-title class="white--text">HOTSPOT</v-list-item-title>
           </v-list-item>
-          <v-list-item to="/about">
+          <v-list-item @click="redirect('/about')">
             <v-list-item-title class="white--text">ABOUT US</v-list-item-title>
           </v-list-item>
           <v-list-item to="/signup">
@@ -73,16 +73,16 @@
         background-color="rgb(16,37,53)"
         dark
       >
-        <v-tab to="/">
+        <v-tab @click="redirect('/')">
           HOME
         </v-tab>
-        <v-tab to="/?to=map_div" @click="goto('map_div')">
+        <v-tab @click="redirect('/?to=map_div')">
           MAP
         </v-tab>
-        <v-tab to="/hotspot">
+        <v-tab @click="redirect('/hotspot')">
           HOTSPOT
         </v-tab>
-        <v-tab to="/about">
+        <v-tab @click="redirect('/about')">
           ABOUT US
         </v-tab>
       </v-tabs>
@@ -141,6 +141,9 @@ export default {
       this.$nextTick(() => {
         this.$vuetify.goTo(document.getElementById(id).offsetTop + 40)
       })
+    },
+    redirect(path) {
+      window.location.replace(path)
     }
   }
 }

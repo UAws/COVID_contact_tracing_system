@@ -26,10 +26,10 @@
           <v-list-item to="/about">
             <v-list-item-title class="white--text">ABOUT US</v-list-item-title>
           </v-list-item>
-          <v-list-item to="/admin/#/signup">
+          <v-list-item @click="redirect('/admin/#/signup')">
             <v-list-item-title class="white--text">SIGN UP</v-list-item-title>
           </v-list-item>
-          <v-list-item to="/admin/#/login">
+          <v-list-item @click="redirect('/admin/#/login')">
             <v-list-item-title class="white--text">LOG IN</v-list-item-title>
           </v-list-item>
         </v-list-item-group>
@@ -88,12 +88,12 @@
       </v-tabs>
       <v-spacer />
       <div class="mx-5">
-        <v-btn color="white" to="/admin/#/login">
+        <v-btn color="white" @click="redirect('/admin/#/login')">
           <span class="black--text">Log in</span>
         </v-btn>
       </div>
       <div class="mx-5">
-        <v-btn color="#1976D2" to="/admin/#/signup">
+        <v-btn color="#1976D2" @click="redirect('/admin/#/signup')">
           Sign up
         </v-btn>
       </div>
@@ -141,6 +141,8 @@ export default {
       this.$nextTick(() => {
         this.$vuetify.goTo(document.getElementById(id).offsetTop + 40)
       })
+    }, redirect(path) {
+      window.location.replace(path)
     }
   }
 }
