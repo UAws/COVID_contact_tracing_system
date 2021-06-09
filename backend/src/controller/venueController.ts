@@ -29,7 +29,7 @@ export class venueController {
     }
 
     async postVenueInfo(request: Request, response: Response, next: NextFunction) {
-        return this.venueRepository.save(request.body)
+        return ApiResultBean.success(await this.venueRepository.save(request.body))
     }
 
     async save(request: Request, response: Response, next: NextFunction) {
