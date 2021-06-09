@@ -6,8 +6,17 @@ cd ..
 mkdir -p backend/src/public/admin
 cd backend/src/public || exit
 rm -rf ./*
-wget https://github.com/UAws/COVID_contact_tracing_system/releases/download/latest/frontend-admin.zip.zip -O frontend-admin.zip.zip
-wget https://github.com/UAws/COVID_contact_tracing_system/releases/download/latest/frontend.zip.zip -O frontend.zip.zip
+curl -s https://api.github.com/repos/UAws/COVID_contact_tracing_system/releases/latest \
+| grep "frontend-admin.zip.zip" \
+| cut -d : -f 2,3 \
+| tr -d \" \
+| wget -i -
+
+curl -s https://api.github.com/repos/UAws/COVID_contact_tracing_system/releases/latest \
+| grep "frontend.zip.zip" \
+| cut -d : -f 2,3 \
+| tr -d \" \
+| wget -i -
 
 unzip frontend-admin.zip.zip
 unzip frontend-admin.zip
