@@ -23,7 +23,6 @@ export class venueController {
         } as any)
         return ApiResultBean.success({total, list})
     }
-
     async getVenueInfo(request: Request, response: Response, next: NextFunction) {
         return this.venueRepository.findOne(request.params.id, {relations: ['Users']});
     }

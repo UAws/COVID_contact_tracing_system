@@ -12,9 +12,12 @@
         v-model="listQuery.checkInCode"
         placeholder="CheckIn Code"
         style="width: 200px;"
-        class="filter-itemm"
+        class="filter-item"
         @keyup.enter.native="handleFilter"
       />
+      <el-select v-model="listQuery.sort" style="width: 140px" class="filter-item" @change="handleFilter">
+        <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />
+      </el-select>
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         Search
       </el-button>
@@ -26,16 +29,6 @@
         @click="handleUpdate({})"
       >
         Add
-      </el-button>
-      <el-button
-        v-waves
-        :loading="downloadLoading"
-        class="filter-item"
-        type="primary"
-        icon="el-icon-download"
-        @click="handleDownload"
-      >
-        Export
       </el-button>
     </div>
 
