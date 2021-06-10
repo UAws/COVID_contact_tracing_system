@@ -30,6 +30,30 @@ export class JWTAuthInterceptor {
 
     ]
 
+    private static VenueLevelAllowedRoutes = [
+        {
+            method: "get",
+            route: "/api/user/info/:id"
+        },{
+            method: "get",
+            route: "/api/user/info",
+        },{
+            method: 'get',
+            route: '/api/venue/info',
+        }, {
+            method: 'post',
+            route: '/api/venue/info'
+        },{
+            method: 'get',
+            route: '/api/venue/checkIn/:code',
+        },{
+            method: 'get',
+            route: '/api/venue/venueID/:id',
+        }
+
+    ]
+    
+
     private static fullUrl(req) {
         return url.format({
             protocol: req.protocol,
@@ -52,7 +76,6 @@ export class JWTAuthInterceptor {
                 next();
                 return;
             }
-
 
             // check Authorization header
             const auth = req.headers.authorization;
@@ -107,10 +130,18 @@ export class JWTAuthInterceptor {
                         }
                     }
                     break;
-                case 2:
+                case 2: //vuene 
+                    for (const route of JWTAuthInterceptor.VenueLevelAllowedRoutes) {
+                        if (
+                            (req.originalUrl.split('?')[0]).search(route.route.split(':')[0]) !== -1 &&
+                            route.method === req.method.toLowerCase()
+                        ) {
 
-                    next();
-                    return;
+                            next();
+                            return;
+
+                        }
+                    }
                     break;
                 case 3:
                     for (const route of Routes) {
@@ -128,7 +159,6 @@ export class JWTAuthInterceptor {
                     break;
             }
 
-
             res.status(403).send('Forbidden !! Access denied');
 
         })};
@@ -140,3 +170,5 @@ export class JWTAuthInterceptor {
     }
 
 }
+
+
