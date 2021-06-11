@@ -2,6 +2,9 @@ import {NextFunction, Router} from "express";
 import {JwtConstants} from "../constants/JwtConstants";
 import * as Jwt from "jwt-simple";
 import {Routes} from "../routes";
+import to from "await-to-js";
+import {ApiResultBean} from "../support/ApiResultBean";
+import {log} from "util";
 
 const url = require('url');
 
@@ -61,7 +64,16 @@ export class JWTAuthInterceptor {
                 const token = auth.split(' ')[1];
                 // console.log(req.headers.authorization);
                 // console.log(Jwt.decode(token, JwtConstants.SECRET));
-                req.tokenInfo = Jwt.decode(token, JwtConstants.SECRET);
+                try {
+
+                    req.tokenInfo = Jwt.decode(token, JwtConstants.SECRET);
+
+                } catch (error){
+
+                    console.log(error);
+                    return res.status(500).send(ApiResultBean.error(req, error));
+
+                }
                 next();
                 return;
 
@@ -70,7 +82,16 @@ export class JWTAuthInterceptor {
 
                 const token = req.query.token;
 
-                req.tokenInfo = Jwt.decode(token, JwtConstants.SECRET);
+                try {
+
+                    req.tokenInfo = Jwt.decode(token, JwtConstants.SECRET);
+
+                } catch (error){
+
+                    return res.status(500).send(ApiResultBean.error(req, error));
+
+                }
+
                 next();
                 return;
 
