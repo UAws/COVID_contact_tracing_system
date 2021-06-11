@@ -7,3 +7,11 @@ export function postUserCheckIn(data) {
     data
   })
 }
+
+export function fetchCheckInList(query) {
+  return request({
+    url: '/user/checkIn/',
+    method: 'get',
+    params: query
+  })
+}

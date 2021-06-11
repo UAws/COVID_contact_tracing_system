@@ -1,5 +1,7 @@
 <template>
+
   <el-card>
+
     <v-row>
       <v-col cols="12">
         <v-sheet
@@ -14,21 +16,26 @@
 
               <!--            <p>{{ mapHeight }}</p>-->
               <GmapMap
-                :center="center"
+                :center="changeSelectableArea.position"
                 :zoom="zoom"
                 map-type-id="terrain"
                 style="width: 100%; "
                 :style="map_height"
               >
 
+                <GmapMarker
+                  v-if="GPSFLAG"
+                  :position="GPSlocation"
+                  :shape="shape"
+                />
                 <GmapCircle
                   v-if="venue_id"
-                  :center="!changeSelectableArea?selectMapCoordinate:changeSelectableArea.position"
+                  :center="changeSelectableArea.position"
                   :radius="200"
                   :options="shape_options"
-                  @center_changed="updateSelect"
                 />
               </GmapMap>
+
             </div>
           </div>
 
@@ -102,7 +109,12 @@ export default {
         fillOpacity: 0.35
       },
       selectMapCoordinate: {},
-      list: []
+      list: [],
+      GPSlocation: {
+        lat: '',
+        lng: ''
+      },
+      GPSFLAG: false
     }
   },
   computed: {
@@ -201,6 +213,22 @@ export default {
 
       this.$store.dispatch('venue/changeLat', this.selectMapCoordinate.lat)
       this.$store.dispatch('venue/changeLng', this.selectMapCoordinate.lng)
+    },
+    geolocate() {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const gps_location = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        }
+        this.center = gps_location
+        // this.GPSlocation = gps_location
+        this.GPSlocation = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        }
+        this.GPSFLAG = true
+        console.log(gps_location)
+      })
     }
   }
 }

@@ -51,6 +51,11 @@ const tableRouter = {
       component: () => import('@/views/hotspot/manageHotspot'),
       name: 'HotSpot Manage',
       meta: { title: 'HotSpot Manage' }
+    }, {
+      path: 'manage-checkIn',
+      component: () => import('@/views/table/complex-table-checkin'),
+      name: 'Check In Manage',
+      meta: { title: 'Check In Manage' }
     }
   ]
 }

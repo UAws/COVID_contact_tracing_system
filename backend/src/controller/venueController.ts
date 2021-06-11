@@ -48,7 +48,18 @@ export class venueController {
     }
 
     async postVenueInfo(request: Request, response: Response, next: NextFunction) {
-        return this.venueRepository.save(request.body)
+
+        const [error, venue] = await to(this.venueRepository.save(request.body));
+
+        if (error) {
+            return ApiResultBean.error(request, error);
+        }
+
+        if (venue) {
+            return ApiResultBean.success(venue);
+        } else {
+            return ApiResultBean.errorMessage("venue not found");
+        }
     }
 
     async save(request: Request, response: Response, next: NextFunction) {

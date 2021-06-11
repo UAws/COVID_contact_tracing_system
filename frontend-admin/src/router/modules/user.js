@@ -17,6 +17,12 @@ const userRouter = {
       component: () => import('@/views/checkIn/user/UserCheckIn'),
       name: 'Check In',
       meta: { title: 'Check In' }
+    },
+    {
+      path: 'check-in-list',
+      component: () => import('@/views/checkIn/user/UserCheckInList'),
+      name: 'Check In List',
+      meta: { title: 'Check In List' }
     }
   ]
 }

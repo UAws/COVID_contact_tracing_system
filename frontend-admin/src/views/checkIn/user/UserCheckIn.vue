@@ -3,7 +3,7 @@
     <el-row :gutter="20">
 
       <el-col :span="18" :xs="24">
-        <GMap propmapheight="82vh" />
+        <GMap ref="child_gmap" propmapheight="82vh" />
       </el-col>
 
       <el-col :span="6" :xs="24">
@@ -18,9 +18,13 @@
                   <el-input v-else v-model="checkInCode" />
                 </el-form-item>
                 <el-form-item>
-                  <el-button type="primary" @click="search">Search</el-button>
+                  <el-button type="success" @click="callgeolocate">
+                    Get Gps
+                  </el-button>
                 </el-form-item>
                 <el-form-item>
+                  <el-button type="primary" @click="search">Search</el-button>
+
                   <el-button v-if="showVenueInfo" type="primary" @click="submit">CheckIn</el-button>
                   <el-button v-else type="primary" disabled @click="submit">CheckIn</el-button>
                 </el-form-item>
@@ -120,6 +124,9 @@ export default {
           type: 'warning'
         })
       })
+    },
+    callgeolocate() {
+      this.$refs.child_gmap.geolocate()
     }
   }
 }
