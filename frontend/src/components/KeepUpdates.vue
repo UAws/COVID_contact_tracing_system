@@ -8,7 +8,7 @@
         >
           <v-img
             class="mx-auto white--text align-end"
-            src="../assets/nurse.jpeg"
+            src="https://cdn.jsdelivr.net/gh/UAws/COVID_contact_tracing_system/frontend/src/assets/nurse.jpeg"
             height="300px"
           >
             <v-card
@@ -37,7 +37,7 @@
         >
           <v-img
             class="mx-auto white--text align-end"
-            src="../assets/vaccine.jpeg"
+            src="https://cdn.jsdelivr.net/gh/UAws/COVID_contact_tracing_system/frontend/src/assets/vaccine.jpeg"
             height="300px"
           >
             <v-card
@@ -66,7 +66,7 @@
         >
           <v-img
             class="mx-auto white--text align-end"
-            src="../assets/doctor.jpeg"
+            src="https://cdn.jsdelivr.net/gh/UAws/COVID_contact_tracing_system/frontend/src/assets/doctor.jpeg"
             height="300px"
           >
             <v-card

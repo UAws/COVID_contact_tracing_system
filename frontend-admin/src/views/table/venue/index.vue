@@ -20,16 +20,6 @@
       >
         Add
       </el-button>
-      <el-button
-        v-waves
-        :loading="downloadLoading"
-        class="filter-item"
-        type="primary"
-        icon="el-icon-download"
-        @click="handleDownload"
-      >
-        Export
-      </el-button>
     </div>
 
     <el-table
@@ -59,13 +49,16 @@
           <span>{{ row.is_hotspot ? 'yes' : 'no' }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Actions" align="center" width="250" class-name="small-padding fixed-width">
+      <el-table-column label="Actions" align="center" width="300" class-name="small-padding fixed-width">
         <template slot-scope="{row,$index}">
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             Edit
           </el-button>
-          <el-button size="mini" type="success" @click="handleModifyStatus(row,!row.is_in_hotspot)">
-            {{ !row.is_in_hotspot ? 'In HotSpot' : 'Not In HotSpot' }}
+          <el-button v-if="row.is_hotspot" size="mini" type="success" @click="handleModifyStatus(row)">
+            {{ row.is_hotspot ? 'In HotSpot' : 'Not In HotSpot' }}
+          </el-button>
+          <el-button v-else size="mini" @click="handleModifyStatus(row)">
+            {{ row.is_hotspot ? 'In HotSpot' : 'Not In HotSpot' }}
           </el-button>
           <el-button v-if="row.status!=='deleted'" size="mini" type="danger" @click="handleDelete(row,$index)">
             Delete
@@ -88,7 +81,7 @@
 <script>
 import { fetchPv, updateArticle } from '@/api/article'
 import { createUser } from '@/api/myUserInfo'
-import { delVenue, editVenue, listVenue } from '@/api/venue'
+import { delVenue, venueChangeInHotSport, listVenue } from '@/api/venue'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
@@ -211,14 +204,14 @@ export default {
       this.getList()
     },
     async handleModifyStatus(row, status) {
-      const res = await editVenue(row.venue_id, { ...row, status })
+      const res = await venueChangeInHotSport(row.venue_id)
       if (res.code === 20000) {
         this.$message({
           message: '操作Success',
           type: 'success'
         })
         // eslint-disable-next-line require-atomic-updates
-        row.is_in_hotspot = status
+        row.is_hotspot = !row.is_hotspot
       }
     },
     sortChange(data) {
@@ -343,20 +336,6 @@ export default {
       fetchPv(pv).then(response => {
         this.pvData = response.data.pvData
         this.dialogPvVisible = true
-      })
-    },
-    handleDownload() {
-      this.downloadLoading = true
-      import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = ['timestamp', 'title', 'type', 'importance', 'status']
-        const filterVal = ['timestamp', 'title', 'type', 'importance', 'status']
-        const data = this.formatJson(filterVal)
-        excel.export_json_to_excel({
-          header: tHeader,
-          data,
-          filename: 'table-list'
-        })
-        this.downloadLoading = false
       })
     },
     formatJson(filterVal) {

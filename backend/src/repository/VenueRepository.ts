@@ -2,6 +2,7 @@ import {Venue} from "../entity/Venue";
 import {EntityRepository, getManager, getRepository, Repository} from "typeorm";
 import {badRequest} from "@hapi/boom";
 import {venueHotSpotOptions} from "../support/venueHotSpotOptions";
+import to from "await-to-js";
 
 @EntityRepository(Venue)
 export class VenueRepository extends Repository<Venue>{
@@ -70,4 +71,20 @@ export class VenueRepository extends Repository<Venue>{
 
     }
 
+    public async CheckInCodeGenerator() : Promise<number>{
+        const [error,result] = await to(this.findOne({
+            order: {venue_id: 'DESC'},
+        }))
+
+        if (error) {
+            throw error;
+        }
+
+        if (result) {
+            return parseInt(result.check_in_code) + 1;
+        } else {
+            return 100000;
+        }
+
+    }
 }

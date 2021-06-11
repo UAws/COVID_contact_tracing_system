@@ -11,6 +11,7 @@ import Layout from '@/layout'
 // import chartsRouter from './modules/charts'
 import tableRouter from './modules/table'
 import userRouter from '@/router/modules/user'
+import venueRouter from '@/router/modules/venue'
 // import nestedRouter from './modules/nested'
 
 /**
@@ -136,8 +137,9 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
 
-  tableRouter,
   userRouter,
+  venueRouter,
+  tableRouter,
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }

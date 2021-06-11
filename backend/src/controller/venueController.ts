@@ -4,6 +4,7 @@ import {ApiResultBean} from "../support/ApiResultBean";
 import {VenueRepository} from "../repository/VenueRepository";
 import {venueHotSpotOptions} from '../support/venueHotSpotOptions'
 import to from "await-to-js";
+import {error} from "util";
 
 export class venueController {
     private venueRepository = getCustomRepository(VenueRepository)
@@ -25,18 +26,26 @@ export class venueController {
     }
 
     async getVenueInfo(request: Request, response: Response, next: NextFunction) {
-        return this.venueRepository.findOne(request.params.id, {relations: ['Users']});
+        const [error, result] = await to(this.venueRepository.findOne(request.params.id, {relations: ['Users', 'userCheckIns']}));
+
+        if (error) {
+            return ApiResultBean.error(request, error);
+        }
+
+        return ApiResultBean.success(result);
+
+
     }
 
     async getVenueInfoByCheckInCode(request: Request, response: Response, next: NextFunction) {
         const [error, venue] = await to(this.venueRepository.findOne({
                 where: {check_in_code: request.params.code},
-                relations: ['Users']
+                relations: ['Users','userCheckIns']
             }
         ));
 
         if (error) {
-            ApiResultBean.error(request, error);
+            return ApiResultBean.error(request, error);
         }
 
         if (venue) {
@@ -63,7 +72,29 @@ export class venueController {
     }
 
     async save(request: Request, response: Response, next: NextFunction) {
-        return ApiResultBean.success(await this.venueRepository.save(request.body))
+
+
+        let error, result: Object;
+
+        [error, result] = await to(this.venueRepository.findOne(request.body.venue_id));
+
+        if (error) {
+            return ApiResultBean.error(request, error);
+        }
+
+        if (result) {
+            [error, request.body.check_in_code] = await to(this.venueRepository.CheckInCodeGenerator());
+            if (error) {
+                return ApiResultBean.error(request, error);
+            }
+        }
+
+        [error, result] = await to(this.venueRepository.save(request.body));
+        if (error) {
+            return ApiResultBean.error(request, error);
+        }
+
+        return ApiResultBean.success(result);
     }
 
     async remove(request: Request, response: Response, next: NextFunction) {
