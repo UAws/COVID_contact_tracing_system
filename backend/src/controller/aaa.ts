@@ -81,7 +81,7 @@
       :limit.sync="listQuery.limit"
       @pagination="getList"
     />
-    <edit-modal ref="editModal" :visible.sync="ctrl.showEditModal" @update="getList" />
+    <edit-modal ref="editModal" :visible.sync="ctrl.showEditModal" @getList="getList" />
   </div>
 </template>
 
@@ -93,20 +93,17 @@ import Pagination from '@/components/Pagination' // secondary package based on e
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import editModal from './components/editModal'
-
 const calendarTypeOptions = [
   { key: 'CN', display_name: 'China' },
   { key: 'US', display_name: 'USA' },
   { key: 'JP', display_name: 'Japan' },
   { key: 'EU', display_name: 'Eurozone' }
 ]
-
 // arr to obj, such as { CN : "China", US : "USA" }
 const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
   acc[cur.key] = cur.display_name
   return acc
 }, {})
-
 export default {
   name: 'ComplexTable',
   components: { Pagination, editModal },
@@ -200,7 +197,6 @@ export default {
       listVenue(this.listQuery).then(response => {
         this.myData = response.data.list
         this.total = response.data.total
-
         // Just to simulate the time of the request
         setTimeout(() => {
           this.listLoading = false

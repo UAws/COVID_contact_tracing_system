@@ -13,9 +13,10 @@ export class venueController {
         const page = Number(request.query.page) || 1
         const keyword = request.query.keyword || ''
         const sort = request.query.sort || 'ASC'
+        const checkInCode= request.query.checkInCode || ''
 
         const [list, total] = await this.venueRepository.findAndCount({
-            where: {venue_name: Like('%' + keyword + '%')},
+            where: {venue_name: Like('%' + keyword + '%'), check_in_code: Like('%' + checkInCode + '%')},
             order: {venue_id: sort},
             take: limit,
             skip: (page - 1) * limit,
