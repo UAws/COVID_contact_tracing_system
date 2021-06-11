@@ -46,7 +46,7 @@ export const Routes = [{
     action: "getRoleById"
 }, {
     method: "get",
-    route: "/api/user/checkIn/:id",
+    route: "/api/user/checkIn/:userId",
     controller: UserCheckInController,
     action: "getUserCheckIn"
 }, {
