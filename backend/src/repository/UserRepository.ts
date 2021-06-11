@@ -138,7 +138,7 @@ export class UserRepository extends Repository<User>{
                 return dbuser;
 
             } else {
-                return "user not already exists";
+                throw badRequest("user not already exists");
             }
 
     }
