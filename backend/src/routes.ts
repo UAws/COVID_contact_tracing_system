@@ -49,6 +49,11 @@ export const Routes = [{
     route: "/api/user/checkIn/:userId",
     controller: UserCheckInController,
     action: "getUserCheckIn"
+},{
+    method: "get",
+    route: "/api/user/checkIn/",
+    controller: UserCheckInController,
+    action: "getAllUserCheckIN"
 }, {
     method: "post",
     route: "/api/user/checkIn/",

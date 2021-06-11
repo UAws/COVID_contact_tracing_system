@@ -6,17 +6,51 @@ import to from "await-to-js";
 import {ApiResultBean} from "../support/ApiResultBean";
 import {UserRepository} from "../repository/UserRepository";
 import {User} from "../entity/User";
+import {reqParamsOptionsInterface} from "../support/reqParamsOptions.Interface";
+import {UserCheckInRepository} from "../repository/UserCheckInRepository";
 const { BAD_REQUEST, CREATED, OK } = StatusCodes;
 
 
 export class UserCheckInController {
 
-    private userCheckInRepository = getRepository(UserCheckIn);
+    private userCheckInRepository = getCustomRepository(UserCheckInRepository);
     private userRepository = getCustomRepository(UserRepository);
 
     async getUserCheckIn(req: Request, res: Response, next: NextFunction) {
 
         return this.userCheckInRepository.findOne(req.params.id, {relations: ['Users']});
+
+    }
+
+    async getAllUserCheckIN(request: Request, res: Response, next: NextFunction) {
+
+
+
+        const reqParams : reqParamsOptionsInterface = {
+            limit : request.query.limit || 10,
+            page : request.query.page || 1,
+            keyword: request.query.keyword || '',
+            sort : request.query.sort || 'ASC',
+            userType : request.query.type || null
+        }
+
+        let error, list, total, result_object;
+
+        [error, result_object] = await to(this.userCheckInRepository.listAllCheckIn(reqParams));
+
+        if (result_object) {
+            [list, total] = result_object;
+        }
+
+        if (error) {
+            return ApiResultBean.error(request, error);
+        } else if (list != null && total != null) {
+            return ApiResultBean.success({list, total});
+        } else {
+            return ApiResultBean.errorMessage("CheckInNotFound");
+        }
+
+
 
 
     }

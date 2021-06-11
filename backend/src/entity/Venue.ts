@@ -1,6 +1,15 @@
-import {Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, OneToMany,} from "typeorm";
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    Column,
+    ManyToMany,
+    JoinTable,
+    OneToMany,
+    ManyToOne,
+} from "typeorm";
 import { Audit } from "./Audit";
 import {User} from "./User";
+import {UserCheckIn} from "./UserCheckIn";
 
 @Entity()
 
@@ -36,5 +45,7 @@ export class Venue extends Audit{
     @ManyToMany(()=>User, user=> user.Venue)
     Users : User[];
 
+    @OneToMany(()=>UserCheckIn, userCheckIn => userCheckIn.venue)
+    userCheckIns: UserCheckIn[];
 
 }

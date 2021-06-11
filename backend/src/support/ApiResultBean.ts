@@ -62,6 +62,10 @@ export class ApiResultBean {
                 errorDatabaseInfo: error
             }
 
+            if (error.stack) {
+                errObj.errorDatabaseInfo = {message: error.message, stack: error.stack};
+            }
+
             if (error.output) {
                 return new ApiResultBean(error.output.payload.message, 20003, errObj);
             }
