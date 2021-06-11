@@ -12,6 +12,7 @@ import {tokenOptions} from "../support/tokenOptions";
 import {badRequest, notFound, unauthorized} from "@hapi/boom";
 import * as Dayjs from 'dayjs';
 import {Role} from "../entity/Role";
+import to from "await-to-js";
 
 
 @EntityRepository(User)
@@ -94,11 +95,16 @@ export class UserRepository extends Repository<User>{
 
     public async updateUser(user: User) {
 
-        try {
+        let error, dbuser: User;
 
-            let dbuser : User = await this.findOne({
-                where: {user_id: user.user_id}
-            });
+        [error, dbuser] = await to(this.findOne({
+            where: {user_id: user.user_id},
+            relations: ['Role'],
+        }));
+
+        if (error) {
+            throw error;
+        }
 
             if (dbuser) {
 
@@ -115,19 +121,25 @@ export class UserRepository extends Repository<User>{
 
                 user.update_time = Dayjs().toDate();
 
-                dbuser = await this.repository.save(user);
-                return await this.findOne({
+                [error, dbuser] = await to(this.repository.save(user));
+
+                if (error) {
+                    throw error;
+                }
+                [error, dbuser] = await to(this.findOne({
                     relations: ['Role'],
                     where: {user_id: dbuser.user_id}
-                });
+                }));
+
+                if (error) {
+                    throw error;
+                }
+
+                return dbuser;
 
             } else {
                 return "user not already exists";
             }
-
-        } catch (error) {
-            return error;
-        }
 
     }
 

@@ -63,7 +63,10 @@ export default {
           {
             user_id: ''
           }
-        ]
+        ],
+        venue: {
+          venue_id: ''
+        }
       }
     }
   }, computed: {
@@ -103,6 +106,7 @@ export default {
       data.CheckInAddress = this.targetVenue.shop_address
       data.CheckInTimeStamp = new Date()
       data.Users[0].user_id = this.userData.user_id
+      data.venue.venue_id = this.venue_id
       postUserCheckIn(data).then(response => {
         if (response.code === 20000) {
           this.checkInCode = ''
