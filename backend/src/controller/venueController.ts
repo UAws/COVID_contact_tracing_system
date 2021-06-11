@@ -13,9 +13,9 @@ export class venueController {
         const page = Number(request.query.page) || 1
         const keyword = request.query.keyword || ''
         const sort = request.query.sort || 'ASC'
-        const checkInCode= request.query.checkInCode ||''
+        const checkInCode= request.query.checkInCode || ''
         const [list, total] = await this.venueRepository.findAndCount({
-            where: {venue_name: Like('%' + keyword + '%'),check_in_code: Like('%' + checkInCode + '%')},
+            where: {venue_name: Like('%' + keyword + '%'), check_in_code: Like('%' + checkInCode + '%')},
             order: {venue_id: sort},
             take: limit,
             skip: (page - 1) * limit,
@@ -23,13 +23,12 @@ export class venueController {
         } as any)
         return ApiResultBean.success({total, list})
     }
-
     async getVenueInfo(request: Request, response: Response, next: NextFunction) {
         return this.venueRepository.findOne(request.params.id, {relations: ['Users']});
     }
 
     async postVenueInfo(request: Request, response: Response, next: NextFunction) {
-        return ApiResultBean.success(await this.venueRepository.save(request.body))
+        return this.venueRepository.save(request.body)
     }
 
     async save(request: Request, response: Response, next: NextFunction) {

@@ -12,9 +12,12 @@
         v-model="listQuery.checkInCode"
         placeholder="CheckIn Code"
         style="width: 200px;"
-        class="filter-itemm"
+        class="filter-item"
         @keyup.enter.native="handleFilter"
       />
+      <el-select v-model="listQuery.sort" style="width: 140px" class="filter-item" @change="handleFilter">
+        <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />
+      </el-select>
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         Search
       </el-button>
@@ -26,16 +29,6 @@
         @click="handleUpdate({})"
       >
         Add
-      </el-button>
-      <el-button
-        v-waves
-        :loading="downloadLoading"
-        class="filter-item"
-        type="primary"
-        icon="el-icon-download"
-        @click="handleDownload"
-      >
-        Export
       </el-button>
     </div>
 
@@ -68,13 +61,13 @@
       </el-table-column>
       <el-table-column label="Actions" align="center" width="250" class-name="small-padding fixed-width">
         <template slot-scope="{row,$index}">
-          <el-button type="text" size="mini" @click="handleUpdate(row)">
+          <el-button type="primary" size="mini" @click="handleUpdate(row)">
             Edit
           </el-button>
-          <el-button size="mini" type="text" @click="handleModifyStatus(row,!row.is_in_hotspot)">
+          <el-button size="mini" type="success" @click="handleModifyStatus(row,!row.is_in_hotspot)">
             {{ !row.is_in_hotspot ? 'In HotSpot' : 'Not In HotSpot' }}
           </el-button>
-          <el-button v-if="row.status!=='deleted'" size="mini" type="text" @click="handleDelete(row,$index)">
+          <el-button v-if="row.status!=='deleted'" size="mini" type="danger" @click="handleDelete(row,$index)">
             Delete
           </el-button>
         </template>
@@ -88,32 +81,29 @@
       :limit.sync="listQuery.limit"
       @pagination="getList"
     />
-    <edit-modal ref="editModal" :visible.sync="ctrl.showEditModal" @update="getList" />
+    <edit-modal ref="editModal" :visible.sync="ctrl.showEditModal" @getList="getList" />
   </div>
 </template>
 
 <script>
 import { fetchPv, updateArticle } from '@/api/article'
 import { createUser } from '@/api/myUserInfo'
-import { delVenue, editVenue, listVenue } from '@/api/venue'
+import { delVenue, listVenue } from '@/api/venue'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import editModal from './components/editModal'
-
 const calendarTypeOptions = [
   { key: 'CN', display_name: 'China' },
   { key: 'US', display_name: 'USA' },
   { key: 'JP', display_name: 'Japan' },
   { key: 'EU', display_name: 'Eurozone' }
 ]
-
 // arr to obj, such as { CN : "China", US : "USA" }
 const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
   acc[cur.key] = cur.display_name
   return acc
 }, {})
-
 export default {
   name: 'ComplexTable',
   components: { Pagination, editModal },
@@ -207,7 +197,6 @@ export default {
       listVenue(this.listQuery).then(response => {
         this.myData = response.data.list
         this.total = response.data.total
-
         // Just to simulate the time of the request
         setTimeout(() => {
           this.listLoading = false
@@ -218,16 +207,16 @@ export default {
       this.listQuery.page = 1
       this.getList()
     },
-    async handleModifyStatus(row, status) {
-      const res = await editVenue(row.venue_id, { ...row, status })
-      if (res.code === 20000) {
-        this.$message({
-          message: '操作Success',
-          type: 'success'
-        })
-        // eslint-disable-next-line require-atomic-updates
-        row.is_in_hotspot = status
-      }
+    handleModifyStatus(row, status) {
+      // const res = await editVenue(row.venue_id, { ...row, status })
+      // if (res.code === 20000) {
+      this.$message({
+        message: '操作Success',
+        type: 'success'
+      })
+      // eslint-disable-next-line require-atomic-updates
+      row.is_in_hotspot = status
+      // }
     },
     sortChange(data) {
       const { prop, order } = data
