@@ -7,7 +7,7 @@
       highlight-current-row
       style="width: 100%;"
     >
-      <el-table-column label="ID" prop="id" sortable="custom" align="center" width="80">
+      <el-table-column label="Check In ID" prop="id" align="center" width="80">
         <template slot-scope="{row}">
           <span>{{ row.check_in_id }}</span>
         </template>
