@@ -58,7 +58,7 @@
           >
             <v-img
               class="mx-0"
-              src="../assets/Tracing_logo.png"
+              src="https://cdn.jsdelivr.net/gh/UAws/COVID_contact_tracing_system/frontend/src/assets/Tracing_logo.png"
               style="padding-left: 5px; padding-right: 5px; padding-bottom: 10px"
               :height="imgH+'px'"
               contain

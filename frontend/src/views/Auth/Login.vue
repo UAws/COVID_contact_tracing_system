@@ -10,7 +10,7 @@
       >
         <v-img
           class="mx-auto white--text align-end"
-          src="../../assets/login.png"
+          src="https://cdn.jsdelivr.net/gh/UAws/COVID_contact_tracing_system/frontend/src/assets/login.png"
           height="90vh"
           style="margin-top: 5vh"
         />

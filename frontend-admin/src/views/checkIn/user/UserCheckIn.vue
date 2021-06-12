@@ -63,7 +63,10 @@ export default {
           {
             user_id: ''
           }
-        ]
+        ],
+        venue: {
+          venue_id: ''
+        }
       }
     }
   }, computed: {
@@ -71,6 +74,9 @@ export default {
       'venue_id',
       'userData'
     ])
+  },
+  created() {
+    this.fillCode()
   },
   methods: {
     search() {
@@ -103,6 +109,7 @@ export default {
       data.CheckInAddress = this.targetVenue.shop_address
       data.CheckInTimeStamp = new Date()
       data.Users[0].user_id = this.userData.user_id
+      data.venue.venue_id = this.venue_id
       postUserCheckIn(data).then(response => {
         if (response.code === 20000) {
           this.checkInCode = ''
@@ -127,6 +134,13 @@ export default {
     },
     callgeolocate() {
       this.$refs.child_gmap.geolocate()
+    },
+    fillCode() {
+      if (this.$route.query.code) {
+        this.checkInCode = this.$route.query.code
+        this.showVenueInfo = true
+        this.search()
+      }
     }
   }
 }
