@@ -5,6 +5,9 @@ import {VenueRepository} from "../repository/VenueRepository";
 import {venueHotSpotOptions} from '../support/venueHotSpotOptions'
 import to from "await-to-js";
 import {error} from "util";
+import {Venue} from "../entity/Venue";
+var QRCode = require('qrcode')
+
 
 export class venueController {
     private venueRepository = getCustomRepository(VenueRepository)
@@ -134,6 +137,40 @@ export class venueController {
 
         }
         return ApiResultBean.success(result);
+
+    }
+
+
+    private static qrcode;
+
+    async getQRCode(request: Request, response: Response, next: NextFunction) {
+
+        let error, result: Venue;
+
+        [error, result] = await to(this.venueRepository.findOne(request.params.id));
+
+        if (error) {
+            return ApiResultBean.error(request,error);
+        }
+
+
+        const fullUrl = request.protocol + '://' + request.get('host');
+
+        const checkInUrl = fullUrl + '/admin/#/user/check-in/' + `?code=${result.check_in_code}`
+
+
+        QRCode.toDataURL(checkInUrl)
+            .then(url => {
+                venueController.qrcode = url;
+                console.log(url)
+            })
+            .catch(err => {
+                console.error(err)
+            })
+
+        return ApiResultBean.success(venueController.qrcode);
+
+
 
     }
 

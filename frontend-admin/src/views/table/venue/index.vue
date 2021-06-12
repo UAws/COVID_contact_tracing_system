@@ -51,6 +51,9 @@
       </el-table-column>
       <el-table-column label="Actions" align="center" width="300" class-name="small-padding fixed-width">
         <template slot-scope="{row,$index}">
+          <el-button type="success" size="mini" @click="handleQRCode(row)">
+            QR Code
+          </el-button>
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             Edit
           </el-button>
@@ -75,6 +78,21 @@
       @pagination="getList"
     />
     <edit-modal ref="editModal" :visible.sync="ctrl.showEditModal" @update="getList" />
+
+    <el-dialog
+      title="QRCode"
+      :visible.sync="dialogVisible"
+      width="30%"
+    >
+      <div class="block" style="padding-left: 25%">
+        <el-image :src="qrCode" />
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">Cancel</el-button>
+        <el-button type="primary" @click="dialogVisible = false">Confirm</el-button>
+      </span>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -86,6 +104,8 @@ import Pagination from '@/components/Pagination' // secondary package based on e
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import editModal from './components/editModal'
+
+const { getVenueQrCode } = require('@/api/venue')
 
 const calendarTypeOptions = [
   { key: 'CN', display_name: 'China' },
@@ -119,6 +139,8 @@ export default {
   },
   data() {
     return {
+      qrCode: null,
+      dialogVisible: false,
       ctrl: {
         showEditModal: false
       },
@@ -350,6 +372,25 @@ export default {
     getSortClass: function(key) {
       const sort = this.listQuery.sort
       return sort === `+${key}` ? 'ascending' : 'descending'
+    },
+    handleQRCode(row) {
+      getVenueQrCode(row.venue_id).then(response => {
+        if (response.code === 20000) {
+          this.dialogVisible = true
+          this.qrCode = response.data
+          console.log(response.data)
+
+          this.$message({
+            message: 'QR Code In Success',
+            type: 'success'
+          })
+        } else {
+          this.$message({
+            message: 'Check In Failed',
+            type: 'warning'
+          })
+        }
+      })
     }
   }
 }

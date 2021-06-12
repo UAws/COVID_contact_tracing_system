@@ -75,6 +75,9 @@ export default {
       'userData'
     ])
   },
+  created() {
+    this.fillCode()
+  },
   methods: {
     search() {
       getVenueInfoByCheckInCode(this.checkInCode).then(response => {
@@ -131,6 +134,12 @@ export default {
     },
     callgeolocate() {
       this.$refs.child_gmap.geolocate()
+    },
+    fillCode() {
+      if (this.$route.query.code) {
+        this.checkInCode = this.$route.query.code
+        this.showVenueInfo = true
+      }
     }
   }
 }
