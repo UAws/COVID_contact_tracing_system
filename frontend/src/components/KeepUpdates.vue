@@ -20,7 +20,7 @@
               <v-card-title
                 class="text--primary"
               >
-                {{ slide.title}}
+                {{ slide.title }}
               </v-card-title>
               <v-card-subtitle
                 class="text--secondary"
@@ -73,6 +73,4 @@ export default {
 }
 </script>
 <style scoped>
-
 </style>
-
