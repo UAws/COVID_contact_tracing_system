@@ -1,39 +1,68 @@
 <template>
   <el-row :gutter="20">
     <div class="dashboard-editor-container">
-      <div class=" clearfix">
-        <pan-thumb :image="avatar" style="float: left">
-          Your roles:
-          <span v-for="item in roles" :key="item" class="pan-info-roles">{{ item }}</span>
-        </pan-thumb>
-        <github-corner style="position: absolute; top: 0px; border: 0; right: 0;" />
-        <div class="info-container">
-          <span style="font-size:40px;" class="display_name">{{ name }}</span>
-          <span style="font-size:25px;padding-top:20px;display:inline-block;">Welcome!</span>
-        </div>
-      </div>
       <v-row :gutter="10">
-        <img :src="emptyGif" class="emptyGif">
+        <!-- <img :src="emptyGif" class="emptyGif"> -->
 
-        <v-card
+        <!-- <v-card
           class="mx-auto"
-          max-width="400"
-        >
-          <v-img
-            class="white--text align-end"
+          width="max-auto"
+        > -->
+        <div class=" clearfix">
+          <pan-thumb :image="avatar" style="float: left">
+            Your roles:
+            <span v-for="item in roles" :key="item" class="pan-info-roles">{{ item }}</span>
+          </pan-thumb>
+          <github-corner style="position: absolute; top: 0px; border: 0; right: 0;" />
+          <div class="info-container">
+            <span style="font-size:40px;" class="display_name">Hello, {{ name }}</span>
+            <span style="font-size:20px;padding-top:27px;display:inline-block;">Welcome back!</span>
+          </div>
+        </div>
+      </v-row>
+      <v-row :gutter="10">
+        <el-col :span="12" :xs="24">
+          <!-- <v-img
+            class="white--text rounded-circle align-end"
             height="200px"
-            src="https://lh3.googleusercontent.com/proxy/YilJI16h1beNfsmjjmRLRKk5lOZbS7NR5FJG2TGFN4HuBrSiub3kdgOez5T-cEof9dCsJDrNBKrTv557ultTK9RcYX-xQeH6cE7ivYxBaz-PCmbP7GP0kAs"
-          />
+            src="https://lh3.googleusercontent.com/proxy/xbxcM9lQGAkpot2s-DJh0DDuy607_CFrJz5LV30IYRHuaCik9L9mJIKYqPUKcwPlMZU8-prBbvKXg3mQXiu_6AVWUX01uwPGE9ntdcH5agGGU21tdzM2p5o"
+          >
+            </v-img> -->
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon
+                size="30"
+              >
+                mdi-cloud-circle
+              </v-icon>
+            </v-list-item-icon>
 
-          <v-card-title>
-            South Australia
-          </v-card-title>
+            <v-list-item-content>
+              <v-list-item-title class="text-body-2"> 15&deg;C </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item
+            link
+            @click="goToSAhealth()"
+          >
+            <v-list-item-icon>
+              <v-icon
+                size="30"
+              >
+                mdi-map-marker-circle
+              </v-icon>
+            </v-list-item-icon>
 
+            <v-list-item-content>
+              <v-list-item-title class="text-body-2"> SA Health</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <!--
           <v-card-text class="text--primary">
             <div>15&deg;C</div>
 
-            <v-icon>mdi-cloud</v-icon>
-          </v-card-text>
+            <v-icon><mdi-history></mdi-history></v-icon>
+          </v-card-text> -->
           <v-list-item
             link
             @click="goToProfile()"
@@ -74,14 +103,19 @@
               <v-icon
                 size="30"
               >
-                mdi-home
+                mdi-home-circle
               </v-icon>
             </v-list-item-icon>
             <v-list-item-content>
               <v-list-item-title> Home </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-        </v-card>
+        <!-- </v-card> -->
+        </el-col>
+        <el-col :span="12" :xs="24">
+          <img :src="emptyGif" class="emptyGif">
+        </el-col>
+
       </v-row>
     </div>
   </el-row>
@@ -97,8 +131,8 @@ export default {
   components: { PanThumb, GithubCorner },
   data() {
     return {
-      // emptyGif: 'https://media0.giphy.com/media/QuslVm3lEHtubdaJ1u/giphy.gif'
-      emptyGif: 'https://wpimg.wallstcn.com/0e03b7da-db9e-4819-ba10-9016ddfdaed3'
+      emptyGif: 'https://img.alicdn.com/bao/imgextra/i2/4215259796/O1CN010aCxfe2MEcLwJjyBn_!!4215259796.gif'
+      // emptyGif: 'https://wpimg.wallstcn.com/0e03b7da-db9e-4819-ba10-9016ddfdaed3'
       // items: [
       //   { icon: 'mdi-account-circle', title: 'Profile' },
       //   { icon: 'mdi-clock-start', title: 'Check-in' },
@@ -122,6 +156,9 @@ export default {
     },
     goToHome() {
       this.$router.push('/documentation/index')
+    },
+    goToSAhealth() {
+      location.href = 'https://www.sahealth.sa.gov.au/'
     }
   }
 }
@@ -134,10 +171,10 @@ export default {
     padding: 20px 20px 0px;
   }
   .mx-auto {
-    background-color: #fcfcfcd7;
+    background-color: white;
   }
   .dashboard-editor-container {
-    background-color: #e3e3e3;
+    background-color: white;
     min-height: 100vh;
     padding: 50px 60px 0px;
     .pan-info-roles {
