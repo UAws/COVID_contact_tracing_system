@@ -139,6 +139,7 @@ export default {
       if (this.$route.query.code) {
         this.checkInCode = this.$route.query.code
         this.showVenueInfo = true
+        this.search()
       }
     }
   }
