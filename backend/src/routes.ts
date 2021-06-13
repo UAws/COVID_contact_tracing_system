@@ -79,6 +79,11 @@ export const Routes = [{
     route: '/api/venue/info',
     controller: venueController,
     action: 'all',
+},{
+    method: 'get',
+    route: '/api/public/venue/info',
+    controller: venueController,
+    action: 'all',
 }, {
     method: 'delete',
     route: '/api/venue/info/:id',

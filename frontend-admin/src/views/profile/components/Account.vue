@@ -1,30 +1,33 @@
 <template>
   <el-form>
-    <el-form-item label="UserLevel">
+    <el-form-item
+      v-permission="['admin']"
+      label="UserLevel"
+    >
       <el-select v-model.trim="localUser.Role[0].description" class="filter-item" placeholder="Please select">
         <el-option v-for="item in userTypeOptions" :key="item.key" :label="item.display_name" :value="item.key" />
       </el-select>
     </el-form-item>
-    <el-form-item label="Name">
+    <el-form-item required label="Name">
       <el-input v-model.trim="localUser.name" />
     </el-form-item>
-    <el-form-item label="Password">
+    <el-form-item required label="Password">
       <el-input v-model.trim="password" type="password" />
     </el-form-item>
-    <el-form-item label="Address">
+    <el-form-item required label="Address">
       <el-input v-model.trim="localUser.address" />
     </el-form-item>
-    <el-form-item label="Phone">
+    <el-form-item required label="Phone">
       <el-input v-model.trim="localUser.phone" />
     </el-form-item>
-    <el-form-item label="Email">
+    <el-form-item required label="Email">
       <el-input v-model.trim="localUser.emailAddress" />
     </el-form-item>
     <el-form-item label="Update Time" prop="timestamp">
       <el-date-picker v-model="localUser.update_time" type="datetime" placeholder="Please pick a date" />
     </el-form-item>
 
-    <el-form-item label="HotSpot Status">
+    <el-form-item required label="HotSpot Status">
       <el-radio-group v-model="localUser.is_in_hotspot">
         <el-radio :label="true">Yes</el-radio>
         <el-radio :label="false"> No </el-radio>
@@ -39,6 +42,7 @@
 <script>
 
 const { UpdateUser } = require('@/api/myUserInfo')
+import permission from '@/directive/permission/index.js' // 权限判断指令
 const userTypeOptions = [
   { key: '1', display_name: 'Administrators' },
   { key: '2', display_name: 'Venue Manager' },
@@ -46,6 +50,7 @@ const userTypeOptions = [
 ]
 
 export default {
+  directives: { permission },
   props: {
     user: {
       type: Object,
@@ -75,16 +80,17 @@ export default {
       userTypeOptions,
       statusOptions: ['false', 'true'],
       password: '',
-      localUser: this.user
+      localUser: this.user,
+      valid: false
     }
   },
   methods: {
     submit() {
       // Clear role, we just need id;
 
-      const tempData = Object.assign({}, this.localUser)
-
       function isNumber(n) { return /^-?[\d.]+(?:e-?\d+)?$/.test(n) }
+
+      const tempData = Object.assign({}, this.localUser)
 
       let tmp_role_id
       if (isNumber(this.localUser.Role[0].description)) {

@@ -30,9 +30,13 @@
             <el-radio :label="false"> No </el-radio>
           </el-radio-group>
         </el-form-item>
+        <el-form-item label="QR Code">
+          <el-image :src="qrCode" />
+        </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submit">Update</el-button>
         </el-form-item>
+
       </el-form>
     </v-card>
   </unified-margin-padding-slot>
@@ -42,7 +46,7 @@
 <script>
 
 import UnifiedMarginPaddingSlot from '@/components/Self/unified_margin_padding_slot'
-
+const { getVenueQrCode } = require('@/api/venue')
 const { editVenue } = require('@/api/venue')
 
 const { getVenueById } = require('@/api/venue')
@@ -86,7 +90,8 @@ export default {
           }
         ]
       },
-      managed_venue: []
+      managed_venue: [],
+      qrCode: null
     }
   },
   computed: {
@@ -111,6 +116,7 @@ export default {
         getVenueById(managedVenueElement.venue_id).then(response => {
           // this.myData = response.data.UserCheckIn
           this.my_venue = response.data
+          this.fetchQRCode(this.my_venue)
         })
       }
     },
@@ -125,6 +131,24 @@ export default {
         } else {
           this.$message({
             message: 'Check In Code Can not find a venue',
+            type: 'warning'
+          })
+        }
+      })
+    },
+    fetchQRCode(venue) {
+      getVenueQrCode(venue.venue_id).then(response => {
+        if (response.code === 20000) {
+          this.qrCode = response.data
+          console.log(response.data)
+
+          this.$message({
+            message: 'QR Code In Success',
+            type: 'success'
+          })
+        } else {
+          this.$message({
+            message: 'Check In Failed',
             type: 'warning'
           })
         }
