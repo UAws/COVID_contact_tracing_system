@@ -1,48 +1,52 @@
 <template>
-  <v-card>
-    <div
-      v-for="venue in list"
-      id="content_div"
-      :key="venue.venue_id"
-      style="padding-bottom: 20px"
-    >
-      <v-card
-        class="mx-auto"
-        max-width="100%"
+  <unified-margin-padding-slot>
+    <v-card>
+      <div
+        v-for="venue in list"
+        id="content_div"
+        :key="venue.venue_id"
+        style="padding-bottom: 20px"
       >
-        <v-img
-          class="white--text align-end"
-          height="200px"
-          src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+        <v-card
+          class="mx-auto"
+          max-width="100%"
         >
-          <v-card-title>{{ venue.venue_name }}</v-card-title>
-        </v-img>
+          <v-img
+            class="white--text align-end"
+            height="200px"
+            src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+          >
+            <v-card-title>{{ venue.venue_name }}</v-card-title>
+          </v-img>
 
-        <v-card-subtitle class="pb-0">
-          Address : {{ venue.shop_address }}
-        </v-card-subtitle>
+          <v-card-subtitle class="pb-0">
+            Address : {{ venue.shop_address }}
+          </v-card-subtitle>
 
-        <v-card-text class="text--primary">
-          <div>Venue ID:  {{ venue.venue_id }}</div>
-          <div>HotSpot:
-            <v-btn v-if="!venue.is_hotspot" size="mini" type="danger">
-              In HotSpot
-            </v-btn>
-            <v-btn v-if="venue.is_hotspot" size="mini" type="success">
-              Not In HotSpot
-            </v-btn>
-          </div>
-          <div>Check In Code:  {{ venue.check_in_code }}</div>
-          <div>Email : {{ venue.email_address }}</div>
-          <div>Risk : {{ venue.risk_display_name }}</div>
-        </v-card-text>
+          <v-card-text class="text--primary">
+            <div>Venue ID:  {{ venue.venue_id }}</div>
+            <div>HotSpot:
+              <v-btn v-if="!venue.is_hotspot" size="mini" color="error">
+                In HotSpot
+              </v-btn>
+              <v-btn v-if="venue.is_hotspot" size="mini" color="success">
+                Not In HotSpot
+              </v-btn>
+            </div>
+            <div>Check In Code:  {{ venue.check_in_code }}</div>
+            <div>Email : {{ venue.email_address }}</div>
+            <div>Risk : {{ venue.risk_display_name }}</div>
+          </v-card-text>
 
-      </v-card>
-    </div>
-  </v-card>
+        </v-card>
+      </div>
+    </v-card>
+
+  </unified-margin-padding-slot>
 </template>
 
 <script>
+import UnifiedMarginPaddingSlot from '@/components/slots/unified_margin_padding_slot'
 const axios = require('axios').default
 
 const risk_level = [
@@ -53,6 +57,7 @@ const risk_level = [
 
 export default {
   name: 'VenueInfo',
+  components: { UnifiedMarginPaddingSlot },
   data() {
     return {
       total: 5,
@@ -78,12 +83,13 @@ export default {
     this.getList()
   }, methods: {
     listVenue() {
-      return axios.get('/api/public/venue/info')
+      // return axios.get('http://localhost:3000/api/public/venue/info')
+      return axios.get('/api/public/venue/info/')
     },
     getList() {
       this.listVenue().then(response => {
-        this.list = response.data.list
-        this.total = response.data.total
+        this.list = response.data.data.list
+        this.total = response.data.data.total
 
         for (const listElement of this.list) {
           for (const risk of risk_level) {

@@ -133,12 +133,13 @@ export default {
   },
   methods: {
     listVenue() {
-      return axios.get('/api/public/venue/info')
+      return axios.get('/api/public/venue/info/')
+      // return axios.get('http://localhost:3000/api/public/venue/info')
     },
     getList() {
       this.listVenue().then(response => {
-        this.list = response.data.list
-        this.total = response.data.total
+        this.list = response.data.data.list
+        this.total = response.data.data.total
 
         const list = this.list
         this.markers = []

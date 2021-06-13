@@ -110,6 +110,11 @@ export const Routes = [{
         controller: venueController,
         action: "getQRCode"
 },{
+        method: "get",
+        route: "/api/public/venue/info/qrcode/:id",
+        controller: venueController,
+        action: "getQRCode"
+},{
     method: 'post',
     route: '/api/auth/register',
     controller: AuthController,
