@@ -121,14 +121,14 @@
         </el-form-item>
         <el-form-item label="HotSpot Status">
           <el-radio-group v-model="temp.is_in_hotspot">
-            <el-radio :label="true.toString()">Yes</el-radio>
-            <el-radio :label="false.toString()"> No </el-radio>
+            <el-radio :label="true">Yes</el-radio>
+            <el-radio :label="false"> No </el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="Approval">
           <el-radio-group v-model="temp.is_approval">
-            <el-radio :label="true.toString()"> Approval </el-radio>
-            <el-radio :label="false.toString()"> Pending </el-radio>
+            <el-radio :label="true"> Approval </el-radio>
+            <el-radio :label="false"> Pending </el-radio>
           </el-radio-group>
         </el-form-item>
       </el-form>
@@ -311,8 +311,8 @@ export default {
         password: '123456',
         address: 'test st, prospect, SA',
         emailAddress: 'test@adelaide.edu.au',
-        is_in_hotspot: 'false',
-        is_approval: 'false',
+        is_in_hotspot: false,
+        is_approval: false,
         phone: '0450460166',
         Role: [
           {
@@ -382,8 +382,8 @@ export default {
     // this.temp.Role[0].level = undefined
 
     handleUpdate(row) {
-      row.is_approval = row.is_approval.toString()
-      row.is_in_hotspot = row.is_in_hotspot.toString()
+      // row.is_approval = row.is_approval.toString()
+      // row.is_in_hotspot = row.is_in_hotspot.toString()
       this.temp = Object.assign({}, row) // copy obj
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
