@@ -95,23 +95,10 @@ export const constantRoutes = [
     component: Layout,
     children: [
       {
-        path: 'index',
+        path: 'https://github.com/UAws/COVID_contact_tracing_system/tree/master/docs',
         component: () => import('@/views/documentation/index'),
         name: 'Documentation',
         meta: { title: 'Documentation', icon: 'documentation', affix: true }
-      }
-    ]
-  },
-  {
-    path: '/guide',
-    component: Layout,
-    redirect: '/guide/index',
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/guide/index'),
-        name: 'Guide',
-        meta: { title: 'Guide', icon: 'guide', noCache: true }
       }
     ]
   },

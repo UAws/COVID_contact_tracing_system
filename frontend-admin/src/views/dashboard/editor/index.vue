@@ -2,12 +2,6 @@
   <el-row :gutter="20">
     <div class="dashboard-editor-container">
       <v-row :gutter="10">
-        <!-- <img :src="emptyGif" class="emptyGif"> -->
-
-        <!-- <v-card
-          class="mx-auto"
-          width="max-auto"
-        > -->
         <div class="clearfix">
           <pan-thumb :image="avatar" style="float: left">
             Your roles:
@@ -22,12 +16,6 @@
       </v-row>
       <v-row :gutter="10" style="padding-top:30px">
         <el-col :span="12" :xs="24">
-          <!-- <v-img
-            class="white--text rounded-circle align-end"
-            height="200px"
-            src="https://lh3.googleusercontent.com/proxy/xbxcM9lQGAkpot2s-DJh0DDuy607_CFrJz5LV30IYRHuaCik9L9mJIKYqPUKcwPlMZU8-prBbvKXg3mQXiu_6AVWUX01uwPGE9ntdcH5agGGU21tdzM2p5o"
-          >
-            </v-img> -->
           <v-list-item>
             <v-list-item-icon>
               <v-icon
@@ -57,12 +45,6 @@
               <v-list-item-title class="text-body-2"> SA Health</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-          <!--
-          <v-card-text class="text--primary">
-            <div>15&deg;C</div>
-
-            <v-icon><mdi-history></mdi-history></v-icon>
-          </v-card-text> -->
           <v-list-item
             link
             @click="goToProfile()"
@@ -110,7 +92,6 @@
               <v-list-item-title> Home </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-        <!-- </v-card> -->
         </el-col>
         <el-col :span="12" :xs="24">
           <img :src="emptyGif" class="emptyGif">
@@ -132,12 +113,6 @@ export default {
   data() {
     return {
       emptyGif: 'https://img.alicdn.com/bao/imgextra/i2/4215259796/O1CN010aCxfe2MEcLwJjyBn_!!4215259796.gif'
-      // emptyGif: 'https://wpimg.wallstcn.com/0e03b7da-db9e-4819-ba10-9016ddfdaed3'
-      // items: [
-      //   { icon: 'mdi-account-circle', title: 'Profile' },
-      //   { icon: 'mdi-clock-start', title: 'Check-in' },
-      //   { icon: 'mdi-email', title: 'Inbox' }
-      // ]
     }
   },
   computed: {
