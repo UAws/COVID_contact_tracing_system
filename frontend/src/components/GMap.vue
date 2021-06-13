@@ -18,20 +18,12 @@
               style="width: 100%; "
               :style="map_height"
             >
-              <GmapMarker
-                v-for="(m, index) in markers"
-                :key="index"
-                :position="m.position"
-                :clickable="true"
-                :draggable="true"
-                :shape="shape"
-                @click="center=m.position"
-              />
               <GmapCircle
-                :center="center"
+                v-for="(m) in markers"
+                :key="m.venue_id"
+                :center="m.position"
                 :radius="200"
-                :draggable="true"
-                :editable="true"
+                :options="m.options"
               />
             </GmapMap>
           </div>
@@ -47,6 +39,9 @@
 <script>
 import * as GmapVue from 'gmap-vue'
 import Vue from 'vue'
+import { gmapApi } from 'gmap-vue'
+import { mapGetters } from 'vuex'
+const axios = require('axios').default
 
 export default {
   name: 'GMap',
@@ -83,28 +78,128 @@ export default {
       // https://diegoazh.github.io/gmap-vue/examples/marker.html#source-code
       markers: [{
         position: {
-          lat: -34.9269366,
-          lng: 138.587581
+          lat: '',
+          lng: ''
         }
       }, {
         position: {
-          lat: 11.0,
-          lng: 11.0
+          lat: '',
+          lng: ''
         }
-      }],
+      }
+      ],
       shape: {
         coords: [10, 10, 10, 15, 15, 15, 15, 10],
         type: 'poly'
-      }
+      },
+      shape_options: {
+        strokeColor: '#0080ff',
+        fillColor: '#0080ff',
+        fillOpacity: 0.35
+      },
+      selectMapCoordinate: {},
+      list: []
     }
   },
-
   computed: {
+
     computedPadding() {
       return `p${this.paddingDirection}-${this.paddingSize}`
     },
     computedMargin() {
       return `m${this.marginDirection}-${this.marginSize}`
+    },
+    google: gmapApi,
+    ...mapGetters([
+      'venue_id'
+    ]),
+
+    changeSelectableArea() {
+      for (const listElement of this.markers) {
+        if (listElement.venue_id === this.venue_id) {
+          return listElement
+        }
+      }
+
+      return { position: this.center }
+    }
+  },
+  created() {
+    this.getList()
+    this.selectMapCoordinate = this.center
+  },
+  mounted() {
+
+  },
+  methods: {
+    listVenue() {
+      return axios.get('/api/public/venue/info')
+    },
+    getList() {
+      this.listVenue().then(response => {
+        this.list = response.data.list
+        this.total = response.data.total
+
+        const list = this.list
+        this.markers = []
+        let shape_options = {
+          strokeColor: '#FF0000',
+          fillColor: '#FF0000',
+          fillOpacity: 0.35
+        }
+        for (const listElement of list) {
+          if (listElement.lat != null && listElement.lng != null) {
+            switch (listElement.risk_level) {
+              case 1:
+                shape_options = {
+                  strokeColor: '#FF0000',
+                  fillColor: '#FF0000',
+                  fillOpacity: 0.35
+                }
+                break
+              case 2:
+                shape_options = {
+                  strokeColor: '#ff00ff',
+                  fillColor: '#ff00ff',
+                  fillOpacity: 0.35
+                }
+                break
+              case 3:
+                shape_options = {
+                  strokeColor: '#ffff00',
+                  fillColor: '#ffff00',
+                  fillOpacity: 0.35
+                }
+            }
+
+            this.markers.push({
+              position: {
+                lat: listElement.lat,
+                lng: listElement.lng
+              },
+              options: shape_options,
+              venue_id: listElement.venue_id
+            })
+          }
+        }
+
+        console.log(this.markers)
+
+        // Just to simulate the time of the request
+        setTimeout(() => {
+          this.listLoading = false
+        }, 1.5 * 1000)
+      })
+    },
+    updateSelect(latLng) {
+      this.selectMapCoordinate = {
+        lat: latLng.lat(),
+        lng: latLng.lng()
+      }
+      // console.log(this.selectMapCoordinate)
+
+      this.$store.dispatch('venue/changeLat', this.selectMapCoordinate.lat)
+      this.$store.dispatch('venue/changeLng', this.selectMapCoordinate.lng)
     }
   }
 }

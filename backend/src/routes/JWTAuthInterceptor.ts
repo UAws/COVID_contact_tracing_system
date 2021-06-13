@@ -56,6 +56,11 @@ export class JWTAuthInterceptor {
                 return;
             }
 
+            if (req.originalUrl.split('/')[2] === 'public') {
+                next();
+                return;
+            }
+
 
             // check Authorization header
             const auth = req.headers.authorization;
@@ -110,6 +115,11 @@ export class JWTAuthInterceptor {
             }
 
             if (req.originalUrl.split('/')[2] === 'auth') {
+                next();
+                return;
+            }
+
+            if (req.originalUrl.split('/')[2] === 'public') {
                 next();
                 return;
             }
