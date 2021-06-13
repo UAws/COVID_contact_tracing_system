@@ -5,7 +5,7 @@
       Login
     </h1>
 
-    <h1 v-if="add_check_in_code !== ''" style="padding-bottom: 3vh">
+    <h1 v-if="add_check_in_code" style="padding-bottom: 3vh">
       Check In Code : {{ add_check_in_code }}
     </h1>
 
@@ -133,10 +133,10 @@ export default {
   }),
   computed: {
     add_check_in_code() {
-      return this.$store.getters.getCheckInCode
+      return this.$route.query.code
     },
     loginPadding() {
-      if (this.$store.getters.getCheckInCode !== '') {
+      if (this.$route.query.code !== '') {
         return '2vh'
       } else {
         return '4vh'

@@ -121,7 +121,7 @@ export default {
       this.$router.push('/user/check-in')
     },
     goToHome() {
-      this.$router.push('/documentation/index')
+      window.location.replace('/')
     }
   }
 }
