@@ -10,7 +10,7 @@
             flex
             class="mx-auto"
             :aspect-ratio="16/9"
-            src="../assets/clinic.jpeg"
+            src="https://cdn.jsdelivr.net/gh/UAws/COVID_contact_tracing_system/frontend/src/assets/clinic.jpeg"
             height="300px"
           />
         </v-card>

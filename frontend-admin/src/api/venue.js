@@ -29,7 +29,14 @@ export function venueChangeSelectableArea(id, data) {
 
 export function getVenueInfoByCheckInCode(code) {
   return request({
-    url: `venue/checkIn/${code}`,
+    url: `/venue/checkIn/${code}`,
+    method: 'get'
+  })
+}
+
+export function getVenueQrCode(id) {
+  return request({
+    url: `/venue/info/qrcode/${id}`,
     method: 'get'
   })
 }

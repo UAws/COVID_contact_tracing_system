@@ -20,16 +20,6 @@
       >
         Add
       </el-button>
-      <el-button
-        v-waves
-        :loading="downloadLoading"
-        class="filter-item"
-        type="primary"
-        icon="el-icon-download"
-        @click="handleDownload"
-      >
-        Export
-      </el-button>
     </div>
 
     <el-table
@@ -59,13 +49,19 @@
           <span>{{ row.is_hotspot ? 'yes' : 'no' }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Actions" align="center" width="250" class-name="small-padding fixed-width">
+      <el-table-column label="Actions" align="center" width="300" class-name="small-padding fixed-width">
         <template slot-scope="{row,$index}">
+          <el-button type="success" size="mini" @click="handleQRCode(row)">
+            QR Code
+          </el-button>
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             Edit
           </el-button>
-          <el-button size="mini" type="success" @click="handleModifyStatus(row,!row.is_in_hotspot)">
-            {{ !row.is_in_hotspot ? 'In HotSpot' : 'Not In HotSpot' }}
+          <el-button v-if="row.is_hotspot" size="mini" type="success" @click="handleModifyStatus(row)">
+            {{ row.is_hotspot ? 'In HotSpot' : 'Not In HotSpot' }}
+          </el-button>
+          <el-button v-else size="mini" @click="handleModifyStatus(row)">
+            {{ row.is_hotspot ? 'In HotSpot' : 'Not In HotSpot' }}
           </el-button>
           <el-button v-if="row.status!=='deleted'" size="mini" type="danger" @click="handleDelete(row,$index)">
             Delete
@@ -82,17 +78,34 @@
       @pagination="getList"
     />
     <edit-modal ref="editModal" :visible.sync="ctrl.showEditModal" @update="getList" />
+
+    <el-dialog
+      title="QRCode"
+      :visible.sync="dialogVisible"
+      width="30%"
+    >
+      <div class="block" style="padding-left: 25%">
+        <el-image :src="qrCode" />
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">Cancel</el-button>
+        <el-button type="primary" @click="dialogVisible = false">Confirm</el-button>
+      </span>
+    </el-dialog>
+
   </div>
 </template>
 
 <script>
 import { fetchPv, updateArticle } from '@/api/article'
 import { createUser } from '@/api/myUserInfo'
-import { delVenue, editVenue, listVenue } from '@/api/venue'
+import { delVenue, venueChangeInHotSport, listVenue } from '@/api/venue'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import editModal from './components/editModal'
+
+const { getVenueQrCode } = require('@/api/venue')
 
 const calendarTypeOptions = [
   { key: 'CN', display_name: 'China' },
@@ -126,6 +139,8 @@ export default {
   },
   data() {
     return {
+      qrCode: null,
+      dialogVisible: false,
       ctrl: {
         showEditModal: false
       },
@@ -211,14 +226,14 @@ export default {
       this.getList()
     },
     async handleModifyStatus(row, status) {
-      const res = await editVenue(row.venue_id, { ...row, status })
+      const res = await venueChangeInHotSport(row.venue_id)
       if (res.code === 20000) {
         this.$message({
           message: '操作Success',
           type: 'success'
         })
         // eslint-disable-next-line require-atomic-updates
-        row.is_in_hotspot = status
+        row.is_hotspot = !row.is_hotspot
       }
     },
     sortChange(data) {
@@ -345,20 +360,6 @@ export default {
         this.dialogPvVisible = true
       })
     },
-    handleDownload() {
-      this.downloadLoading = true
-      import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = ['timestamp', 'title', 'type', 'importance', 'status']
-        const filterVal = ['timestamp', 'title', 'type', 'importance', 'status']
-        const data = this.formatJson(filterVal)
-        excel.export_json_to_excel({
-          header: tHeader,
-          data,
-          filename: 'table-list'
-        })
-        this.downloadLoading = false
-      })
-    },
     formatJson(filterVal) {
       return this.list.map(v => filterVal.map(j => {
         if (j === 'timestamp') {
@@ -371,6 +372,25 @@ export default {
     getSortClass: function(key) {
       const sort = this.listQuery.sort
       return sort === `+${key}` ? 'ascending' : 'descending'
+    },
+    handleQRCode(row) {
+      getVenueQrCode(row.venue_id).then(response => {
+        if (response.code === 20000) {
+          this.dialogVisible = true
+          this.qrCode = response.data
+          console.log(response.data)
+
+          this.$message({
+            message: 'QR Code In Success',
+            type: 'success'
+          })
+        } else {
+          this.$message({
+            message: 'Check In Failed',
+            type: 'warning'
+          })
+        }
+      })
     }
   }
 }

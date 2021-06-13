@@ -2,7 +2,7 @@
   <v-container fluid>
     <Header />
     <v-img
-      src="../assets/About.png"
+      src="https://cdn.jsdelivr.net/gh/UAws/COVID_contact_tracing_system/frontend/src/assets/About.png"
       max-height="400px"
       contain
     />
@@ -15,7 +15,7 @@
           <v-img
             class="mx-auto"
             :aspect-ratio="16/9"
-            src="../assets/About1.jpg"
+            src="https://cdn.jsdelivr.net/gh/UAws/COVID_contact_tracing_system/frontend/src/assets/About1.jpg"
             height="300px"
           />
         </v-card>
@@ -65,7 +65,7 @@
           <v-img
             class="mx-auto"
             :aspect-ratio="16/9"
-            src="../assets/About3.jpg"
+            src="https://cdn.jsdelivr.net/gh/UAws/COVID_contact_tracing_system/frontend/src/assets/About3.jpg"
             height="550px"
           />
         </v-card>

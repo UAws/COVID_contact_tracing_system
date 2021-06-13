@@ -4,6 +4,7 @@ import {getCustomRepository, Repository} from "typeorm";
 import {UserRepository} from "../repository/UserRepository";
 import {User} from "../entity/User";
 import {AuthService} from "../service/AuthService";
+import {tokenOptions} from "../support/tokenOptions";
 const passport = require('passport');
 const cookieSession = require('cookie-session');
 
@@ -61,7 +62,13 @@ export class googleOAuthRouter{
 
                 // console.log(result);
 
-                const {user, accessToken} = await userRepository.findAndGenerateToken(result);
+                const tokenOps : tokenOptions = {
+                    refreshToken: undefined,
+                    password : result.password,
+                    emailAddress : result.emailAddress
+                }
+
+                const {user, accessToken} = await userRepository.findAndGenerateToken(tokenOps);
 
                 const token = await AuthService.generateTokenResponse(user, accessToken);
 

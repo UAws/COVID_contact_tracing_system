@@ -74,7 +74,7 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="Actions" align="center" width="230" class-name="small-padding fixed-width">
+      <el-table-column label="Actions" align="center" width="300" class-name="small-padding fixed-width">
         <template slot-scope="{row,$index}">
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             Edit
@@ -101,19 +101,19 @@
             <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name" :value="item.key" />
           </el-select>
         </el-form-item>
-        <el-form-item label="User Name" prop="username">
+        <el-form-item label="User Name" prop="username" required>
           <el-input v-model="temp.username" />
         </el-form-item>
-        <el-form-item label="Password" prop="password">
-          <el-input v-model="temp.password" />
+        <el-form-item label="Password" prop="password" required>
+          <el-input v-model="temp.password" type="password" />
         </el-form-item>
-        <el-form-item label="Address" prop="address">
+        <el-form-item label="Address" prop="address" required>
           <el-input v-model="temp.address" />
         </el-form-item>
-        <el-form-item label="Phone" prop="phone">
+        <el-form-item label="Phone" prop="phone" required>
           <el-input v-model="temp.phone" />
         </el-form-item>
-        <el-form-item label="Email" prop="emailAddress">
+        <el-form-item label="Email" prop="emailAddress" required>
           <el-input v-model="temp.emailAddress" />
         </el-form-item>
         <el-form-item label="Update Time" prop="timestamp">
@@ -277,7 +277,7 @@ export default {
           message: 'Success',
           type: 'success'
         })
-        row.is_in_hotspot = status
+        row.is_in_hotspot = !row.is_in_hotspot
       }).catch(err => {
         this.$message({
           message: err,

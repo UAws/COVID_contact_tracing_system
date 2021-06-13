@@ -9,8 +9,8 @@
       <el-form-item required prop="venue_name" label="Venue Name">
         <el-input v-model="form.venue_name" />
       </el-form-item>
-      <el-form-item required prop="check_in_code" label="Check In Code">
-        <el-input v-model="form.check_in_code" />
+      <el-form-item prop="check_in_code" label="Check In Code">
+        <el-input v-model="form.check_in_code" disabled />
       </el-form-item>
       <el-form-item required prop="email_address" label="Email Address">
         <el-input v-model="form.email_address" />
