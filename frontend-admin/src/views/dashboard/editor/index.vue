@@ -8,7 +8,7 @@
           class="mx-auto"
           width="max-auto"
         > -->
-        <div class=" clearfix">
+        <div class="clearfix">
           <pan-thumb :image="avatar" style="float: left">
             Your roles:
             <span v-for="item in roles" :key="item" class="pan-info-roles">{{ item }}</span>
@@ -16,11 +16,11 @@
           <github-corner style="position: absolute; top: 0px; border: 0; right: 0;" />
           <div class="info-container">
             <span style="font-size:40px;" class="display_name">Hello, {{ name }}</span>
-            <span style="font-size:20px;padding-top:27px;display:inline-block;">Welcome back!</span>
+            <span style="font-size:20px;padding-top:90px;display:inline-block;" class="display_name">Welcome back!</span>
           </div>
         </div>
       </v-row>
-      <v-row :gutter="10">
+      <v-row :gutter="10" style="padding-top:30px">
         <el-col :span="12" :xs="24">
           <!-- <v-img
             class="white--text rounded-circle align-end"
@@ -188,6 +188,7 @@ export default {
       margin-left: 190px;
       height: 150px;
       line-height: 200px;
+      width: 250px;
       .display_name {
         font-size: 48px;
         line-height: 48px;
