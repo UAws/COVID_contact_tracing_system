@@ -165,7 +165,13 @@ cd /home/ubuntu/wdc/COVID_contact_tracing_system/script
 ./run_build.sh
 ```
 
+1. Run CS50 on local computer via docker (only test on MacOS and ubuntu ). As the size of cs50 base docker image, there are at latest 10GB space available on the local machine
 
+   ```shell
+   docker run --name cs50 -p 1337:1337 -p 8081:8081 -p 8080:8080 -d cs50/ide:latest
+   ```
+
+2. Self Hosted CS50 (Internal only)
 
 
 
