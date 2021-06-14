@@ -1,6 +1,6 @@
 ## COVID contact tracing system
 
-
+![image-20210614215541005](https://minio.llycloud.com/image/uPic/image-20210614rTvHmG.png)
 
 ## Authors
 
@@ -11,45 +11,95 @@ This project is supervisored by University of Adelaide course [Web & Database Co
 
 ## Github Actions CI Status：[![CI](https://github.com/UAws/COVID_contact_tracing_system/actions/workflows/vue-ci.yaml/badge.svg?branch=master)](https://github.com/UAws/COVID_contact_tracing_system/actions/workflows/vue-ci.yaml)
 
+## Project Overview
+
+TRACING is an important tool to reduce the spread of the infectious diseases — COVID-19. Based on different user level (user, venue and admin), registered users are able to sign up and log in to the system in order to: 
+
+- ### LEVEL 1 — User: 
+
+  - Manage their user information.
+  - Check-in to locations by entering a check-in code.
+  - View their check-in history on a map.
+  - See current hotspots on a map.
+  - See if they've been to a hotspot.
+
+- ### LEVEL 2 — Venue
+
+  - Manage their venue information.
+
+  - View the check-in history for their venue.
+
+    
+
+- ### LEVEL 3 — Admins/Health Officials
+
+  - Manage their user information.
+  - Create and manage hotspot areas/venues & timeframes.
+  - View the check-in history for users and venues.
+  - See current hotspots on a map.
+  - Manage Users/Venues.
+  - Sign-up other Health Officials.
+
+
+
+- Advanced functions:
+
+  - Users/venue managers are able to choose to link a social media/email/other account, allowing login via that platform, to make logging in easier.
+  - GPS Location — Users can check in using their browser's location.
+  - QR Code scanning Check-In
+
+  ---
+
+
+## Dependency review 
+
+- Frontend 
+  - [Vue](https://vuejs.org/) 2.x, Vue-router, Vuex
+  - [Axios](https://github.com/axios/axios) -- Ajax Request 
+  - [Vuetify](https://github.com/vuetifyjs/vuetify) 2.4.x -- UI Framework
+  - [Enlist](https://github.com/enlist) -- style and validation
+  - [Material Design Icons](https://materialdesignicons.com/)
+- Frontend-admin
+  - [Vue](https://vuejs.org/) 2.x, Vue-router, Vuex
+  - [Axios](https://github.com/axios/axios) -- Ajax Request 
+  - [Vuetify](https://github.com/vuetifyjs/vuetify) 2.4.x -- UI Framework
+  - [Enlist](https://github.com/enlist) -- style and validation
+  - [Material Design Icons](https://materialdesignicons.com/)
+  - [Element UI](https://github.com/ElemeFE/element) 2.x-- UI Framework (YES,we combined Vuetify with it)
+  - [Vue-element-admin](https://github.com/PanJiaChen/vue-element-admin) -- dashboard support
+  - [Gmap-vue](https://www.npmjs.com/package/gmap-vue) -- HotSpot Map
+  - [js-cookie](https://github.com/js-cookie/js-cookie) -- Cookie support
+- Backend
+  - [Typescript](https://www.typescriptlang.org/)/ts-node -- **Typed JavaScript at Any Scale.**
+  - [await-to-js](https://github.com/scopsy/await-to-js) -- Promise error handler
+  - [bcrypt](https://www.npmjs.com/package/bcrypt) -- password encode
+  - [@type/Express](https://www.npmjs.com/package/@types/express) -- Express framework 
+  - [jwt-simple](https://www.npmjs.com/package/jwt-simple) -- Json web token (Security)
+  - [passportjs](http://www.passportjs.org/) -- google OAuth and JWT
+  - [qrcode](https://www.npmjs.com/package/qrcode) -- QRCode generator
+  - [typeorm](https://typeorm.io/#/) -- Persistent Layer Integration 
+  - [nodemon](https://www.npmjs.com/package/nodemon) -- Auto Reload
+  - [dotenv](https://www.npmjs.com/package/dotenv) -- Environment variable detection
+- Development environment
+  - Mysql 8.0.25
+  - Node v12.22.1
+  - npm 6.14.12
+  - Jetbrains IDEA
+  - VSCode
+  - CS50
+- Continuous integration/Continuous deployment.
+  - [Github Action](https://github.com/UAws/COVID_contact_tracing_system) 
+  - [Argo CD](https://argoproj.github.io/argo-cd/)
+
 ## Setup Instructions
 
-### Frontend :
+![2021-06-14_21-56-58](https://minio.llycloud.com/image/uPic/image-202106149FBU08.png)
 
-go to `frontend` folder
+### Global Start :
 
+1. Run on official ide.cs50.io
 
-
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-
-```
-npm run build
-```
-
-### Run your unit tests
-
-```
-npm run test:unit
-```
-
-### Lints and fixes files
-
-```
-npm run lint
-```
-
-
-
-In shared cs50, go to directory : `/home/ubuntu/wdc/COVID_contact_tracing_system/frontend`
+In shared cs50, go to directory : `/home/ubuntu/wdc/COVID_contact_tracing_system/script`
 
 This cs50 has been authorized to `ian-knight-uofa` and `wdc-marker-uofa` with following link: https://ide.cs50.io/d8e35ee8ab724f2db147fb4a556d67b1
 
@@ -57,25 +107,37 @@ After `npm run serve ` the project would be viewed on the following link: https:
 
 **Important : The default server port for project frontend is 8081**
 
+Declension : the following script will fetch the latest release version on our github project release page.
 
+```shell
+cd /home/ubuntu/wdc/COVID_contact_tracing_system/script
+./run_production_on_CS50.sh
+```
 
-![2021-05-13_23-14-27](https://minio.llycloud.com/image/uPic/image-20210513bE98Ri.png)
+**known issues :** If the backend nodejs unfortunately started failed, please rerun the script above. As average, the backend node would be successfully start by run above script **2-3 times.**
 
-### Fast way to view frontend project 
+![img](https://minio.llycloud.com/image/uPic/image-20210614y3e1VW.png)
 
-![2021-05-13_23-18-51](https://minio.llycloud.com/image/uPic/image-20210513DZSMJe.png)
+When server started successfully :
 
-directly run `http-server` in `dist` folder (we have built it for you) or `serve -l 8081` 
+![2021-06-14_21-25-08](https://minio.llycloud.com/image/uPic/image-20210614F7d0ZI.png)
 
-`/home/ubuntu/wdc/COVID_contact_tracing_system/frontend/dist`
-
-**Important : Due to the limitations that http-server command can not directly display url root, we would strongly recommend you to use `serve -l 8081` command to avoid unpredictable issues**
-
-![2021-05-13_23-19-08](https://minio.llycloud.com/image/uPic/image-20210513O2RF62.png)
-
-preview link : 
+After that, preview could be found by following click :
 
 https://ide-d8e35ee8ab724f2db147fb4a556d67b1-8081.cs50.ws/
+
+2. Run on Selfhost CS50
+
+There is another script provide ability to build `frontend` and `frontend-admin` on CS50, but as the limited resources provide by cs50 (disk space / memory/ CPU), we would strongly recommend build these parts in our self host cs50 environment or on the local machine
+
+```shell
+cd /home/ubuntu/wdc/COVID_contact_tracing_system/script
+./run_build.sh
+```
+
+
+
+
 
 ## Licensed Under GPL-v3
 
