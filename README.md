@@ -55,7 +55,7 @@ TRACING is an important tool to reduce the spread of the infectious diseases —
 
 ## Dependency review 
 
-- Frontend 
+- Frontend 
   - [Vue](https://vuejs.org/) 2.x, Vue-router, Vuex
   - [Axios](https://github.com/axios/axios) -- Ajax Request 
   - [Vuetify](https://github.com/vuetifyjs/vuetify) 2.4.x -- UI Framework
