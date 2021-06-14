@@ -26,10 +26,10 @@
           <v-card-text class="text--primary">
             <div>Venue ID:  {{ venue.venue_id }}</div>
             <div>HotSpot:
-              <v-btn v-if="!venue.is_hotspot" size="mini" color="error">
+              <v-btn v-if="venue.is_hotspot" size="mini" color="error">
                 In HotSpot
               </v-btn>
-              <v-btn v-if="venue.is_hotspot" size="mini" color="success">
+              <v-btn v-if="!venue.is_hotspot" size="mini" color="success">
                 Not In HotSpot
               </v-btn>
             </div>

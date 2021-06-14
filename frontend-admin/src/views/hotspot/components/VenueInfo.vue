@@ -25,10 +25,10 @@
         <v-card-text class="text--primary">
           <div>Venue ID:  {{ venue.venue_id }}</div>
           <div>HotSpot:
-            <el-button v-if="!venue.is_hotspot" size="mini" type="danger" @click="handleModifyStatus(venue,true)">
+            <el-button v-if="venue.is_hotspot" size="mini" type="danger" @click="handleModifyStatus(venue,true)">
               In HotSpot
             </el-button>
-            <el-button v-if="venue.is_hotspot" size="mini" type="success" @click="handleModifyStatus(venue,false)">
+            <el-button v-if="!venue.is_hotspot" size="mini" type="success" @click="handleModifyStatus(venue,false)">
               Not In HotSpot
             </el-button>
           </div>

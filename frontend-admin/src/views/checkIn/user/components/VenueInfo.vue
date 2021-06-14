@@ -22,10 +22,10 @@
         <v-card-text class="text--primary">
           <div>Venue ID:  {{ venue.venue_id }}</div>
           <div>HotSpot:
-            <el-button v-if="!venue.is_hotspot" size="mini" type="danger">
+            <el-button v-if="venue.is_hotspot" size="mini" type="danger">
               In HotSpot
             </el-button>
-            <el-button v-if="venue.is_hotspot" size="mini" type="success">
+            <el-button v-if="!venue.is_hotspot" size="mini" type="success">
               Not In HotSpot
             </el-button>
           </div>
