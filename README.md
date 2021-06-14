@@ -11,10 +11,12 @@ This project is supervisored by University of Adelaide course [Web & Database Co
 
 ## Github Actions CI Status：[![CI](https://github.com/UAws/COVID_contact_tracing_system/actions/workflows/vue-ci.yaml/badge.svg?branch=master)](https://github.com/UAws/COVID_contact_tracing_system/actions/workflows/vue-ci.yaml)
 
-## Project Overview
+## YouTube Preview
 
 [![Youtube](https://img.youtube.com/vi/2EjzAcCSSDw/0.jpg)](https://www.youtube.com/watch?v=2EjzAcCSSDw)
 
+
+## Project Overview
 
 ### [Design document](https://github.com/UAws/COVID_contact_tracing_system/tree/master/docs) 
 
