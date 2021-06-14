@@ -138,7 +138,7 @@ In shared cs50, go to directory : `/home/ubuntu/wdc/COVID_contact_tracing_system
 
 This cs50 has been authorized to `ian-knight-uofa` and `wdc-marker-uofa` with following link: https://ide.cs50.io/d8e35ee8ab724f2db147fb4a556d67b1
 
-After `npm run serve ` the project would be viewed on the following link: https://ide-d8e35ee8ab724f2db147fb4a556d67b1-8081.cs50.ws/
+After `./run_production_on_CS50.sh` in `script` folder the project would be viewed on the following link: https://ide-d8e35ee8ab724f2db147fb4a556d67b1-8081.cs50.ws/
 
 **Important : The default server port for project frontend is 8081**
 
