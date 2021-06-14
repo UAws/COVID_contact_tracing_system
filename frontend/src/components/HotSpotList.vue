@@ -33,6 +33,16 @@
                 Not In HotSpot
               </v-btn>
             </div>
+            <div>
+              QR Code:
+              <v-btn
+                color="blue"
+                @click="handleQRCode(venue)"
+              >
+                Click Me
+              </v-btn>
+            </div>
+
             <div>Check In Code:  {{ venue.check_in_code }}</div>
             <div>Email : {{ venue.email_address }}</div>
             <div>Risk : {{ venue.risk_display_name }}</div>
@@ -41,8 +51,46 @@
         </v-card>
       </div>
     </v-card>
+    <div v-if="dialog">
+      QR Code :
+      <v-dialog
+        v-model="dialog"
+        width="500"
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            color="blue"
+            v-bind="attrs"
+            v-on="on"
+          >
+            Click Me
+          </v-btn>
+        </template>
 
+        <v-card>
+          <v-card-title class="text-h5 lighten-2">
+            QR CODE
+          </v-card-title>
+
+          <v-img :src="qrCode" />
+
+          <v-divider />
+
+          <v-card-actions>
+            <v-spacer />
+            <v-btn
+              color="primary"
+              text
+              @click="dialog = false"
+            >
+              Got it
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </div>
   </unified-margin-padding-slot>
+
 </template>
 
 <script>
@@ -62,20 +110,22 @@ export default {
     return {
       total: 5,
       dataTemp: {
-        update_time: '2021-05-30T03:50:32.000Z',
-        create_time: '2021-05-30T03:38:46.000Z',
-        update_by: 'Super Admin',
-        create_by: 'Super Admin',
+        update_time: '',
+        create_time: '',
+        update_by: '',
+        create_by: '',
         venue_id: 2,
-        check_in_code: '100002',
-        email_address: 'aaaa@adelaide.edu.au',
-        venue_name: 'Killision',
-        shop_address: '22 hendly st, Adelaide',
+        check_in_code: '',
+        email_address: '',
+        venue_name: '',
+        shop_address: '',
         is_hotspot: false,
         Users: []
       },
       list: [],
-      risk_level: risk_level
+      risk_level: risk_level,
+      dialog: false,
+      qrCode: null
     }
   }, computed: {
   },
@@ -104,6 +154,19 @@ export default {
         setTimeout(() => {
           this.listLoading = false
         }, 1.5 * 1000)
+      })
+    },
+    getVenueQrCode(id) {
+      // return axios.get(`http://localhost:3000/api/public/venue/info/qrcode/${id}`)
+      return axios.get('/api/public/venue/info/qrcode/${id}')
+    },
+    handleQRCode(row) {
+      this.getVenueQrCode(row.venue_id).then(response => {
+        if (response.data.code === 20000) {
+          this.dialog = true
+          this.qrCode = response.data.data
+          console.log(response.data.data)
+        }
       })
     }
   }
