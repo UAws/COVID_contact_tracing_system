@@ -1,8 +1,8 @@
 {
-  "name": "vue-element-admin",
-  "version": "4.4.0",
-  "description": "A magical vue admin. An out-of-box UI solution for enterprise applications. Newest development stack of vue. Lots of awesome features",
-  "author": "Pan <panfree23@gmail.com>",
+  "name": "COVID-contact-tracing-system",
+  "version": "v0.1.3",
+  "description": "COVID-19 Contact Tracing Web Application that allows users to check-in when they visit businesses/public places, shows hotspots/areas to avoid, and alerts health officials & the user if the user has come into contact with a hotspot.",
+  "author": " Akide Liu <mail@llycloud.com> , Chi Wang, Ziqi Zhang, Zihan Wang..",
   "scripts": {
     "dev": "vue-cli-service serve",
     "lint": "eslint --ext .js,.vue src",
