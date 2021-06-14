@@ -32,21 +32,26 @@ export class VenueRepository extends Repository<Venue>{
                 // update all of people who has been checked into this venue
                 if (dbVenue.is_hotspot === true) {
 
-                    const [error,result] = await to(this.manager.query(`
-                        update user
-                        set user.is_in_hotspot = true
-                        where user_id in (
-                            select u.user_id
-                            from user_check_in
-                                     inner join venue v on user_check_in.venueVenueId = v.venue_id
-                                     inner join user__user_check_in_user_check_in uuciuci
-                                                on user_check_in.check_in_id = uuciuci.userCheckInCheckInId
-                                     inner join user u on uuciuci.userUserId = u.user_id
-                            where v.is_hotspot = true
-                              AND v.venue_id = ?
-                            group by user_id
-                        )
+                    const [error, result] = await to(this.manager.query(`
+                        update user as outUser
+                        set outUser.is_in_hotspot = true
+                        where outUser.user_id in (
+                            select user_id
+                            from (
+                                     select u.user_id
+                                     from user_check_in
+                                              inner join venue v on user_check_in.venueVenueId = v.venue_id
+                                              inner join user__user_check_in_user_check_in uuciuci
+                                                         on user_check_in.check_in_id = uuciuci.userCheckInCheckInId
+                                              inner join user u on uuciuci.userUserId = u.user_id
+                                     where v.is_hotspot = true
+                                       AND v.venue_id = ?
+                                     group by user_id
+                                 ) as u
+                        );
+
                     `, [dbVenue.venue_id]));
+
 
                     if (error) {
                         throw error;
