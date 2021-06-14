@@ -22,7 +22,7 @@
           <v-img
             class="white--text align-end"
             height="200px"
-            src="https://cdn.jsdelivr.net/gh/UAws/COVID_contact_tracing_system/frontend-admin/src/assets/covid_vaccine_stock.jpg"
+            src="https://cdn.jsdelivr.net/gh/UAws/COVID_contact_tracing_system@master/frontend-admin/src/assets/covid_vaccine_stock.jpg"
           />
 
           <v-card-title>
