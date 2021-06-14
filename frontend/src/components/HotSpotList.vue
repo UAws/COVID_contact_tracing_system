@@ -158,7 +158,7 @@ export default {
     },
     getVenueQrCode(id) {
       // return axios.get(`http://localhost:3000/api/public/venue/info/qrcode/${id}`)
-      return axios.get('/api/public/venue/info/qrcode/${id}')
+      return axios.get(`/api/public/venue/info/qrcode/${id}`)
     },
     handleQRCode(row) {
       this.getVenueQrCode(row.venue_id).then(response => {
