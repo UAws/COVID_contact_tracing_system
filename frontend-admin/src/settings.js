@@ -1,5 +1,5 @@
 module.exports = {
-  title: 'Vue Element Admin',
+  title: 'COVID contact tracing system Dashboard',
 
   /**
    * @type {boolean} true | false
