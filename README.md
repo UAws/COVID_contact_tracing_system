@@ -13,6 +13,8 @@ This project is supervisored by University of Adelaide course [Web & Database Co
 
 ## Project Overview
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/2EjzAcCSSDw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ### [Design document](https://github.com/UAws/COVID_contact_tracing_system/tree/master/docs) 
 
 TRACING is an important tool to reduce the spread of the infectious diseases — COVID-19. Based on different user level (user, venue and admin), registered users are able to sign up and log in to the system in order to: 
