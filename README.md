@@ -95,6 +95,8 @@ TRACING is an important tool to reduce the spread of the infectious diseases —
 
 ## Example SQL Query
 
+### Database dump file : **[dump.sql](https://github.com/UAws/COVID_contact_tracing_system/blob/master/backend/sql_dump/dump.sql)**
+
 [VenueRepository.ts](https://github.com/UAws/COVID_contact_tracing_system/blob/e636812ea042eca31719573dc1cb19ec9521b78b/backend/src/repository/VenueRepository.ts#L35-L51)
 
 ```typescript
