@@ -13,6 +13,8 @@ This project is supervisored by University of Adelaide course [Web & Database Co
 
 ## Project Overview
 
+### [Design document](https://github.com/UAws/COVID_contact_tracing_system/tree/master/docs) 
+
 TRACING is an important tool to reduce the spread of the infectious diseases — COVID-19. Based on different user level (user, venue and admin), registered users are able to sign up and log in to the system in order to: 
 
 - ### LEVEL 1 — User: 
@@ -91,6 +93,32 @@ TRACING is an important tool to reduce the spread of the infectious diseases —
   - [Github Action](https://github.com/UAws/COVID_contact_tracing_system) 
   - [Argo CD](https://argoproj.github.io/argo-cd/)
 
+## Example SQL Query
+
+[VenueRepository.ts](https://github.com/UAws/COVID_contact_tracing_system/blob/e636812ea042eca31719573dc1cb19ec9521b78b/backend/src/repository/VenueRepository.ts#L35-L51)
+
+```typescript
+const [error, result] = await to(this.manager.query(`
+    update user as outUser
+    set outUser.is_in_hotspot = true
+    where outUser.user_id in (
+        select user_id
+        from (
+                 select u.user_id
+                 from user_check_in
+                          inner join venue v on user_check_in.venueVenueId = v.venue_id
+                          inner join user__user_check_in_user_check_in uuciuci
+                                     on user_check_in.check_in_id = uuciuci.userCheckInCheckInId
+                          inner join user u on uuciuci.userUserId = u.user_id
+                 where v.is_hotspot = true
+                   AND v.venue_id = ?
+                 group by user_id
+             ) as u
+    );
+
+`, [dbVenue.venue_id]));
+```
+
 ## Setup Instructions
 
 ![2021-06-14_21-56-58](https://minio.llycloud.com/image/uPic/image-202106149FBU08.png)
@@ -107,7 +135,7 @@ After `npm run serve ` the project would be viewed on the following link: https:
 
 **Important : The default server port for project frontend is 8081**
 
-Declension : the following script will fetch the latest release version on our github project release page.
+Declaration : the following script will fetch the latest release version on our github project release page. Therefore, Internet connection is required.
 
 ```shell
 cd /home/ubuntu/wdc/COVID_contact_tracing_system/script
