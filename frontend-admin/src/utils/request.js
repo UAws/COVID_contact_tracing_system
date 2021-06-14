@@ -48,6 +48,16 @@ service.interceptors.response.use(
   response => {
     const res = response.data
 
+    // notify on in hotspot
+
+    if (res.code === 20000 && res.data.is_in_hotspot) {
+      Message({
+        message: 'You Are in hotspot now ! Contact Health Department Immediately!!!',
+        type: 'error',
+        duration: 5 * 1000
+      })
+    }
+
     // if the custom code is not 20000, it is judged as an error.
     if (res.code !== 20000) {
       Message({
