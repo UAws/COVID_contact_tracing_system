@@ -13,7 +13,8 @@ This project is supervisored by University of Adelaide course [Web & Database Co
 
 ## Project Overview
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/2EjzAcCSSDw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+[![Youtube](https://img.youtube.com/vi/2EjzAcCSSDw/0.jpg)](https://www.youtube.com/watch?v=2EjzAcCSSDw)
+
 
 ### [Design document](https://github.com/UAws/COVID_contact_tracing_system/tree/master/docs) 
 
